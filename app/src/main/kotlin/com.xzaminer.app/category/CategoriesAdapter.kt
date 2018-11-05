@@ -75,7 +75,7 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
         if (!activity.isActivityDestroyed()) {
-            Glide.with(activity).clear(holder.itemView?.dir_thumbnail!!)
+            Glide.with(activity).clear(holder.itemView?.cat_thumbnail!!)
         }
     }
 
@@ -92,19 +92,17 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
     private fun setupView(view: View, category: Category) {
         view.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                dir_shadow_holder.clipToOutline = true
-                dir_thumbnail.clipToOutline = true
+                cat_thumbnail.clipToOutline = true
             }
 
-            dir_shadow_holder.setImageDrawable(colorDrawable)
             dir_name.text = category.name
             val thumbnailType = TYPE_IMAGES
 
             if(category.image == "" || category.image == null) {
                 val img : Int = R.drawable.im_1
-                activity.loadIcon(img, dir_thumbnail, true)
+                activity.loadIcon(img, cat_thumbnail, false)
             } else {
-                activity.loadImage(thumbnailType, category.image!!, dir_thumbnail, false, true)
+                activity.loadImage(thumbnailType, category.image!!, cat_thumbnail, false, false)
             }
         }
     }

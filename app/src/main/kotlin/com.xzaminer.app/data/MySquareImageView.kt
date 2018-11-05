@@ -15,6 +15,6 @@ class MySquareImageView : ImageView {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val spec = if (isHorizontalScrolling) heightMeasureSpec else widthMeasureSpec
-        super.onMeasure(spec, (spec*1.5).toInt())
+        super.onMeasure(spec, spec)
     }
 }

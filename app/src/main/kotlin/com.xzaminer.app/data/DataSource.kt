@@ -63,11 +63,11 @@ class DataSource {
                         cats.addAll(audToCat)
                     }
                 }
-                callback(cats, it?.name ?: "AudiBoo")
+                callback(cats, it?.name ?: "Xzaminer")
             }
         } else {
             getCats {
-                callback(it, "AudiBoo")
+                callback(it, "Xzaminer")
             }
         }
     }

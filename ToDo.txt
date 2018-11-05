@@ -6,6 +6,7 @@ Googleplay@345
 
 Links
 https://www.uplabs.com/posts/exam-app-exam-categories
+https://www.iconfinder.com/iconsets/finance-152
 
 https://play.google.com/store/apps/details?id=com.pavansgroup.rtoexam
 https://www.uplabs.com/posts/quiz-app-full-ui-kit-quizer

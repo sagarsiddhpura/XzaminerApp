@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.Window
-import com.simplemobiletools.commons.extensions.appLaunched
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.extensions.isGone
 import com.simplemobiletools.commons.extensions.toast
@@ -40,7 +39,6 @@ class MainActivity : SimpleActivity() {
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        appLaunched(BuildConfig.APPLICATION_ID)
 
         intent.apply {
             catId = getLongExtra(CAT_ID, -1)

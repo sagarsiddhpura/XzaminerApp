@@ -9,13 +9,13 @@ class DebugDataSource {
         val dbRef = dataSource.getCatsDatabase()
 
         val c1 = Category(1, "Students", "School/College Students",
-            "images/cat_1.jpg", getSubCategories(1), getQuestionBanks(1))
+            "images/cat_1.png", getSubCategories(1), getQuestionBanks(1))
         val c2 = Category(2, "IT Professionals", "IT Professionals",
-            "images/cat_2.jpg", getSubCategories(2), getQuestionBanks(2))
+            "images/cat_2.png", getSubCategories(2), getQuestionBanks(2))
         val c3 = Category(3, "Government", "Government",
-            "images/cat_3.jpg", getSubCategories(3), getQuestionBanks(3))
+            "images/cat_3.png", getSubCategories(3), getQuestionBanks(3))
         val c4 = Category(4, "Banks", "Banks",
-            "images/cat_4.jpg", getSubCategories(4), getQuestionBanks(4))
+            "images/cat_4.png", getSubCategories(4), getQuestionBanks(4))
         dbRef.child("cats").setValue(hashMapOf(c1.id.toString() to c1, c2.id.toString() to c2, c3.id.toString() to c3, c4.id.toString() to c4))
         dbRef.push()
     }
@@ -23,15 +23,15 @@ class DebugDataSource {
     private fun getSubCategories(i: Int): HashMap<String, Category> {
         if (i == 1) {
             val c1 = Category(101, "10th Standard", "10th Standard",
-                "", getSubCategories(101), getQuestionBanks(101))
+                "images/cat_101.png", getSubCategories(101), getQuestionBanks(101))
             val c2 = Category(102, "12th Standard", "12th Standard",
-                "", getSubCategories(102), getQuestionBanks(102))
+                "images/cat_102.png", getSubCategories(102), getQuestionBanks(102))
             val c3 = Category(103, "Third Year B. Com", "Third Year B. Com",
-                "", getSubCategories(103), getQuestionBanks(103))
+                "images/cat_103.png", getSubCategories(103), getQuestionBanks(103))
             val c4 = Category(104, "Third Year B. Arts", "Third Year B. Arts",
-                "", getSubCategories(104), getQuestionBanks(104))
+                "images/cat_104.png", getSubCategories(104), getQuestionBanks(104))
             val c5 = Category(105, "Third Year B. Science", "Third Year B. Science",
-                "", getSubCategories(105), getQuestionBanks(105))
+                "images/cat_105.png", getSubCategories(105), getQuestionBanks(105))
             return hashMapOf(c1.id.toString() to c1, c2.id.toString() to c2, c3.id.toString() to c3, c4.id.toString() to c4, c5.id.toString() to c5)
         }
         if (i == 2) {
@@ -39,11 +39,11 @@ class DebugDataSource {
         }
         if (i == 3) {
             val c1 = Category(301, "IAS", "Indian Administrative Services",
-                "", getSubCategories(301), getQuestionBanks(301))
+                "images/cat_301.png", getSubCategories(301), getQuestionBanks(301))
             val c2 = Category(302, "IRS", "Indian Revenue Services",
-                "", getSubCategories(302), getQuestionBanks(302))
+                "images/cat_302.png", getSubCategories(302), getQuestionBanks(302))
             val c3 = Category(303, "UPSC", "UPSC",
-                "", getSubCategories(303), getQuestionBanks(303))
+                "images/cat_303.png", getSubCategories(303), getQuestionBanks(303))
             return hashMapOf(c1.id.toString() to c1, c2.id.toString() to c2, c3.id.toString() to c3)
         }
         if (i == 4) {
@@ -51,11 +51,11 @@ class DebugDataSource {
         }
         if (i == 101) {
             val c1 = Category(1011, "SSC - Maharashtra Board", "SSC - Maharashtra Board",
-                "", getSubCategories(1011), getQuestionBanks(1011))
+                "images/cat_1011.png", getSubCategories(1011), getQuestionBanks(1011))
             val c2 = Category(1012, "SSC - Kerela Board", "SSC - Kerela Board",
-                "", getSubCategories(1012), getQuestionBanks(1012))
+                "images/cat_1012.png", getSubCategories(1012), getQuestionBanks(1012))
             val c3 = Category(1013, "CBSE - Delhi Board", "CBSE - Delhi Board",
-                "", getSubCategories(1013), getQuestionBanks(1013))
+                "images/cat_1013.png", getSubCategories(1013), getQuestionBanks(1013))
             return hashMapOf(c1.id.toString() to c1, c2.id.toString() to c2, c3.id.toString() to c3)
         }
         return hashMapOf()
