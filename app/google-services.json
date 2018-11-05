@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "245620089190",
+    "firebase_url": "https://xzaminerapp.firebaseio.com",
+    "project_id": "xzaminerapp",
+    "storage_bucket": "xzaminerapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245620089190:android:127582f2f23640a4",
+        "android_client_info": {
+          "package_name": "com.xzaminer.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245620089190-l5df9lh6q3sk3tc4e0pjuuvngm346i98.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xzaminer.app",
+            "certificate_hash": "65bff97adf48ce152d690f92ac89f39f4116c82c"
+          }
+        },
+        {
+          "client_id": "245620089190-rid4b28a453fk43ovt5v8h4v5uv829fe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXTqwMKDpDOSnJVzeoyDza5R4BhbhX5lc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245620089190-rid4b28a453fk43ovt5v8h4v5uv829fe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+            android:id="@+id/directories_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/directories_empty_text_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingLeft="@dimen/big_margin"
+                android:paddingRight="@dimen/big_margin"
+                android:paddingTop="@dimen/activity_margin"
+                android:text="@string/unable_to_load_content"
+                android:textSize="@dimen/bigger_text_size"
+                android:visibility="gone"/>
+
+        <com.simplemobiletools.commons.views.MyRecyclerView
+                android:id="@+id/categories_grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                app:spanCount="@integer/category_columns_vertical_scroll"
+                android:layout_margin="2dp"/>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
