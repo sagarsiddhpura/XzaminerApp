@@ -25,7 +25,7 @@ class SplashActivity : BaseSplashActivity() {
             baseConfig.primaryColor = ContextCompat.getColor(this, R.color.colorPrimary)
             config.enablePullToRefresh = false
         }
-        config.setLoggedInUser(com.xzaminer.app.data.User("Xzaminer", "xzaminer@gmail.com", "", "", "", "918866806146", arrayListOf(), ""))
+        config.setLoggedInUser(com.xzaminer.app.data.User("Xzaminer", "xzaminer@gmail.com", "", "", "", "+918866806146", arrayListOf(), ""))
 
         appLaunched(BuildConfig.APPLICATION_ID)
         navigate()

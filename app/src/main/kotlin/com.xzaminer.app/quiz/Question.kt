@@ -5,7 +5,8 @@ data class Question (
     var text: String? = null,
     var description: String? = null,
     var options: ArrayList<QuestionOption> = arrayListOf(),
-    var correctAnswer: Long? = null
+    var correctAnswer: Long? = null,
+    var selectedAnswer: Long? = 0
     ) {
 
     // genre

@@ -200,4 +200,11 @@ class DataSource {
         }
         return null
     }
+
+    fun getQuestionBankFromUser(userId: String, quizId: Long?, callback: (quiz: QuestionBank?) -> Unit) {
+        getUser(userId) {
+            val quiz = it?.quizzes?.find { it.id == quizId }
+            callback(quiz)
+        }
+    }
 }

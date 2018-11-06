@@ -2,34 +2,37 @@ package com.xzaminer.app.quiz
 
 import android.content.res.Resources
 import android.graphics.drawable.GradientDrawable
+import android.support.constraint.ConstraintLayout
+import android.support.v7.widget.CardView
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import android.widget.ImageView
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.adjustAlpha
-import com.simplemobiletools.commons.extensions.isActivityDestroyed
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
-import kotlinx.android.synthetic.main.category_item_grid.view.*
 import kotlinx.android.synthetic.main.question_item_grid.view.*
 import java.util.*
 
 
 
-class QuestionsAdapter(activity: BaseSimpleActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
+class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
                        itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
     private var currentQuestionsHash = questions.hashCode()
     private var colorDrawable : GradientDrawable
+    private var quizActivity: QuizActivity? = null
+    var adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
 
     init {
         setupDragListener(true)
         colorDrawable = GradientDrawable()
         colorDrawable.setColor(primaryColor.adjustAlpha(0.6f))
         colorDrawable.cornerRadius = Resources.getSystem().displayMetrics.density*4
+        this.quizActivity = activity
 
     }
 
@@ -67,30 +70,37 @@ class QuestionsAdapter(activity: BaseSimpleActivity, var questions: ArrayList<Qu
 
     override fun getIsItemSelectable(position: Int) = true
 
-    override fun onViewRecycled(holder: ViewHolder) {
-        super.onViewRecycled(holder)
-        if (!activity.isActivityDestroyed()) {
-            Glide.with(activity).clear(holder.itemView?.cat_thumbnail!!)
-        }
-    }
-
     fun updateQuestions(newQuestions: ArrayList<Question>) {
-        val newquestionsClone = newQuestions.clone() as ArrayList<Question>
-        if (newquestionsClone.hashCode() != currentQuestionsHash) {
-            currentQuestionsHash = newquestionsClone.hashCode()
-            questions = newquestionsClone
-            notifyDataSetChanged()
-            finishActMode()
-        }
+        questions = newQuestions.clone() as ArrayList<Question>
+        notifyDataSetChanged()
     }
 
     private fun setupView(view: View, question: Question) {
         view.apply {
             question_text.text = question.text
-            option_1.text = question.options[0].text
-            option_2.text = question.options[1].text
-            option_3.text = question.options[2].text
-            option_4.text = question.options[3].text
+            question_icon.setColorFilter(adjustedPrimaryColor)
+            val rootLayout = (view as CardView).getChildAt(0) as ConstraintLayout
+
+            rootLayout.getChildAt(7).beGone()
+            rootLayout.getChildAt(8).beGone()
+            rootLayout.getChildAt(9).beGone()
+            rootLayout.getChildAt(10).beGone()
+
+            question.options.forEachIndexed { index, option ->
+                val text = rootLayout.getChildAt(index + 3) as MyTextView
+
+                if(question.selectedAnswer == option.id) {
+                    text.text = option.text!!.highlightTextPart(option.text!!, adjustedPrimaryColor)
+                    val image = rootLayout.getChildAt(index + 7) as ImageView
+                    image.setColorFilter(adjustedPrimaryColor)
+                    image.beVisible()
+                } else {
+                    text.text = option.text
+                }
+                text.setOnClickListener { quizActivity?.optionClicked(question, option.id) }
+
+
+            }
         }
     }
 }

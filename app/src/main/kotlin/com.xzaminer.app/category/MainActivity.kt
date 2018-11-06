@@ -11,13 +11,13 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.BuildConfig
-import com.xzaminer.app.QuizActivity
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.extensions.debugDataSource
 import com.xzaminer.app.extensions.getCategoriesFromDb
+import com.xzaminer.app.quiz.QuizActivity
 import com.xzaminer.app.utils.CAT_ID
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -60,10 +60,16 @@ class MainActivity : SimpleActivity() {
 
         // debug
         if(BuildConfig.DEBUG) {
-            Intent(this, QuizActivity::class.java).apply {
-                putExtra(CAT_ID, 10111L)
-                startActivity(this)
+            if(catId == null) {
+//                Intent(this, ResultActivity::class.java).apply {
+//                    putExtra(QUIZ_ID, 10111L)
+//                    startActivity(this)
+//                }
             }
+//            Intent(this, QuizActivity::class.java).apply {
+//                putExtra(CAT_ID, 10111L)
+//                startActivity(this)
+//            }
         }
         debugDataSource.initMockDataRealtimeDatabase(dataSource)
     }
