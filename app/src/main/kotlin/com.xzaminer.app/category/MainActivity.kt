@@ -11,6 +11,7 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.BuildConfig
+import com.xzaminer.app.QuizActivity
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.config
@@ -59,7 +60,10 @@ class MainActivity : SimpleActivity() {
 
         // debug
         if(BuildConfig.DEBUG) {
-
+            Intent(this, QuizActivity::class.java).apply {
+                putExtra(CAT_ID, 10111L)
+                startActivity(this)
+            }
         }
         debugDataSource.initMockDataRealtimeDatabase(dataSource)
     }
@@ -75,7 +79,7 @@ class MainActivity : SimpleActivity() {
             getRecyclerAdapter()?.updatePrimaryColor(config.primaryColor)
         }
 
-        directories_empty_text_label.setTextColor(config.textColor)
+        categories_empty_text_label.setTextColor(config.textColor)
 
         tryLoadCategories(catId)
     }
@@ -117,6 +121,10 @@ class MainActivity : SimpleActivity() {
 
         getCategoriesFromDb(catId) { cats: ArrayList<Category>, name: String ->
             supportActionBar?.title = name
+            // TODO: debug
+            if(catId == null) {
+                cats.add(Category(10111, "Question Bank 1", "Question Bank 1", "", null, null, true))
+            }
             gotCategories(cats)
         }
     }
@@ -133,16 +141,16 @@ class MainActivity : SimpleActivity() {
 
     private fun itemClicked(item: Any) {
         if(item is Category) {
-            if(!item.isAudioBook) {
+            if(!item.isQuestionBank) {
                 Intent(this, MainActivity::class.java).apply {
                     putExtra(CAT_ID, item.id)
                     startActivity(this)
                 }
             } else {
-//                Intent(this, AudioBookActivity::class.java).apply {
-//                    putExtra(CAT_ID, item.id)
-//                    startActivity(this)
-//                }
+                Intent(this, QuizActivity::class.java).apply {
+                    putExtra(CAT_ID, item.id)
+                    startActivity(this)
+                }
             }
         }
     }
@@ -168,25 +176,25 @@ class MainActivity : SimpleActivity() {
     private fun checkPlaceholderVisibility(dirs: ArrayList<Category>) {
         if(dirs.isEmpty() && mLoadedInitialCategories) {
             if(catId == null) {
-                directories_empty_text_label.text = "No Data to show. Connect to Internet and try again!"
+                categories_empty_text_label.text = "No Data to show. Connect to Internet and try again!"
             } else {
-                directories_empty_text_label.text = "No files in this category. Try again later!"
+                categories_empty_text_label.text = "No files in this category. Try again later!"
             }
         }
-        directories_empty_text_label.beVisibleIf(dirs.isEmpty() && mLoadedInitialCategories)
-        categories_grid.beVisibleIf(directories_empty_text_label.isGone())
+        categories_empty_text_label.beVisibleIf(dirs.isEmpty() && mLoadedInitialCategories)
+        categories_grid.beVisibleIf(categories_empty_text_label.isGone())
     }
 
-    private fun setupAdapter(dirs: ArrayList<Category>) {
+    private fun setupAdapter(cats: ArrayList<Category>) {
         val currAdapter = categories_grid.adapter
         if (currAdapter == null) {
-            CategoriesAdapter(this, dirs.clone() as ArrayList<Category>, categories_grid) {
+            CategoriesAdapter(this, cats.clone() as ArrayList<Category>, categories_grid) {
                 itemClicked(it)
             }.apply {
                 categories_grid.adapter = this
             }
         } else {
-            (currAdapter as CategoriesAdapter).updateDirs(dirs)
+            (currAdapter as CategoriesAdapter).updateCategories(cats)
         }
     }
 

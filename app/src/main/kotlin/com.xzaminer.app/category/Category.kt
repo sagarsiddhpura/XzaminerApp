@@ -9,7 +9,7 @@ data class Category (
     var image: String? = null,
     var subCategories: HashMap<String, Category>? = null,
     var questionBanks: HashMap<String, QuestionBank>? = null,
-    var isAudioBook: Boolean = false)
+    var isQuestionBank: Boolean = false)
     {
         override fun toString(): String {
             return "$name:::$description"

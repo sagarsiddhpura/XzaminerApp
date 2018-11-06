@@ -2,6 +2,7 @@ package com.xzaminer.app.data
 
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.quiz.QuestionBank
+import com.xzaminer.app.utils.QB_STATUS_IN_PROGRESS
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,7 +18,8 @@ data class User(
     var phone: String? = null,
     var purchases: ArrayList<Purchase> = arrayListOf(),
     val lastLoggedIn: String = "",
-    val status: String = "enabled") {
+    val status: String = "enabled",
+    val quizzes: ArrayList<QuestionBank> = arrayListOf()) {
     fun getId(): String {
         return replace(email) + replace(phone?: "")
     }
@@ -53,6 +55,11 @@ data class User(
 
     fun removePurchase(purchaseId: String) {
         purchases = purchases.filter {  it -> it == null || it.id != purchaseId } as ArrayList<Purchase>
+    }
+
+    fun startQuiz(questionBank: QuestionBank) {
+        questionBank.status = QB_STATUS_IN_PROGRESS
+        quizzes.add(questionBank)
     }
 
     companion object {

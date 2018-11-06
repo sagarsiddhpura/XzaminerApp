@@ -24,13 +24,13 @@
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
-            android:id="@+id/categories_holder"
+            android:id="@+id/quiz_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/categories_empty_text_label"
+                android:id="@+id/quiz_empty_text_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -42,7 +42,7 @@
                 android:visibility="gone"/>
 
         <com.simplemobiletools.commons.views.MyRecyclerView
-                android:id="@+id/categories_grid"
+                android:id="@+id/quiz_grid"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none"

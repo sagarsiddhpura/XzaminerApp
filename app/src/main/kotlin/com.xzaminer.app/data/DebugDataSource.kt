@@ -1,7 +1,12 @@
 package com.xzaminer.app.data
 
+import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.category.Category
+import com.xzaminer.app.quiz.Question
 import com.xzaminer.app.quiz.QuestionBank
+import com.xzaminer.app.quiz.QuestionOption
+import com.xzaminer.app.utils.PURCHASE_TYPE_IAP
+import com.xzaminer.app.utils.getProductName
 
 
 class DebugDataSource {
@@ -50,7 +55,7 @@ class DebugDataSource {
             return hashMapOf()
         }
         if (i == 101) {
-            val c1 = Category(1011, "SSC - Maharashtra Board", "SSC - Maharashtra Board",
+            val c1 = Category(1011, "SSC - Maharashtra Board Maharashtra Board", "SSC - Maharashtra Board",
                 "images/cat_1011.png", getSubCategories(1011), getQuestionBanks(1011))
             val c2 = Category(1012, "SSC - Kerela Board", "SSC - Kerela Board",
                 "images/cat_1012.png", getSubCategories(1012), getQuestionBanks(1012))
@@ -62,70 +67,52 @@ class DebugDataSource {
     }
 
     private fun getQuestionBanks(i: Int): HashMap<String, QuestionBank> {
-//        if (i == 1011) {
-//            return hashMapOf()
-//        }
-//        if (i == 102) {
-//            val a1 = QuestionBank(1021, "Shree Ganesha Stuti", "Shree Ganesha Stuti", "05:45", "", 0,
-//                hashMapOf(GENRE to arrayListOf("Devotional")), arrayListOf())
-//            return hashMapOf(a1.id.toString() to a1)
-//        }
-//        if (i == 401) {
-//            val a1 = QuestionBank(4011, "Inspirational Volume 1", "Inspirational Volume 1", "04:23", "", 0,
-//                hashMapOf(GENRE to arrayListOf("Inspirational, Uplifting")), arrayListOf())
-//            val a2 = QuestionBank(4012, "Inspirational Volume 2", "Inspirational Volume 2", "06:13", "", 0,
-//                hashMapOf(GENRE to arrayListOf("Inspirational, Uplifting")), arrayListOf())
-//            return hashMapOf(a1.id.toString() to a1, a2.id.toString() to a2)
-//        }
-//        if (i == 402) {
-//            return hashMapOf()
-//        }
-//        if (i == 1) {
-//            val a1 = QuestionBank(1001, "History of Maharashtra", "History of Maharashtra", "07:00", "", 0,
-//                hashMapOf(GENRE to arrayListOf("Historical")), arrayListOf())
-//            return hashMapOf(a1.id.toString() to a1)
-//        }
-//        if (i == 4) {
-//            val a1 = QuestionBank(4001, "Making of I - Sub", "Making of I is an enlightening journey to discover self. Get immersed in the vast " +
-//                    "knowledge tome and be prepared to dive deep into yourself as you would have never have done before.\n\nAs a famous person once said" +
-//                    "\"Best place to discover is you\", come for a journey that is unique and stay here for lifetime. This audiobook is available under subscription and purchase",
-//                "12:34", "", 0,
-//                hashMapOf(GENRE to arrayListOf("Historical"), YEAR to arrayListOf("2009"), PRICE to arrayListOf("Rs. 199"),
-//                    PUBLISHER to arrayListOf("Pravin Niar"), PUBLISHED_ON to arrayListOf("Dec 7, 2009"), PUBLISHED_ON to arrayListOf("Dec 7, 2009"),
-//                    AGE to arrayListOf("All Ages"), PLAY_COUNT to arrayListOf("316"), ARTIST to arrayListOf("Pravin Niar")),
-//                arrayListOf(
-//                    Question(1, "Intro", "4001_1", "Intro", "05:57",
-//                    "https://firebasestorage.googleapis.com/v0/b/audibooapp.appspot.com/o/audio%2F4001_1.mp3?alt=media&token=", null),
-//                    Question(2, "Chikkies", "4001_2", "Chikkies", "06:29",
-//                        "https://firebasestorage.googleapis.com/v0/b/audibooapp.appspot.com/o/audio%2F4001_2.mp3?alt=media&token=", null),
-//                    Question(3, "Ego", "4001_3", "Ego", "02:48",
-//                        "https://firebasestorage.googleapis.com/v0/b/audibooapp.appspot.com/o/audio%2F4001_3.mp3?alt=media&token=", null),
-//                    Question(4, "Author", "4001_4", "Author", "01:17",
-//                        "https://firebasestorage.googleapis.com/v0/b/audibooapp.appspot.com/o/audio%2F4001_4.mp3?alt=media&token=", null)),
-//                arrayListOf(
-//                    Purchase(IAP_SUB_YEARLY, getProductName(IAP_SUB_YEARLY), PURCHASE_TYPE_SUBSCRIPTION, null, null, null),
-//                    Purchase(IAP_SUB_MONTHLY, getProductName(IAP_SUB_MONTHLY), PURCHASE_TYPE_SUBSCRIPTION, null, null, null),
-//                    Purchase("com.audiboo.android.iap.audiobook.4001", getProductName("com.audiboo.android.iap.audiobook.4001"), PURCHASE_TYPE_IAP, null, null, null)))
-//            val a2 = QuestionBank(4002, "Making of I - Purchase", "Making of I is an enlightening journey to discover self. Get immersed in the vast " +
-//                    "knowledge tome and be prepared to dive deep into yourself as you would have never have done before.\n\nAs a famous person once said" +
-//                    "\"Best place to discover is you\", come for a journey that is unique and stay here for lifetime. This audiobook is available under purchase only",
-//                "12:34", "", 0,
-//                hashMapOf(GENRE to arrayListOf("Historical"), YEAR to arrayListOf("2009"), PRICE to arrayListOf("Rs. 199"),
-//                    PUBLISHER to arrayListOf("Pravin Niar"), PUBLISHED_ON to arrayListOf("Dec 7, 2009"), PUBLISHED_ON to arrayListOf("Dec 7, 2009"),
-//                    AGE to arrayListOf("All Ages"), PLAY_COUNT to arrayListOf("316"), ARTIST to arrayListOf("Pravin Niar")),
-//                arrayListOf(Question(1, "Intro", "4001_1", "Intro", "05:57",
-//                    "https://firebasestorage.googleapis.com/v0/b/audibooapp.appspot.com/o/audio%2F4001_1.mp3?alt=media&token=", null),
-//                    Question(2, "Chikkies", "4001_2", "Chikkies", "06:29",
-//                        "https://firebasestorage.googleapis.com/v0/b/audibooapp.appspot.com/o/audio%2F4001_2.mp3?alt=media&token=", null),
-//                    Question(3, "Ego", "4001_3", "Ego", "02:48",
-//                        "https://firebasestorage.googleapis.com/v0/b/audibooapp.appspot.com/o/audio%2F4001_3.mp3?alt=media&token=", null),
-//                    Question(4, "Author", "4001_5", "Author", "01:17",
-//                        "https://firebasestorage.googleapis.com/v0/b/audibooapp.appspot.com/o/audio%2F4001_5.mp3?alt=media&token=", null)),
-//                arrayListOf(Purchase(IAP_SUB_YEARLY, getProductName(IAP_SUB_YEARLY), PURCHASE_TYPE_SUBSCRIPTION, null, null, null),
-//                    Purchase("com.audiboo.android.iap.audiobook.4002", getProductName("com.audiboo.android.iap.audiobook.4002"), PURCHASE_TYPE_IAP, null, null, null)))
-//            return hashMapOf(a1.id.toString() to a1, a2.id.toString() to a2)
-//        }
+
+        if (i == 1011) {
+            val a1 = QuestionBank(10111, "Question Bank 1", "Question Bank 1",
+                "", 0,
+                hashMapOf(),
+                getQuestions(10111),
+                arrayListOf(
+                    Purchase("com.xzaminer.app.iap.questionbank.10111", getProductName("com.audiboo.android.iap.audiobook.4001"), PURCHASE_TYPE_IAP, null, null, null)))
+            return hashMapOf(a1.id.toString() to a1)
+        }
         return hashMapOf()
+    }
+
+    private fun getQuestions(i: Int): ArrayList<Question>? {
+        return  arrayListOf(
+                    Question(1, "The decisions and actions of an IS auditor are MOST likely to affect which of the following types of risk?", "",
+                        arrayListOf(QuestionOption(1, "Inherent", "", false),
+                            QuestionOption(2, "Detection", "Detection risk is directly affected by the IS auditor's seelction of audit procedures and techniques. Detecton risk is the risk that a review will not detect or notice a material issue.", false),
+                            QuestionOption(3, "Control", "", false),
+                            QuestionOption(4, "Business", "", false)),
+                        2),
+                    Question(2, "An IS auditor is evaluating management's risk assessement of information systems. The IS auditor should FIRST review:", "",
+                        arrayListOf(QuestionOption(1, "Inherent", "", false),
+                            QuestionOption(2, "The controls in place", "", false),
+                            QuestionOption(3, "The effectiveness of the controls", "", false),
+                            QuestionOption(4, "The mechanism for monitoring the risk", "One of the key factors to be considered while assessing the information systems risks is the value of the systems (the assets) and the threats & vulnerabilities affecting the assets. The risk related to the use of information of assets should be evaluated in isolation from the installed controls.", false)),
+                        4),
+                    Question(3, "In the course of performing a risk analysis, an IS auditor has identified threats and potential impacts. Next, the IS auditor should:", "",
+                        arrayListOf(QuestionOption(1, "Ensure the risk assessement is aligned to management's risk assessement process", "", false),
+                            QuestionOption(2, "Identify information assets and the underlying systems.", "", false),
+                            QuestionOption(3, "Disclose the threats and impacts to the management", "", false),
+                            QuestionOption(4, "Identify and evaluate the existing controls", "It is important for an IS auditor to identify and evaluate the existence and effectiveness of existing and planned controls so that the risk level can be calculated after the potential threats and possible impacts are identified.", false)),
+                        4),
+                    Question(4, "When developing a risk-based audit strategy, an IS auditor should conduct a risk assessement to ensure that ", "",
+                        arrayListOf(QuestionOption(1, "Controls needed to mitigate risk are in place", "", false),
+                            QuestionOption(2, "Vulnerabilities and threats are identified", "In developing a risk-based audit strategy, it is critical that the risk and vulnerabilities be understood. This will determine the areas to be audited and the extent of coverage", false),
+                            QuestionOption(3, "Audit risk is considered", "", false),
+                            QuestionOption(2, "A gap analysis is appropriate", "", false)),
+                        4),
+                    Question(5, "While conducting an audit, an IS auditor detects the presence of Virus. What should be the IS auditor's next step?", "",
+                        arrayListOf(QuestionOption(1, "Observe the response mechanism", "", false),
+                            QuestionOption(2, "Clear the virus from the network", "", false),
+                            QuestionOption(3, "Inform appropriate personnel immediately", "The first thing an IS auditor should do after detecting the virus is to alert the organization to its presence, then wait for their response", false),
+                            QuestionOption(4, "Ensure deletion of the virus", "", false)),
+                        3)
+                   )
     }
 
     fun addDebugObject(dataSource: DataSource, id: String, value: Any) {
