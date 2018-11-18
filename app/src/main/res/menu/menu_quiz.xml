@@ -4,7 +4,12 @@
     <item
         android:id="@+id/show_marked_later"
         android:icon="@drawable/ic_marked_later"
-        android:title="@string/marked_la1ter"
+        android:title="@string/marked_later"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/show_all"
+        android:icon="@drawable/ic_show_all"
+        android:title="@string/show_all"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/finish_quiz"

@@ -104,6 +104,10 @@ class QuizActivity : SimpleActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_quiz, menu)
+        menu.apply {
+            findItem(R.id.show_all).isVisible = isMarkedForLaterQuestionsShown
+            findItem(R.id.show_marked_later).isVisible = !isMarkedForLaterQuestionsShown
+        }
         return true
     }
 
@@ -111,6 +115,7 @@ class QuizActivity : SimpleActivity() {
         when (item.itemId) {
             R.id.finish_quiz -> finishQuiz()
             R.id.show_marked_later -> showMarkedLaterQuestions()
+            R.id.show_all -> showMarkedLaterQuestions()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -143,6 +148,7 @@ class QuizActivity : SimpleActivity() {
         val questions = user.quizzes.find { it.id == quizId }!!.questions
         refreshQuestions(questions)
         toast( if(!isMarkedForLaterQuestionsShown) "Showing all Questions" else "Showing Marked for Later questions" )
+        invalidateOptionsMenu()
     }
 
     private fun refreshQuestions(questions: ArrayList<Question>) {
