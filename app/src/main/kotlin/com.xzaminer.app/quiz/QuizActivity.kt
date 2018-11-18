@@ -25,6 +25,7 @@ class QuizActivity : SimpleActivity() {
     private var quizId: Long? = null
     private var toolbar: Toolbar? = null
     private lateinit var user: User
+    private var isMarkedForLaterQuestionsShown: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY)
@@ -98,7 +99,7 @@ class QuizActivity : SimpleActivity() {
             questionQuiz.selectedAnswer = id
         }
         dataSource.addUser(user)
-        getRecyclerAdapter()?.updateQuestions(questions)
+        refreshQuestions(questions)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -109,9 +110,20 @@ class QuizActivity : SimpleActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.finish_quiz -> finishQuiz()
+            R.id.show_marked_later -> showMarkedLaterQuestions()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    fun markForLater(question: Question) {
+        val questions = user.quizzes.find { it.id == quizId }!!.questions
+        val currentQuestion = questions.find { it.id == question.id }
+        currentQuestion!!.isMarkedForLater = !currentQuestion.isMarkedForLater
+        dataSource.addUser(user)
+        refreshQuestions(questions)
+        toast( if(currentQuestion.isMarkedForLater) "Marking Question for Later" else "Question removed from Marked for Later" )
+        dataSource.addUser(user)
     }
 
     private fun finishQuiz() {
@@ -124,5 +136,16 @@ class QuizActivity : SimpleActivity() {
             }
             finish()
         }
+    }
+
+    private fun showMarkedLaterQuestions() {
+        isMarkedForLaterQuestionsShown = !isMarkedForLaterQuestionsShown
+        val questions = user.quizzes.find { it.id == quizId }!!.questions
+        refreshQuestions(questions)
+        toast( if(!isMarkedForLaterQuestionsShown) "Showing all Questions" else "Showing Marked for Later questions" )
+    }
+
+    private fun refreshQuestions(questions: ArrayList<Question>) {
+        getRecyclerAdapter()?.updateQuestions(questions.filter { it -> ((it.isMarkedForLater == isMarkedForLaterQuestionsShown) || !isMarkedForLaterQuestionsShown) } as java.util.ArrayList<Question>)
     }
 }

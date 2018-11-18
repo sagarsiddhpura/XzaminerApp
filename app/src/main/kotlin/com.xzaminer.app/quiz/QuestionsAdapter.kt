@@ -1,6 +1,7 @@
 package com.xzaminer.app.quiz
 
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.CardView
@@ -8,6 +9,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -81,25 +83,32 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
             question_icon.setColorFilter(adjustedPrimaryColor)
             val rootLayout = (view as CardView).getChildAt(0) as ConstraintLayout
 
-            rootLayout.getChildAt(7).beGone()
-            rootLayout.getChildAt(8).beGone()
-            rootLayout.getChildAt(9).beGone()
-            rootLayout.getChildAt(10).beGone()
-
             question.options.forEachIndexed { index, option ->
-                val text = rootLayout.getChildAt(index + 3) as MyTextView
+                val root = rootLayout.getChildAt(index + 2) as LinearLayout
+                val text = root.getChildAt(1) as MyTextView
+                val image = root.getChildAt(0) as ImageView
 
                 if(question.selectedAnswer == option.id) {
                     text.text = option.text!!.highlightTextPart(option.text!!, adjustedPrimaryColor)
-                    val image = rootLayout.getChildAt(index + 7) as ImageView
                     image.setColorFilter(adjustedPrimaryColor)
                     image.beVisible()
                 } else {
                     text.text = option.text
+                    image.beInvisible()
                 }
-                text.setOnClickListener { quizActivity?.optionClicked(question, option.id) }
+                root.setOnClickListener { quizActivity?.optionClicked(question, option.id) }
+            }
 
+            if(question.isMarkedForLater) {
+                view.setCardBackgroundColor(resources.getColor(R.color.md_yellow).adjustAlpha(0.2F))
+                question_icon.setImageResource(R.drawable.ic_marked_later)
+            } else {
+                view.setCardBackgroundColor(Color.WHITE)
+                question_icon.setImageResource(R.drawable.ic_mark_later)
+            }
 
+            question_icon.setOnClickListener {
+                quizActivity?.markForLater(question)
             }
         }
     }

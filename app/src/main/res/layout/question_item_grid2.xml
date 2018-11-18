@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="12dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/que_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:paddingBottom="4dp"
+        >
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/question_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+            <ImageView
+                    android:id="@+id/question_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/ic_question"
+                    android:src="@drawable/ic_question"
+                    tools:tint="@color/color_accent"
+                    android:padding="4dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/question_text"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="4dp"
+                    tools:text="The decisions and actions of an IS auditor are MOST likely to affect which of the following types of risk?"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageView
+                    android:id="@+id/question_icon2"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_question"
+                    android:src="@drawable/ic_mark_later"
+                    tools:tint="@color/color_accent"
+                    android:padding="8dp"
+                    android:layout_gravity="center_vertical"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <View
+            android:id="@+id/divider_question_options"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/dimens_16dp"
+            android:layout_marginLeft="@dimen/dimens_16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="@dimen/dimens_16dp"
+            android:layout_marginRight="@dimen/dimens_16dp"
+            android:background="@color/divider_grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/question_root"/>
+
+        <LinearLayout
+                android:id="@+id/option_1_parent"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_question_options">
+
+            <ImageView
+                    android:id="@+id/option_1_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_check"
+                    tools:tint="@color/color_accent"
+                    android:padding="4dp"
+                    android:layout_gravity="center_vertical"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/option_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    tools:text="Ensure the risk assessement is aligned to management's risk assessement process"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/option_2_parent"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/option_1_parent">
+
+            <ImageView
+                    android:id="@+id/option_2_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_check"
+                    tools:tint="@color/color_accent"
+                    android:padding="4dp"
+                    android:layout_gravity="center_vertical"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/option_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    tools:text="Ensure the risk assessement is aligned to management's risk assessement process"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/option_3_parent"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/option_2_parent">
+
+            <ImageView
+                    android:id="@+id/option_3_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_check"
+                    android:padding="4dp"
+                    tools:tint="@color/color_accent"
+                    android:layout_gravity="center_vertical"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/option_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    tools:text="Ensure the risk assessement is aligned to management's risk assessement process"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/option_4_parent"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/option_3_parent">
+
+            <ImageView
+                    android:id="@+id/option_4_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_check"
+                    tools:tint="@color/color_accent"
+                    android:padding="4dp"
+                    android:layout_gravity="center_vertical"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/option_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    tools:text="Ensure the risk assessement is aligned to management's risk assessement process"/>
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

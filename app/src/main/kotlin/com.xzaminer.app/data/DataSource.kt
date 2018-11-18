@@ -168,21 +168,21 @@ class DataSource {
         })
     }
 
-    fun getQuestionBank(abId: Long?, callback: (audioBook: QuestionBank?) -> Unit) {
-        if (abId != null) {
+    fun getQuestionBank(qbId: Long?, callback: (questionBank: QuestionBank?) -> Unit) {
+        if (qbId != null) {
             getCats { it ->
-                callback(searchAudioBookById(abId, it))
+                callback(searchQuestionBankById(qbId, it))
             }
         }
     }
 
-    private fun searchAudioBookById(audioBookId: Long, localCategories: ArrayList<Category>): QuestionBank? {
+    private fun searchQuestionBankById(questionBankId: Long, localCategories: ArrayList<Category>): QuestionBank? {
         // search across categories first
         localCategories.forEach { cat ->
             if (cat.questionBanks != null) {
                 cat.questionBanks!!.values.forEach { questionBank ->
                     if(questionBank != null) {
-                        if(questionBank.id == audioBookId) {
+                        if(questionBank.id == questionBankId) {
                             return questionBank
                         }
                     }
@@ -192,9 +192,9 @@ class DataSource {
         // not found. Search one level deeper
         localCategories.forEach {
             if (it.subCategories != null) {
-                val audioBook = searchAudioBookById(audioBookId, ArrayList(it.subCategories!!.values))
-                if (audioBook != null) {
-                    return audioBook
+                val questionBank = searchQuestionBankById(questionBankId, ArrayList(it.subCategories!!.values))
+                if (questionBank != null) {
+                    return questionBank
                 }
             }
         }

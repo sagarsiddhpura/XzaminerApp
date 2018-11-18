@@ -66,10 +66,10 @@ class MainActivity : SimpleActivity() {
 //                    startActivity(this)
 //                }
             }
-//            Intent(this, QuizActivity::class.java).apply {
-//                putExtra(CAT_ID, 10111L)
-//                startActivity(this)
-//            }
+            Intent(this, QuizActivity::class.java).apply {
+                putExtra(CAT_ID, 10111L)
+                startActivity(this)
+            }
         }
         debugDataSource.initMockDataRealtimeDatabase(dataSource)
     }
