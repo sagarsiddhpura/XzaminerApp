@@ -51,6 +51,7 @@ class QuizActivity : SimpleActivity() {
             if(quizId == (-1).toLong()) {
                 toast("Error Opening Question Bank")
                 finish()
+                return
             }
         }
         user = config.getLoggedInUser() as User
@@ -62,7 +63,13 @@ class QuizActivity : SimpleActivity() {
             }
         } else {
             dataSource.getQuestionBankFromUser(user.getId(), quizId) { loadedQuiz ->
-                loadQuestionBank(loadedQuiz)
+                if(loadedQuiz != null && loadedQuiz.status == QB_STATUS_IN_PROGRESS) {
+                    loadQuestionBank(loadedQuiz)
+                } else {
+                    toast("Error Resuming Quiz. Please start quiz first to resume it.")
+                    finish()
+                    return@getQuestionBankFromUser
+                }
             }
         }
     }

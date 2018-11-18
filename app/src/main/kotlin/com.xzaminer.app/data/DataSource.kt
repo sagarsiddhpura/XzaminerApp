@@ -203,7 +203,7 @@ class DataSource {
 
     fun getQuestionBankFromUser(userId: String, quizId: Long?, callback: (quiz: QuestionBank?) -> Unit) {
         getUser(userId) {
-            val quiz = it?.quizzes?.find { it.id == quizId }
+            val quiz = it?.quizzes?.find { it != null && it.id == quizId }
             callback(quiz)
         }
     }
