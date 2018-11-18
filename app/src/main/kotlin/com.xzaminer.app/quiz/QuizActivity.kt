@@ -207,8 +207,10 @@ class QuizActivity : SimpleActivity() {
 
     override fun onPause() {
         super.onPause()
-        getCurrentQuizFromUser()!!.saveTimer(runningTimer)
-        dataSource.addUser(user)
+        if(runningTimer != -1L) {
+            getCurrentQuizFromUser()!!.saveTimer(runningTimer)
+            dataSource.addUser(user)
+        }
         timer?.cancel()
     }
 

@@ -67,11 +67,11 @@ class MainActivity : SimpleActivity() {
 //                    startActivity(this)
 //                }
             }
-            Intent(this, QuizActivity::class.java).apply {
-                putExtra(CAT_ID, 10111L)
-                putExtra(IS_NEW_QUIZ, false)
-                startActivity(this)
-            }
+//            Intent(this, QuizActivity::class.java).apply {
+//                putExtra(CAT_ID, 10111L)
+//                putExtra(IS_NEW_QUIZ, catId != null)
+//                startActivity(this)
+//            }
         }
         debugDataSource.initMockDataRealtimeDatabase(dataSource)
     }
@@ -157,7 +157,7 @@ class MainActivity : SimpleActivity() {
             } else {
                 Intent(this, QuizActivity::class.java).apply {
                     putExtra(CAT_ID, item.id)
-                    putExtra(IS_NEW_QUIZ, true)
+                    putExtra(IS_NEW_QUIZ, catId != null)
                     startActivity(this)
                 }
             }
