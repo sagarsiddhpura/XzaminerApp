@@ -15,5 +15,5 @@
         android:id="@+id/finish_quiz"
         android:icon="@drawable/ic_finish_quiz"
         android:title="@string/finish_quiz"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 </menu>

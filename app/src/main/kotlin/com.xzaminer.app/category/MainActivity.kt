@@ -19,6 +19,7 @@ import com.xzaminer.app.extensions.debugDataSource
 import com.xzaminer.app.extensions.getCategoriesFromDb
 import com.xzaminer.app.quiz.QuizActivity
 import com.xzaminer.app.utils.CAT_ID
+import com.xzaminer.app.utils.IS_NEW_QUIZ
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : SimpleActivity() {
@@ -55,7 +56,7 @@ class MainActivity : SimpleActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             toolbar?.setNavigationOnClickListener { onBackPressed() }
         } else {
-            supportActionBar?.title = "Xzaminer"
+            supportActionBar?.title = "XzamMiner"
         }
 
         // debug
@@ -68,6 +69,7 @@ class MainActivity : SimpleActivity() {
             }
             Intent(this, QuizActivity::class.java).apply {
                 putExtra(CAT_ID, 10111L)
+                putExtra(IS_NEW_QUIZ, false)
                 startActivity(this)
             }
         }
@@ -155,6 +157,7 @@ class MainActivity : SimpleActivity() {
             } else {
                 Intent(this, QuizActivity::class.java).apply {
                     putExtra(CAT_ID, item.id)
+                    putExtra(IS_NEW_QUIZ, true)
                     startActivity(this)
                 }
             }

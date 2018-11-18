@@ -100,7 +100,7 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
             }
 
             if(question.isMarkedForLater) {
-                view.setCardBackgroundColor(resources.getColor(R.color.md_yellow).adjustAlpha(1F))
+                view.setCardBackgroundColor(resources.getColor(R.color.md_blue_100).adjustAlpha(1F))
                 question_icon.setImageResource(R.drawable.ic_marked_later)
             } else {
                 view.setCardBackgroundColor(Color.WHITE)

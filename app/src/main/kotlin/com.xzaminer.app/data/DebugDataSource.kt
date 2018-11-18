@@ -6,6 +6,7 @@ import com.xzaminer.app.quiz.Question
 import com.xzaminer.app.quiz.QuestionBank
 import com.xzaminer.app.quiz.QuestionOption
 import com.xzaminer.app.utils.PURCHASE_TYPE_IAP
+import com.xzaminer.app.utils.TIMER_TOTAL_TIME
 import com.xzaminer.app.utils.getProductName
 
 
@@ -71,7 +72,7 @@ class DebugDataSource {
         if (i == 1011) {
             val a1 = QuestionBank(10111, "Question Bank 1", "Question Bank 1",
                 "", 0,
-                hashMapOf(),
+                hashMapOf(TIMER_TOTAL_TIME to arrayListOf("02:06")),
                 getQuestions(10111),
                 arrayListOf(
                     Purchase("com.xzaminer.app.iap.questionbank.10111", getProductName("com.audiboo.android.iap.audiobook.4001"), PURCHASE_TYPE_IAP, null, null, null)))

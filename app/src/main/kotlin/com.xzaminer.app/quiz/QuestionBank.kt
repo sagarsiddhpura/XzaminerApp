@@ -2,6 +2,9 @@ package com.xzaminer.app.quiz
 
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.utils.PURCHASE_TYPE_IAP
+import com.xzaminer.app.utils.TIMER_RUNNING_TIME
+import com.xzaminer.app.utils.TIMER_TOTAL_TIME
+import com.xzaminer.app.utils.convertToText
 
 data class QuestionBank (
     var id: Long = 0,
@@ -55,5 +58,41 @@ data class QuestionBank (
 
     fun getResult(): Int? {
         return (getCorrectPoints()*100)/questions.size
+    }
+
+    private fun getTotalTimer(): Long? {
+        if(properties[TIMER_TOTAL_TIME] != null) {
+            var secs = 0L
+            try {
+                val lengthString = properties[TIMER_TOTAL_TIME]?.first()
+                val split = lengthString!!.split(":")
+                secs = split[0].toLong() * 60
+                secs += split[1].toInt()
+            } catch (ex : Exception) { return null }
+            return secs
+        }
+        return null
+    }
+
+    fun saveTimer(runningTimer: Long) {
+        properties[TIMER_RUNNING_TIME] = arrayListOf(convertToText(runningTimer))
+    }
+
+    fun getTotalOrResumeTimer(): Long? {
+        if(getResumeTimer() != null) { return getResumeTimer() } else { return getTotalTimer() }
+    }
+
+    fun getResumeTimer(): Long? {
+        if(properties[TIMER_RUNNING_TIME] != null) {
+            var secs = 0L
+            try {
+                val lengthString = properties[TIMER_RUNNING_TIME]?.first()
+                val split = lengthString!!.split(":")
+                secs = split[0].toLong() * 60
+                secs += split[1].toInt()
+            } catch (ex : Exception) { return null }
+            return secs
+        }
+        return null
     }
 }

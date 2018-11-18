@@ -71,3 +71,15 @@ fun isAvailableForPurchase(questionBank: QuestionBank): Boolean {
     }
     return isAvailableForPurchase
 }
+
+fun convertToText(totalSecs: Long): String {
+    var secsString : String = ""
+    try {
+        var mins = ((totalSecs/60).toString())
+        if(mins.length < 2) { mins = "0$mins" }
+        var secs = ((totalSecs%60).toString())
+        if(secs.length < 2) { secs = "0$secs" }
+        secsString = "$mins:$secs"
+    } catch (ex : Exception) { }
+    return secsString
+}
