@@ -23,4 +23,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="ColouredButton" parent="Theme.AppCompat">
+        <item name="colorButtonNormal">@color/color_accent</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:background">@drawable/button_background</item>
+    </style>
 </resources>

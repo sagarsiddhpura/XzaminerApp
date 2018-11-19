@@ -45,7 +45,7 @@ class DataSource {
         return getDatabase().getReference("cats/v$catsDbVersion")
     }
 
-    fun getCategories(catId: Long?, callback: (cats: ArrayList<Category>, name: String) -> Unit) {
+    fun getChildCategories(catId: Long?, callback: (cats: ArrayList<Category>, name: String) -> Unit) {
         if (catId != null) {
             getCategoryById(catId) {
                 val cats: ArrayList<Category> = arrayListOf()
@@ -116,7 +116,7 @@ class DataSource {
         }
     }
 
-    private fun getCategoryById(catId: Long, callback: (cat: Category?) -> Unit) {
+    fun getCategoryById(catId: Long, callback: (cat: Category?) -> Unit) {
         getCats { it ->
             callback(searchCategoryById(catId, it))
         }
@@ -150,7 +150,7 @@ class DataSource {
         dbRef.child("users").child(loggedInUser.getId()).setValue(loggedInUser)
     }
 
-    fun getUser(userId: String, callback: (user: User?) -> Unit) {
+    private fun getUser(userId: String, callback: (user: User?) -> Unit) {
         val database = getUsersDatabase()
         val userRef = database.child("users").child(userId)
         userRef.keepSynced(true)
@@ -206,5 +206,33 @@ class DataSource {
             val quiz = it?.quizzes?.find { it != null && it.id == quizId }
             callback(quiz)
         }
+    }
+
+    fun getCategoryPath(catId: Long, callback: (path: String?) -> Unit): Unit {
+        getCats { it ->
+            callback(getCategoryPathById(catId, it, ""))
+        }
+    }
+
+    private fun getCategoryPathById(catId: Long, localCategories: ArrayList<Category>, path: String): String? {
+        // search across categories first
+        localCategories.forEach { cat ->
+            if (cat.id == catId) {
+                return path + cat.id + "/questionBanks/"
+            }
+        }
+        // not found. Search one level deeper
+        localCategories.forEach {
+            if (it.subCategories != null) {
+                return getCategoryPathById(catId, ArrayList(it.subCategories!!.values), path + it.id + "/subCategories/")
+            }
+        }
+        return null
+    }
+
+    fun addQuestionBank(selectedPath: String, questionBank: QuestionBank) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child(selectedPath).child(questionBank.id.toString()).setValue(questionBank)
     }
 }

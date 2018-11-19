@@ -84,7 +84,7 @@ fun Context.loadJpg(path: String, target: MySquareImageView, cropThumbnails: Boo
 }
 
 fun Context.getCategoriesFromDb(catId: Long?, callback: (ArrayList<Category>, name: String) -> Unit) {
-    dataSource.getCategories(catId) { cats: ArrayList<Category>, name: String ->
+    dataSource.getChildCategories(catId) { cats: ArrayList<Category>, name: String ->
         callback(cats, name)
     }
 }

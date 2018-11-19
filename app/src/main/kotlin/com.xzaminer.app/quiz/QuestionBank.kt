@@ -95,4 +95,8 @@ data class QuestionBank (
         }
         return null
     }
+
+    fun addTotalTimer(timer: String) {
+        properties[TIMER_RUNNING_TIME] = arrayListOf(timer)
+    }
 }

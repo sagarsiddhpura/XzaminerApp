@@ -5,4 +5,5 @@
     <string name="finish_quiz">Finish Quiz</string>
     <string name="marked_later">Show Marked Later Questions</string>
     <string name="show_all">Show All</string>
+    <string name="pick_category">Pick Category</string>
 </resources>

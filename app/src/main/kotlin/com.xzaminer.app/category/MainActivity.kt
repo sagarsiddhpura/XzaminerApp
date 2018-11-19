@@ -13,9 +13,8 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.BuildConfig
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
+import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.extensions.config
-import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.extensions.debugDataSource
 import com.xzaminer.app.extensions.getCategoriesFromDb
 import com.xzaminer.app.quiz.QuizActivity
 import com.xzaminer.app.utils.CAT_ID
@@ -72,8 +71,11 @@ class MainActivity : SimpleActivity() {
 //                putExtra(IS_NEW_QUIZ, catId != null)
 //                startActivity(this)
 //            }
+            Intent(this, AddQuestionBankActivity::class.java).apply {
+                startActivity(this)
+            }
         }
-        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+//        debugDataSource.initMockDataRealtimeDatabase(dataSource)
     }
 
     override fun onResume() {
@@ -129,10 +131,6 @@ class MainActivity : SimpleActivity() {
 
         getCategoriesFromDb(catId) { cats: ArrayList<Category>, name: String ->
             supportActionBar?.title = name
-            // TODO: debug
-            if(catId == null) {
-                cats.add(Category(10111, "Question Bank 1", "Question Bank 1", "", null, null, true))
-            }
             gotCategories(cats)
         }
     }
@@ -157,7 +155,7 @@ class MainActivity : SimpleActivity() {
             } else {
                 Intent(this, QuizActivity::class.java).apply {
                     putExtra(CAT_ID, item.id)
-                    putExtra(IS_NEW_QUIZ, catId != null)
+                    putExtra(IS_NEW_QUIZ, true)
                     startActivity(this)
                 }
             }
