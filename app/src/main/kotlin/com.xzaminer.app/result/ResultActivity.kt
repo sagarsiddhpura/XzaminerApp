@@ -1,5 +1,6 @@
 package com.xzaminer.app.result
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.Window
@@ -9,6 +10,7 @@ import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
+import com.xzaminer.app.utils.CAT_ID
 import com.xzaminer.app.utils.QUIZ_ID
 import kotlinx.android.synthetic.main.activity_result.*
 
@@ -52,6 +54,13 @@ class ResultActivity : SimpleActivity() {
                 correct_text.text = "Correct:\n" + correct.toString() + "/" + loadedQuiz.questions.size.toString()
                 incorrect_text.text = "Incorrect:\n" + incorrect.toString() + "/" + loadedQuiz.questions.size.toString()
                 unattempted_text.text = "Not Attempted:\n" + notAttempted.toString() + "/" + loadedQuiz.questions.size.toString()
+
+                see_answers.setOnClickListener {
+                    Intent(this, AnswersActivity::class.java).apply {
+                        putExtra(CAT_ID, quizId)
+                        startActivity(this)
+                    }
+                }
             } else {
                 toast("Error Opening Result")
                 finish()

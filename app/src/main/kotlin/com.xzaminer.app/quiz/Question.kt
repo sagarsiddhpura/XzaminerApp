@@ -9,6 +9,26 @@ data class Question (
     var selectedAnswer: Long? = 0,
     var isMarkedForLater: Boolean = false
     ) {
+    fun isCorrect(): Boolean {
+        if(selectedAnswer == correctAnswer) {
+            return true
+        }
+        return false
+    }
+
+    fun isIncorrect(): Boolean {
+        if(selectedAnswer != 0L && selectedAnswer != correctAnswer) {
+            return true
+        }
+        return false
+    }
+
+    fun isNotAttempeted(): Boolean {
+        if(selectedAnswer == 0L) {
+            return true
+        }
+        return false
+    }
 
     // genre
 }

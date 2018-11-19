@@ -30,6 +30,8 @@
         </activity>
         <activity android:name=".admin.AddQuestionBankActivity">
         </activity>
+        <activity android:name=".result.AnswersActivity">
+        </activity>
     </application>
 
 </manifest>

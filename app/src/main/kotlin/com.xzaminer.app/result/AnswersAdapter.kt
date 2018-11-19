@@ -1,7 +1,6 @@
-package com.xzaminer.app.quiz
+package com.xzaminer.app.result
 
 import android.content.res.Resources
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.CardView
@@ -15,18 +14,19 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
-import kotlinx.android.synthetic.main.question_item_grid.view.*
+import com.xzaminer.app.quiz.Question
+import kotlinx.android.synthetic.main.answers_item_grid.view.*
 import java.util.*
 
 
 
-class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
-                       itemClick: (Any) -> Unit) :
+class AnswersAdapter(
+    activity: AnswersActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
+    itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
     private var currentQuestionsHash = questions.hashCode()
     private var colorDrawable : GradientDrawable
-    private var quizActivity: QuizActivity? = null
     var adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
 
     init {
@@ -34,8 +34,6 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
         colorDrawable = GradientDrawable()
         colorDrawable.setColor(primaryColor.adjustAlpha(0.6f))
         colorDrawable.cornerRadius = Resources.getSystem().displayMetrics.density*4
-        this.quizActivity = activity
-
     }
 
     override fun getActionMenuId() = R.menu.cab_empty
@@ -47,7 +45,7 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return createViewHolder(R.layout.question_item_grid, parent)
+        return createViewHolder(R.layout.answers_item_grid, parent)
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
@@ -80,7 +78,14 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
     private fun setupView(view: View, question: Question) {
         view.apply {
             question_text.text = "${question.id.toString()}. ${question.text}"
-            question_icon.setColorFilter(adjustedPrimaryColor)
+            if(question.isCorrect()) {
+                question_icon.setImageDrawable(resources.getDrawable(R.drawable.ic_answer_correct))
+            } else if(question.isIncorrect()) {
+                question_icon.setImageDrawable(resources.getDrawable(R.drawable.ic_answer_incorrect))
+            } else if(question.isNotAttempeted()) {
+                question_icon.setImageDrawable(resources.getDrawable(R.drawable.ic_answer_not_attempted))
+            }
+
             val rootLayout = (view as CardView).getChildAt(0) as ConstraintLayout
 
             question.options.forEachIndexed { index, option ->
@@ -97,19 +102,10 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
                     text.text = optionText
                     image.beInvisible()
                 }
-                root.setOnClickListener { quizActivity?.optionClicked(question, option.id) }
-            }
 
-            if(question.isMarkedForLater) {
-                view.setCardBackgroundColor(resources.getColor(R.color.md_blue_100).adjustAlpha(1F))
-                question_icon.setImageResource(R.drawable.ic_marked_later)
-            } else {
-                view.setCardBackgroundColor(Color.WHITE)
-                question_icon.setImageResource(R.drawable.ic_mark_later)
-            }
-
-            question_icon.setOnClickListener {
-                quizActivity?.markForLater(question)
+                if(question.correctAnswer == option.id) {
+                    answer.text = "Correct Answer: " + getLetter(index) + option.text + if(option.explanation == null || option.explanation == "") "" else "\n\nExplanation: " + option.explanation
+                }
             }
         }
     }
