@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Xzaminer</string>
-    <string name="app_launcher_name">Xzamier</string>
+    <string name="app_launcher_name">Xzaminer</string>
     <string name="unable_to_load_content">Unable to load content. Please check internet and try again.</string>
     <string name="finish_quiz">Finish Quiz</string>
     <string name="marked_later">Show Marked Later Questions</string>
     <string name="show_all">Show All</string>
     <string name="pick_category">Pick Category</string>
+    <string name="home">Home</string>
+    <string name="purchases">Purchases</string>
+    <string name="title_activity_import_question_bank">Import Question Bank</string>
+    <string name="logout">Logout</string>
 </resources>

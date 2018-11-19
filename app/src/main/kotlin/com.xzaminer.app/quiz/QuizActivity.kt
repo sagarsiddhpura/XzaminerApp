@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.extensions.toast
@@ -137,11 +138,12 @@ class QuizActivity : SimpleActivity() {
 
     fun optionClicked(question: Question, id: Long) {
         val questions = getCurrentQuizQuestionsFromUser()
-        val questionQuiz = questions.find { it.id == question.id }
-        if(questionQuiz!!.selectedAnswer == id) {
-            questionQuiz.selectedAnswer = 0L
+        val currentQuestion = questions.find { it.id == question.id }
+        if(currentQuestion!!.selectedAnswer == id) {
+            currentQuestion.selectedAnswer = 0L
         } else {
-            questionQuiz.selectedAnswer = id
+            currentQuestion.selectedAnswer = id
+            currentQuestion.isMarkedForLater = false
         }
         dataSource.addUser(user)
         refreshQuestions(questions)
@@ -224,5 +226,11 @@ class QuizActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
         setupTimer(getCurrentQuizFromUser()?.getResumeTimer())
+    }
+
+    override fun onBackPressed() {
+        ConfirmationDialog(this, "Are you sure you want to exit Quiz?", R.string.yes, R.string.ok, 0) {
+            super.onBackPressed()
+        }
     }
 }

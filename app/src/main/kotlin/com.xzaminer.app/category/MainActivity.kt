@@ -2,9 +2,20 @@ package com.xzaminer.app.category
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.support.v4.content.ContextCompat
+import android.support.v4.graphics.ColorUtils
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
+import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
+import com.mikepenz.materialdrawer.AccountHeaderBuilder
+import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.DrawerBuilder
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import com.simplemobiletools.commons.extensions.baseConfig
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.extensions.isGone
 import com.simplemobiletools.commons.extensions.toast
@@ -16,10 +27,15 @@ import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.getCategoriesFromDb
+import com.xzaminer.app.extensions.launchAbout
 import com.xzaminer.app.quiz.QuizActivity
 import com.xzaminer.app.utils.CAT_ID
 import com.xzaminer.app.utils.IS_NEW_QUIZ
+import com.xzaminer.app.utils.logEvent
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.drawer_header.view.*
+import java.util.HashMap
+import kotlin.collections.ArrayList
 
 class MainActivity : SimpleActivity() {
 
@@ -30,6 +46,7 @@ class MainActivity : SimpleActivity() {
     private var mIsGettingCategories = false
     private var mShouldStopFetching = false
     private var mLoadedInitialCategories = false
+    private var drawer: Drawer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY)
@@ -55,7 +72,8 @@ class MainActivity : SimpleActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             toolbar?.setNavigationOnClickListener { onBackPressed() }
         } else {
-            supportActionBar?.title = "XzamMiner"
+            supportActionBar?.title = "Xzaminer"
+            setupDrawer()
         }
 
         // debug
@@ -71,9 +89,9 @@ class MainActivity : SimpleActivity() {
 //                putExtra(IS_NEW_QUIZ, catId != null)
 //                startActivity(this)
 //            }
-            Intent(this, AddQuestionBankActivity::class.java).apply {
-                startActivity(this)
-            }
+//            Intent(this, AddQuestionBankActivity::class.java).apply {
+//                startActivity(this)
+//            }
         }
 //        debugDataSource.initMockDataRealtimeDatabase(dataSource)
     }
@@ -206,4 +224,151 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun getCurrentlyDisplayedCategories(): ArrayList<Category> = getRecyclerAdapter()?.cats ?: ArrayList()
+
+    private fun setupDrawer() {
+        val home = PrimaryDrawerItem().withIdentifier(1).withName(R.string.home)
+            .withIcon(R.drawable.ic_drw_home).withIconTintingEnabled(true)
+        val purchases = PrimaryDrawerItem().withIdentifier(9).withName(R.string.purchases)
+            .withIcon(R.drawable.ic_drw_purchases).withIconTintingEnabled(true)
+        val settings = PrimaryDrawerItem().withIdentifier(2).withName(R.string.settings)
+            .withIcon(R.drawable.ic_settings).withIconTintingEnabled(true)
+        val importQuestionBank = PrimaryDrawerItem().withIdentifier(10).withName(R.string.title_activity_import_question_bank)
+            .withIcon(R.drawable.ic_drw_question_bank).withIconTintingEnabled(true)
+        val logout = PrimaryDrawerItem().withIdentifier(11).withName(R.string.logout)
+            .withIcon(R.drawable.ic_logout).withIconTintingEnabled(true)
+
+//        val likeHeader = SectionDrawerItem().withName("Like this App?").withDivider(true)
+//        val share = PrimaryDrawerItem().withIdentifier(4).withName(R.string.share)
+//            .withIcon(R.drawable.ic_share).withIconTintingEnabled(true)
+//
+//        val rateUs = PrimaryDrawerItem().withIdentifier(6).withName(R.string.rate_us)
+//            .withIcon(R.drawable.ic_thumb_up).withIconTintingEnabled(true)
+//
+//        val dislikeHeader = SectionDrawerItem().withName("Missing Functionality / Issues / Problems").withDivider(true)
+//        val sendFeedback = PrimaryDrawerItem().withIdentifier(5).withName(R.string.send_feedback)
+//            .withIcon(R.drawable.ic_feedback).withIconTintingEnabled(true)
+        // Remaining
+        // Donate/Contribute
+        // tips & tutorials
+        val idToMap = HashMap<Int, String>()
+        idToMap.put(1, "Home")
+        idToMap.put(2, "Settings")
+        idToMap.put(3, "About")
+        idToMap.put(4, "Share")
+        idToMap.put(5, "Send Feedback")
+        idToMap.put(6, "Rate Us")
+        idToMap.put(7, "Whats New")
+        idToMap.put(8, "Favourites")
+        idToMap.put(9, "Purchases")
+        idToMap.put(10, "ImportQuestionBank")
+        idToMap.put(11, "Logout")
+
+        val customPrimaryColor = baseConfig.primaryColor
+        val view = LayoutInflater.from(this).inflate(R.layout.drawer_header, null)
+        when (baseConfig.appRunCount % 3) {
+            0 -> { view.material_drawer_account_header_background.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.header))
+                val primaryColorAlpha = ColorUtils.setAlphaComponent(customPrimaryColor, 140)
+                view.material_drawer_account_header_background.setColorFilter(primaryColorAlpha) }
+            1 -> { view.material_drawer_account_header_background.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.header2))
+                val primaryColorAlpha = ColorUtils.setAlphaComponent(customPrimaryColor, 100)
+                view.material_drawer_account_header_background.setColorFilter(primaryColorAlpha) }
+            2 -> { view.material_drawer_account_header_background.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.header3))
+                val primaryColorAlpha = ColorUtils.setAlphaComponent(customPrimaryColor, 160)
+                view.material_drawer_account_header_background.setColorFilter(primaryColorAlpha) }
+        }
+
+        view.app_version.text = "v${BuildConfig.VERSION_NAME}"
+        val defaultSelection = 1L
+
+        val header = AccountHeaderBuilder()
+            .withActivity(this)
+            .withAccountHeader(view)
+            .build()
+
+        val drawerBuilder = DrawerBuilder()
+            .withActivity(this)
+            .withToolbar(toolbar as Toolbar)
+            .withAccountHeader(header)
+            .withScrollToTopAfterClick(true)
+            .withSelectedItem(defaultSelection)
+            .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                override fun onItemClick(view1: View, position: Int, drawerItem: IDrawerItem<*, *>): Boolean {
+                    logEvent("Drawer" + idToMap.getValue(drawerItem.identifier.toInt()))
+                    when (drawerItem.identifier) {
+                        1L -> {
+//                                config.showMedia = IMAGES_AND_VIDEOS
+//                                tryLoadCategories()
+                        }
+                        2L -> {
+//                            launchSettings()
+                            toast("This functionality is being implemented")
+                            resetSelection()
+                        }
+                        3L -> {
+                            launchAbout()
+                            resetSelection()
+                        }
+                        4L -> {
+                            toast("This functionality is being implemented")
+                            resetSelection()
+                        }
+                        5L -> {
+                            toast("This functionality is being implemented")
+                            resetSelection()
+                        }
+                        6L -> {
+                            toast("This functionality is being implemented")
+                            resetSelection()
+                        }
+                        7L -> {
+                            resetSelection()
+                        }
+                        8L -> {
+                            toast("This functionality is being implemented")
+                            resetSelection()
+                        }
+                        9L -> {
+                            toast("This functionality is being implemented")
+                            resetSelection()
+                        }
+                        10L -> {
+                            startActivity(Intent(applicationContext, AddQuestionBankActivity::class.java))
+                            resetSelection()
+                        }
+                        11L -> {
+//                            dataSource.logout()
+//                            config.setLoggedInUser(null)
+//                            startActivity(Intent(applicationContext, SplashActivity::class.java))
+//                            finish()
+                            resetSelection()
+                        }
+                    }
+                    return false
+                }
+            })
+        drawerBuilder.addDrawerItems(
+            home,
+            purchases,
+            settings,
+            importQuestionBank,
+            logout
+        )
+        drawer = drawerBuilder.build()
+
+        if(baseConfig.appRunCount == 1) {
+            Handler().postDelayed({
+                drawer?.openDrawer()
+            }, 500)
+            Handler().postDelayed({
+                drawer?.closeDrawer()
+            }, 1500)
+        }
+    }
+
+    private fun resetSelection() {
+        drawer?.setSelection(1L, false)
+    }
 }

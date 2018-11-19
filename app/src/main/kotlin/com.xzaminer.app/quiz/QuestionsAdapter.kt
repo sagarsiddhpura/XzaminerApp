@@ -79,7 +79,7 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
 
     private fun setupView(view: View, question: Question) {
         view.apply {
-            question_text.text = question.text
+            question_text.text = "${question.id.toString()}. ${question.text}"
             question_icon.setColorFilter(adjustedPrimaryColor)
             val rootLayout = (view as CardView).getChildAt(0) as ConstraintLayout
 

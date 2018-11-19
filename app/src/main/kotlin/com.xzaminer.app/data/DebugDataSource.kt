@@ -1,84 +1,31 @@
 package com.xzaminer.app.data
 
-import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.category.Category
 import com.xzaminer.app.quiz.Question
 import com.xzaminer.app.quiz.QuestionBank
 import com.xzaminer.app.quiz.QuestionOption
-import com.xzaminer.app.utils.PURCHASE_TYPE_IAP
-import com.xzaminer.app.utils.TIMER_TOTAL_TIME
-import com.xzaminer.app.utils.getProductName
 
 
 class DebugDataSource {
     fun initMockDataRealtimeDatabase(dataSource: DataSource) {
         val dbRef = dataSource.getCatsDatabase()
 
-        val c1 = Category(1, "Students", "School/College Students",
+        val c1 = Category(1, "Professional Courses", "Professional Courses",
             "images/cat_1.png", getSubCategories(1), getQuestionBanks(1))
-        val c2 = Category(2, "IT Professionals", "IT Professionals",
-            "images/cat_2.png", getSubCategories(2), getQuestionBanks(2))
-        val c3 = Category(3, "Government", "Government",
-            "images/cat_3.png", getSubCategories(3), getQuestionBanks(3))
-        val c4 = Category(4, "Banks", "Banks",
-            "images/cat_4.png", getSubCategories(4), getQuestionBanks(4))
-        dbRef.child("cats").setValue(hashMapOf(c1.id.toString() to c1, c2.id.toString() to c2, c3.id.toString() to c3, c4.id.toString() to c4))
+        dbRef.child("cats").setValue(hashMapOf(c1.id.toString() to c1))
         dbRef.push()
     }
 
     private fun getSubCategories(i: Int): HashMap<String, Category> {
         if (i == 1) {
-            val c1 = Category(101, "10th Standard", "10th Standard",
-                "images/cat_101.png", getSubCategories(101), getQuestionBanks(101))
-            val c2 = Category(102, "12th Standard", "12th Standard",
-                "images/cat_102.png", getSubCategories(102), getQuestionBanks(102))
-            val c3 = Category(103, "Third Year B. Com", "Third Year B. Com",
-                "images/cat_103.png", getSubCategories(103), getQuestionBanks(103))
-            val c4 = Category(104, "Third Year B. Arts", "Third Year B. Arts",
-                "images/cat_104.png", getSubCategories(104), getQuestionBanks(104))
-            val c5 = Category(105, "Third Year B. Science", "Third Year B. Science",
-                "images/cat_105.png", getSubCategories(105), getQuestionBanks(105))
-            return hashMapOf(c1.id.toString() to c1, c2.id.toString() to c2, c3.id.toString() to c3, c4.id.toString() to c4, c5.id.toString() to c5)
-        }
-        if (i == 2) {
-            return hashMapOf()
-        }
-        if (i == 3) {
-            val c1 = Category(301, "IAS", "Indian Administrative Services",
-                "images/cat_301.png", getSubCategories(301), getQuestionBanks(301))
-            val c2 = Category(302, "IRS", "Indian Revenue Services",
-                "images/cat_302.png", getSubCategories(302), getQuestionBanks(302))
-            val c3 = Category(303, "UPSC", "UPSC",
-                "images/cat_303.png", getSubCategories(303), getQuestionBanks(303))
-            return hashMapOf(c1.id.toString() to c1, c2.id.toString() to c2, c3.id.toString() to c3)
-        }
-        if (i == 4) {
-            return hashMapOf()
-        }
-        if (i == 101) {
-            val c1 = Category(1011, "SSC - Maharashtra Board", "SSC - Maharashtra Board",
-                "images/cat_1011.png", getSubCategories(1011), getQuestionBanks(1011))
-            val c2 = Category(1012, "SSC - Kerela Board", "SSC - Kerela Board",
-                "images/cat_1012.png", getSubCategories(1012), getQuestionBanks(1012))
-            val c3 = Category(1013, "CBSE - Delhi Board", "CBSE - Delhi Board",
-                "images/cat_1013.png", getSubCategories(1013), getQuestionBanks(1013))
-            return hashMapOf(c1.id.toString() to c1, c2.id.toString() to c2, c3.id.toString() to c3)
+            val c1 = Category(101, "CISA", "CISA",
+                "images/cat_2.png", getSubCategories(101), getQuestionBanks(101))
+            return hashMapOf(c1.id.toString() to c1)
         }
         return hashMapOf()
     }
 
     private fun getQuestionBanks(i: Int): HashMap<String, QuestionBank> {
-
-        if (i == 1011) {
-            val a1 = QuestionBank(10111, "Question Bank 1", "Question Bank 1",
-                "", 0,
-                hashMapOf(TIMER_TOTAL_TIME to arrayListOf("08:00")),
-//                hashMapOf(),
-                getQuestions(10111),
-                arrayListOf(
-                    Purchase("com.xzaminer.app.iap.questionbank.10111", getProductName("com.audiboo.android.iap.audiobook.4001"), PURCHASE_TYPE_IAP, null, null, null)))
-            return hashMapOf(a1.id.toString() to a1)
-        }
         return hashMapOf()
     }
 

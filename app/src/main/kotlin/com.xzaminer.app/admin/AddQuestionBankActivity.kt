@@ -25,6 +25,9 @@ class AddQuestionBankActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_question_bank)
+        supportActionBar?.title = "Import Question Bank"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         image_edit_category.setColorFilter(getAdjustedPrimaryColor())
         image_edit_file.setColorFilter(getAdjustedPrimaryColor())
         category_root.setOnClickListener {

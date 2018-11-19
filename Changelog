@@ -27,3 +27,15 @@ v1.02
 ability to load quiz from user via intent flag
 Timer functionality
 timer will be red if less than 2:00
+
+-- release 2 --
+
+commmit
+import question bank
+
+commmit
+drawer
+Question numbers should be visible
+If the questions are marked for later, they should be released if the answers are selected
+If we try to skip the or go back to the previous page while the question bank or course it on, it should show alert whether to quit.
+For now you can remove all other categories and put a single Category of Professional Courses=>CISA, we will concentrate on this module to cover everything we want in the app for the respective categories.
