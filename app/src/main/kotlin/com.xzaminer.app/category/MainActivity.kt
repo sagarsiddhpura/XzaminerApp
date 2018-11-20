@@ -161,10 +161,22 @@ class MainActivity : SimpleActivity() {
         val layoutManager = categories_grid.layoutManager as MyGridLayoutManager
         layoutManager.orientation = GridLayoutManager.VERTICAL
         layoutManager.spanCount = config.dirColumnCnt
+
+        val adapter = getRecyclerAdapter()
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val aSectionTitle = adapter?.isASectionTitle(position)
+                return if (adapter?.isASectionTitle(position) == true) {
+                    layoutManager.spanCount
+                } else {
+                    1
+                }
+            }
+        }
     }
 
     private fun itemClicked(item: Any) {
-        if(item is Category) {
+        if(item is Category && item.id != -1L) {
             if(!item.isQuestionBank) {
                 Intent(this, MainActivity::class.java).apply {
                     putExtra(CAT_ID, item.id)
@@ -185,7 +197,19 @@ class MainActivity : SimpleActivity() {
         mShouldStopFetching = false
 
 //        val cats = getSortedCategories(newDirs)
-        val cats = newDirs
+        val cats = arrayListOf<Category>()
+        val subCats = newDirs.filter { !it.isQuestionBank }
+        if(!subCats.isEmpty()) {
+            cats.add(Category(-1L, "Categories"))
+            cats.addAll(subCats)
+        }
+
+        val questionBanks = newDirs.filter { it.isQuestionBank }
+        if(!questionBanks.isEmpty()) {
+            cats.add(Category(-1L, "Question Banks"))
+            cats.addAll(questionBanks)
+        }
+
         runOnUiThread {
             checkPlaceholderVisibility(cats)
             setupAdapter(cats)
@@ -218,6 +242,7 @@ class MainActivity : SimpleActivity() {
             }.apply {
                 categories_grid.adapter = this
             }
+            setupLayoutManager()
         } else {
             (currAdapter as CategoriesAdapter).updateCategories(cats)
         }

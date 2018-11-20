@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.adjustAlpha
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.isActivityDestroyed
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
@@ -18,6 +19,7 @@ import com.xzaminer.app.extensions.loadIcon
 import com.xzaminer.app.extensions.loadImage
 import com.xzaminer.app.utils.TYPE_IMAGES
 import kotlinx.android.synthetic.main.category_item_grid.view.*
+import kotlinx.android.synthetic.main.thumbnail_section.view.*
 import java.util.*
 
 
@@ -29,6 +31,8 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
     private val config = activity.config
     private var currentCategoriesHash = cats.hashCode()
     private var colorDrawable : GradientDrawable
+    private val ITEM_SECTION = 0
+    private val ITEM_MEDIUM = 1
 
     init {
         setupDragListener(true)
@@ -40,6 +44,8 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
 
     override fun getActionMenuId() = R.menu.cab_empty
 
+    fun isASectionTitle(position: Int) = cats.getOrNull(position)!!.id == -1L
+
     override fun prepareItemSelection(viewHolder: ViewHolder) {
     }
 
@@ -47,18 +53,36 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return createViewHolder(R.layout.category_item_grid, parent)
+        val layoutType = if (viewType == ITEM_SECTION) {
+            R.layout.thumbnail_section
+        } else {
+            R.layout.category_item_grid
+        }
+        return createViewHolder(layoutType, parent)
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val cat = cats.getOrNull(position) ?: return
         val view = holder.bindView(cat, true, false) { itemView, adapterPosition ->
-            setupView(itemView, cat)
+            if (cat.id == -1L) {
+                setupSection(itemView, cat)
+            } else {
+                setupView(itemView, cat)
+            }
         }
         bindViewHolder(holder, position, view)
     }
 
     override fun getItemCount() = cats.size
+
+    override fun getItemViewType(position: Int): Int {
+        val tmbItem = cats[position]
+        return if (tmbItem.id == -1L) {
+            ITEM_SECTION
+        } else {
+            ITEM_MEDIUM
+        }
+    }
 
     override fun prepareActionMode(menu: Menu) {
         return
@@ -75,7 +99,9 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
         if (!activity.isActivityDestroyed()) {
-            Glide.with(activity).clear(holder.itemView?.cat_thumbnail!!)
+            if(holder.itemView != null && holder.itemView.cat_thumbnail != null) {
+                Glide.with(activity).clear(holder.itemView.cat_thumbnail)
+            }
         }
     }
 
@@ -104,6 +130,13 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
             } else {
                 activity.loadImage(thumbnailType, category.image!!, cat_thumbnail, false, false)
             }
+        }
+    }
+
+    private fun setupSection(view: View, section: Category) {
+        view.apply {
+            thumbnail_section.text = section.name
+            thumbnail_section.setTextColor(activity.getAdjustedPrimaryColor())
         }
     }
 }

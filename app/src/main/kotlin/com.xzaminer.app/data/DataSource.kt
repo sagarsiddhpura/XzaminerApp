@@ -10,7 +10,7 @@ import com.xzaminer.app.quiz.QuestionBank
 import java.util.*
 
 private var db: FirebaseDatabase? = null
-private var catsDbVersion = 1
+private var catsDbVersion = 2
 private var userDbVersion = 1
 private var storage: FirebaseStorage? = null
 
