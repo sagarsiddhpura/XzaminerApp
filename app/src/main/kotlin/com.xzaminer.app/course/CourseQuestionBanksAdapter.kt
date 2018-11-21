@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
+import com.xzaminer.app.extensions.loadIcon
 import com.xzaminer.app.extensions.loadImage
 import com.xzaminer.app.quiz.QuestionBank
 import com.xzaminer.app.utils.TYPE_IMAGES
@@ -52,7 +53,12 @@ class CourseQuestionBanksAdapter(
     private fun setupView(view: View, questionBank: QuestionBank) {
         view.apply {
             cat_name.text = questionBank.name
-            activity.loadImage(TYPE_IMAGES, questionBank.imageIcon!!, cat_thumbnail, false, false)
+            if(questionBank.imageIcon == "" || questionBank.imageIcon == null) {
+                val img : Int = R.drawable.im_placeholder
+                activity.loadIcon(img, cat_thumbnail, false)
+            } else {
+                activity.loadImage(TYPE_IMAGES, questionBank.imageIcon!!, cat_thumbnail, false, false)
+            }
         }
     }
 }

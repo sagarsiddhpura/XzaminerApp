@@ -122,13 +122,11 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
             }
 
             cat_name.text = category.name
-            val thumbnailType = TYPE_IMAGES
-
             if(category.image == "" || category.image == null) {
                 val img : Int = R.drawable.im_placeholder
                 activity.loadIcon(img, cat_thumbnail, false)
             } else {
-                activity.loadImage(thumbnailType, category.image!!, cat_thumbnail, false, false)
+                activity.loadImage(TYPE_IMAGES, category.image!!, cat_thumbnail, false, false)
             }
         }
     }

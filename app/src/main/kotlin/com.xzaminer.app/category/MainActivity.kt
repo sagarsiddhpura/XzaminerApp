@@ -26,7 +26,9 @@ import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.course.CourseActivity
-import com.xzaminer.app.extensions.*
+import com.xzaminer.app.extensions.config
+import com.xzaminer.app.extensions.getCategoriesFromDb
+import com.xzaminer.app.extensions.launchAbout
 import com.xzaminer.app.utils.CAT_ID
 import com.xzaminer.app.utils.COURSE_ID
 import com.xzaminer.app.utils.logEvent
@@ -90,12 +92,13 @@ class MainActivity : SimpleActivity() {
 //            Intent(this, AddQuestionBankActivity::class.java).apply {
 //                startActivity(this)
 //            }
-            Intent(this, CourseActivity::class.java).apply {
-                putExtra(COURSE_ID, 101L)
-                startActivity(this)
-            }
+//            Intent(this, CourseActivity::class.java).apply {
+//                putExtra(COURSE_ID, 101L)
+//                startActivity(this)
+//            }
         }
-        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+//        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+//        debugDataSource.copyQuestionBank(dataSource)
     }
 
     override fun onResume() {
@@ -198,28 +201,28 @@ class MainActivity : SimpleActivity() {
         mShouldStopFetching = false
 
 //        val cats = getSortedCategories(newDirs)
-        val cats = arrayListOf<Category>()
-        val subCats = newDirs.filter { !it.isCourse }
-        if(!subCats.isEmpty()) {
-            cats.add(Category(-1L, "Categories"))
-            cats.addAll(subCats)
-        }
-
-        val questionBanks = newDirs.filter { it.isCourse }
-        if(!questionBanks.isEmpty()) {
-            cats.add(Category(-1L, "Question Banks"))
-            cats.addAll(questionBanks)
-        }
+//        val cats = arrayListOf<Category>()
+//        val subCats = newDirs.filter { !it.isCourse }
+//        if(!subCats.isEmpty()) {
+//            cats.add(Category(-1L, "Categories"))
+//            cats.addAll(subCats)
+//        }
+//
+//        val questionBanks = newDirs.filter { it.isCourse }
+//        if(!questionBanks.isEmpty()) {
+//            cats.add(Category(-1L, "Question Banks"))
+//            cats.addAll(questionBanks)
+//        }
 
         runOnUiThread {
-            checkPlaceholderVisibility(cats)
-            setupAdapter(cats)
+            checkPlaceholderVisibility(newDirs)
+            setupAdapter(newDirs)
         }
 
         mLoadedInitialCategories = true
 
         runOnUiThread {
-            checkPlaceholderVisibility(cats)
+            checkPlaceholderVisibility(newDirs)
         }
     }
 

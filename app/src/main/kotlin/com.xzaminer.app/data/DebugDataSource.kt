@@ -1,6 +1,9 @@
 package com.xzaminer.app.data
 
 import android.util.Log
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.xzaminer.app.category.Category
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.quiz.Question
@@ -49,7 +52,7 @@ class DebugDataSource {
                     i.toLong(),
                     "Domain " + (i - 101300),
                     "Domain " + (i - 101300),
-                    "images/im_review_manual.png", 0, linkedMapOf(),
+                    "images/im_flash_card.png", 0, linkedMapOf(),
                     getQuestions(i), arrayListOf(), ""
                 )
                 flashCards[c.id.toString()] = c
@@ -99,7 +102,7 @@ class DebugDataSource {
                     i.toLong(),
                     "Day " + (i - 101100),
                     "Day " + (i - 101100),
-                    "images/cat_303.png", 0, linkedMapOf(),
+                    "images/im_concept.png", 0, linkedMapOf(),
                     getQuestions(i), arrayListOf(), ""
                 )
                 studyMats[c.id.toString()] = c
@@ -112,13 +115,13 @@ class DebugDataSource {
     private fun getQuestionBanks(id: Int): LinkedHashMap<String, QuestionBank> {
         if (id == 101) {
             val questionBanks = linkedMapOf<String, QuestionBank>()
-            for (i in 101201..101230) {
+            for (i in 101203..101232) {
                 Log.d("Xz", "creating "+i+"...")
                 val c = QuestionBank(
                     i.toLong(),
                     "Day " + (i - 101200),
                     "Day " + (i - 101200),
-                    "images/cat_303.png", 0, linkedMapOf(),
+                    "images/im_question_bank.png", 0, linkedMapOf(),
                     getQuestions(i), arrayListOf(), ""
                 )
                 questionBanks[c.id.toString()] = c
@@ -270,5 +273,49 @@ class DebugDataSource {
     fun addDebugObject(dataSource: DataSource, id: String, value: Any) {
         val dbRef = dataSource.getDatabase().getReference("debug")
         dbRef.child(id).setValue(value)
+    }
+
+    fun copyQuestionBank(dataSource: DataSource) {
+        val ref1 = "cats/v2/cats/1/subCategories/101/questionBanks/1542708404073"
+        val target1 = "cats/v3/cats/1/courses/101/questionBanks/101200"
+        var reference =
+            dataSource.getDatabase().getReference(ref1)
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val questionBank = snapshot.getValue(QuestionBank::class.java)
+                if (questionBank != null) {
+                    dataSource.getDatabase().getReference(target1).setValue(questionBank)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) { }
+        })
+
+        val ref2 = "cats/v2/cats/1/subCategories/101/questionBanks/1542708433953"
+        val target2 = "cats/v3/cats/1/courses/101/questionBanks/101201"
+        reference =
+                dataSource.getDatabase().getReference(ref2)
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val questionBank = snapshot.getValue(QuestionBank::class.java)
+                if (questionBank != null) {
+                    dataSource.getDatabase().getReference(target2).setValue(questionBank)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) { }
+        })
+
+        val ref3 = "cats/v2/cats/1/subCategories/101/questionBanks/1542708444373"
+        val target3 = "cats/v3/cats/1/courses/101/questionBanks/101202"
+        reference =
+                dataSource.getDatabase().getReference(ref3)
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val questionBank = snapshot.getValue(QuestionBank::class.java)
+                if (questionBank != null) {
+                    dataSource.getDatabase().getReference(target3).setValue(questionBank)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) { }
+        })
     }
 }
