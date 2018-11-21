@@ -1,12 +1,13 @@
-package com.xzaminer.app.quiz
+package com.xzaminer.app.studymaterial
 
 import com.xzaminer.app.billing.Purchase
+import com.xzaminer.app.quiz.Question
 import com.xzaminer.app.utils.PURCHASE_TYPE_IAP
 import com.xzaminer.app.utils.TIMER_RUNNING_TIME
 import com.xzaminer.app.utils.TIMER_TOTAL_TIME
 import com.xzaminer.app.utils.convertToText
 
-data class QuestionBank (
+data class StudyMaterial (
     var id: Long = 0,
     var name: String? = null,
     var description: String? = null,

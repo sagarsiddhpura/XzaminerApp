@@ -121,7 +121,7 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
                 cat_thumbnail.clipToOutline = true
             }
 
-            dir_name.text = category.name
+            cat_name.text = category.name
             val thumbnailType = TYPE_IMAGES
 
             if(category.image == "" || category.image == null) {

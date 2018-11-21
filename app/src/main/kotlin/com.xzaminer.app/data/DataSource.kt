@@ -5,12 +5,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.xzaminer.app.category.Category
+import com.xzaminer.app.course.Course
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.quiz.QuestionBank
+import com.xzaminer.app.studymaterial.StudyMaterial
 import java.util.*
 
 private var db: FirebaseDatabase? = null
-private var catsDbVersion = 2
+private var catsDbVersion = 3
 private var userDbVersion = 1
 private var storage: FirebaseStorage? = null
 
@@ -53,10 +55,10 @@ class DataSource {
                     cats.addAll(ArrayList(it.subCategories!!.values))
                 }
 
-                if (it?.questionBanks != null) {
+                if (it?.courses != null) {
                     val audToCat: ArrayList<Category> = ArrayList()
-                    if (it.questionBanks != null) {
-                        it.questionBanks!!.values.forEach {
+                    if (it.courses != null) {
+                        it.courses!!.values.forEach {
                             if (it != null) {
                                 audToCat.add(Category(it.id, it.name, it.description, it.imageIcon, null, null, true))
                             }
@@ -179,11 +181,17 @@ class DataSource {
     private fun searchQuestionBankById(questionBankId: Long, localCategories: ArrayList<Category>): QuestionBank? {
         // search across categories first
         localCategories.forEach { cat ->
-            if (cat.questionBanks != null) {
-                cat.questionBanks!!.values.forEach { questionBank ->
-                    if(questionBank != null) {
-                        if(questionBank.id == questionBankId) {
-                            return questionBank
+            if (cat.courses != null) {
+                cat.courses!!.values.forEach { course ->
+                    if(course != null) {
+                        if (course.questionBanks != null) {
+                            course.questionBanks!!.values.forEach { questionBank ->
+                                if(questionBank != null) {
+                                    if(questionBank.id == questionBankId) {
+                                        return questionBank
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -234,5 +242,62 @@ class DataSource {
         val catsDatabase = getCatsDatabase()
         val dept = catsDatabase.child("cats")
         dept.child(selectedPath).child(questionBank.id.toString()).setValue(questionBank)
+    }
+
+    fun getCourseById(courseId: Long?, callback: (course: Course?) -> Unit) {
+        if (courseId != null) {
+            getCats { it ->
+                callback(searchCourseById(courseId, it))
+            }
+        }
+    }
+
+    private fun searchCourseById(courseId: Long, localCategories: ArrayList<Category>): Course? {
+        // search across categories first
+        localCategories.forEach { cat ->
+            if (cat.courses != null) {
+                cat.courses!!.values.forEach { course ->
+                    if(course != null) {
+                        if(course.id == courseId) {
+                            return course
+                        }
+                    }
+                }
+            }
+        }
+        // not found. Search one level deeper
+        localCategories.forEach {
+            if (it.subCategories != null) {
+                val course = searchCourseById(courseId, ArrayList(it.subCategories!!.values))
+                if (course != null) {
+                    return course
+                }
+            }
+        }
+        return null
+    }
+
+    fun getCourseConceptById(courseId: Long, studyMaterialId: Long, callback: (course: StudyMaterial?) -> Unit) {
+        getCourseById(courseId) {
+            if(it != null && !it.concepts.isEmpty()) {
+                callback(it.getConceptById(studyMaterialId))
+            }
+        }
+    }
+
+    fun getCourseReviewById(courseId: Long, studyMaterialId: Long, callback: (course: StudyMaterial?) -> Unit) {
+        getCourseById(courseId) {
+            if(it != null && !it.reviewManuals.isEmpty()) {
+                callback(it.getReviewManualsById(studyMaterialId))
+            }
+        }
+    }
+
+    fun getCourseFlashCardsById(courseId: Long, studyMaterialId: Long, callback: (course: StudyMaterial?) -> Unit) {
+        getCourseById(courseId) {
+            if(it != null && !it.flashCards.isEmpty()) {
+                callback(it.getFlashCardsById(studyMaterialId))
+            }
+        }
     }
 }

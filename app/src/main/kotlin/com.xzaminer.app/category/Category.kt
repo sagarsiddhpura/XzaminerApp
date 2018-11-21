@@ -1,6 +1,6 @@
 package com.xzaminer.app.category
 
-import com.xzaminer.app.quiz.QuestionBank
+import com.xzaminer.app.course.Course
 
 data class Category (
     var id: Long = 0,
@@ -8,8 +8,8 @@ data class Category (
     var description: String? = null,
     var image: String? = null,
     var subCategories: HashMap<String, Category>? = null,
-    var questionBanks: HashMap<String, QuestionBank>? = null,
-    var isQuestionBank: Boolean = false)
+    var courses: HashMap<String, Course>? = null,
+    var isCourse: Boolean = false)
     {
         override fun toString(): String {
             return "$name:::$description"

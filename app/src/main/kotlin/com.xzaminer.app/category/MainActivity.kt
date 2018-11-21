@@ -25,12 +25,10 @@ import com.xzaminer.app.BuildConfig
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.admin.AddQuestionBankActivity
-import com.xzaminer.app.extensions.config
-import com.xzaminer.app.extensions.getCategoriesFromDb
-import com.xzaminer.app.extensions.launchAbout
-import com.xzaminer.app.quiz.QuizActivity
+import com.xzaminer.app.course.CourseActivity
+import com.xzaminer.app.extensions.*
 import com.xzaminer.app.utils.CAT_ID
-import com.xzaminer.app.utils.IS_NEW_QUIZ
+import com.xzaminer.app.utils.COURSE_ID
 import com.xzaminer.app.utils.logEvent
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.view.*
@@ -92,8 +90,12 @@ class MainActivity : SimpleActivity() {
 //            Intent(this, AddQuestionBankActivity::class.java).apply {
 //                startActivity(this)
 //            }
+            Intent(this, CourseActivity::class.java).apply {
+                putExtra(COURSE_ID, 101L)
+                startActivity(this)
+            }
         }
-//        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+        debugDataSource.initMockDataRealtimeDatabase(dataSource)
     }
 
     override fun onResume() {
@@ -177,15 +179,14 @@ class MainActivity : SimpleActivity() {
 
     private fun itemClicked(item: Any) {
         if(item is Category && item.id != -1L) {
-            if(!item.isQuestionBank) {
+            if(!item.isCourse) {
                 Intent(this, MainActivity::class.java).apply {
                     putExtra(CAT_ID, item.id)
                     startActivity(this)
                 }
             } else {
-                Intent(this, QuizActivity::class.java).apply {
-                    putExtra(CAT_ID, item.id)
-                    putExtra(IS_NEW_QUIZ, true)
+                Intent(this, CourseActivity::class.java).apply {
+                    putExtra(COURSE_ID, item.id)
                     startActivity(this)
                 }
             }
@@ -198,13 +199,13 @@ class MainActivity : SimpleActivity() {
 
 //        val cats = getSortedCategories(newDirs)
         val cats = arrayListOf<Category>()
-        val subCats = newDirs.filter { !it.isQuestionBank }
+        val subCats = newDirs.filter { !it.isCourse }
         if(!subCats.isEmpty()) {
             cats.add(Category(-1L, "Categories"))
             cats.addAll(subCats)
         }
 
-        val questionBanks = newDirs.filter { it.isQuestionBank }
+        val questionBanks = newDirs.filter { it.isCourse }
         if(!questionBanks.isEmpty()) {
             cats.add(Category(-1L, "Question Banks"))
             cats.addAll(questionBanks)

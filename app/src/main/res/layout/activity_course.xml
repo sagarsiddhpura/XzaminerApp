@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:layout_editor_absoluteY="16dp"
+            tools:layout_editor_absoluteX="16dp">
+
+        <android.support.constraint.ConstraintLayout
+                android:id="@+id/course_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:padding="16dp">
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/course_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/big_text_size"
+                tools:text="CISA (Certified Information System Auditor)"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <View
+                android:id="@+id/divider_title_desc"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/dimens_16dp"
+                android:layout_marginLeft="@dimen/dimens_16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="@dimen/dimens_16dp"
+                android:layout_marginRight="@dimen/dimens_16dp"
+                android:background="@color/divider_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/course_title"
+                android:layout_below="@+id/course_desc"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/course_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                tools:text="Congratulations on choosing to become a Certified Information Systems Auditor (CISA). Whether you have worked for several years in the field of information systems auditing or have just recently been introduced to the world of controls, assurance, and security, don’t underestimate the hard work and dedication required to obtain and maintain CISA certification. Although ambition and motivation are required, the rewards can far exceed the effort.
+You probably never imagined you would find yourself working in the world of auditing or looking to obtain a professional auditing certification. Perhaps the increase in legislative or regulatory requirements for information system security led to your introduction to this field. "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_title_desc" />
+
+            <View
+                android:id="@+id/divider_desc_courses"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/dimens_16dp"
+                android:layout_marginLeft="@dimen/dimens_16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="@dimen/dimens_16dp"
+                android:layout_marginRight="@dimen/dimens_16dp"
+                android:background="@color/divider_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/course_desc"
+                android:layout_below="@+id/course_desc"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/concepts_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:paddingBottom="2dp"
+                android:paddingTop="20dp"
+                android:text="30 Days Course (Concepts)"
+                android:textSize="@dimen/bigger_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_desc_courses"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                    android:id="@+id/concepts_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/concepts_title"
+                    android:visibility="gone">
+
+                <com.simplemobiletools.commons.views.MyRecyclerView
+                        android:id="@+id/concepts_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"
+                        app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                        app:spanCount="1"
+                        android:layout_margin="2dp"
+                        android:padding="0dp" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/question_banks_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:paddingBottom="2dp"
+                android:paddingTop="20dp"
+                android:text="30 Days Course (Questions)"
+                android:textSize="@dimen/bigger_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/concepts_root"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.LinearLayoutCompat
+                    android:id="@+id/question_banks_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/question_banks_title"
+                    android:visibility="gone">
+
+                <com.simplemobiletools.commons.views.MyRecyclerView
+                        android:id="@+id/question_banks_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"
+                        app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                        app:spanCount="1"
+                        android:layout_margin="2dp"
+                        android:padding="0dp" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/manuals_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:paddingBottom="2dp"
+                android:paddingTop="20dp"
+                android:text="Review Manuals"
+                android:textSize="@dimen/bigger_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/question_banks_root"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/manuals_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manuals_title"
+                android:visibility="gone">
+
+                <com.simplemobiletools.commons.views.MyRecyclerView
+                    android:id="@+id/manuals_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                    app:spanCount="1"
+                    android:layout_margin="2dp"
+                    android:padding="0dp" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/flash_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:paddingBottom="2dp"
+                android:paddingTop="20dp"
+                android:text="Flash Cards"
+                android:textSize="@dimen/bigger_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manuals_root" />
+
+            <android.support.v7.widget.LinearLayoutCompat
+                    android:id="@+id/flash_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/flash_title"
+                    android:visibility="gone">
+
+                <com.simplemobiletools.commons.views.MyRecyclerView
+                        android:id="@+id/flash_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"
+                        app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                        app:spanCount="1"
+                        android:layout_margin="2dp"
+                        android:padding="0dp" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

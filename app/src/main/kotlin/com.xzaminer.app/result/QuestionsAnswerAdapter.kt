@@ -20,8 +20,8 @@ import java.util.*
 
 
 
-class AnswersAdapter(
-    activity: AnswersActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
+class QuestionsAnswerAdapter(
+    activity: QuizAnswersActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 

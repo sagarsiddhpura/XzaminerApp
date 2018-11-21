@@ -30,7 +30,11 @@
         </activity>
         <activity android:name=".admin.AddQuestionBankActivity">
         </activity>
-        <activity android:name=".result.AnswersActivity">
+        <activity android:name=".result.QuizAnswersActivity">
+        </activity>
+        <activity android:name=".course.CourseActivity">
+        </activity>
+        <activity android:name=".studymaterial.StudyMaterialActivity">
         </activity>
     </application>
 

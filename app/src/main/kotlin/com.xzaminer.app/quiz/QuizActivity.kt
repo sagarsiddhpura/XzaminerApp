@@ -47,7 +47,7 @@ class QuizActivity : SimpleActivity() {
         toolbar?.setNavigationOnClickListener { onBackPressed() }
 
         intent.apply {
-            quizId = getLongExtra(CAT_ID, -1)
+            quizId = getLongExtra(QUIZ_ID, -1)
             isNewQuiz = getBooleanExtra(IS_NEW_QUIZ, true)
             if(quizId == (-1).toLong()) {
                 toast("Error Opening Question Bank")

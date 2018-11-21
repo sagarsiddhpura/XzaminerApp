@@ -124,7 +124,7 @@ class CategoryPickerDialog(val activity: BaseSimpleActivity,
 
     private fun getItems(path: String, callback: (List<FileDirItem>) -> Unit) {
         activity.dataSource.getChildCategories(if(currCatId == -1L) null else currCatId) { catsAll: ArrayList<Category>, name: String ->
-            val cats = catsAll.filter { it -> !it.isQuestionBank }
+            val cats = catsAll.filter { it -> !it.isCourse }
             callback(cats.map { it -> FileDirItem(currPath + "/" + it.name, it.name!!, true, it.subCategories?.size ?: 0, it.id) })
         }
     }

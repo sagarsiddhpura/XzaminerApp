@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_quiz.*
 
 
 
-class AnswersActivity : SimpleActivity() {
+class QuizAnswersActivity : SimpleActivity() {
 
     private var quizId: Long? = null
     private var toolbar: Toolbar? = null
@@ -40,7 +40,7 @@ class AnswersActivity : SimpleActivity() {
         intent.apply {
             quizId = getLongExtra(CAT_ID, -1)
             if(quizId == (-1).toLong()) {
-                toast("Error Opening Question Bank")
+                toast("Error Showing Answers")
                 finish()
                 return
             }
@@ -59,28 +59,23 @@ class AnswersActivity : SimpleActivity() {
         }
     }
 
-    private fun loadQuestionBank(loadedQuiz: QuestionBank?) {
-        if (loadedQuiz != null) {
-            if (loadedQuiz.questions.size <= 0) {
-                toast("Error Showing Answers. No Questions in this Question Bank")
-                finish()
-                return
-            }
-
-            supportActionBar?.title = loadedQuiz.name
-
-            user.startQuiz(loadedQuiz)
-            config.setLoggedInUser(user)
-            dataSource.addUser(user)
-
-            setupAdapter(loadedQuiz.questions)
-        } else {
-            toast("Error Showing Answers")
+    private fun loadQuestionBank(loadedQuiz: QuestionBank) {
+        if (loadedQuiz.questions.size <= 0) {
+            toast("Error Showing Answers. No Questions in this Question Bank")
             finish()
+            return
         }
+
+        supportActionBar?.title = loadedQuiz.name
+
+        user.startQuiz(loadedQuiz)
+        config.setLoggedInUser(user)
+        dataSource.addUser(user)
+
+        setupAdapter(loadedQuiz.questions)
     }
 
-    private fun getRecyclerAdapter() = quiz_grid.adapter as? AnswersAdapter
+    private fun getRecyclerAdapter() = quiz_grid.adapter as? QuestionsAnswerAdapter
 
     private fun setupGridLayoutManager() {
         val layoutManager = quiz_grid.layoutManager as MyGridLayoutManager
@@ -91,12 +86,12 @@ class AnswersActivity : SimpleActivity() {
     private fun setupAdapter(questions: ArrayList<Question>) {
         val currAdapter = quiz_grid.adapter
         if (currAdapter == null) {
-            AnswersAdapter(this, questions.clone() as ArrayList<Question>, quiz_grid) {
+            QuestionsAnswerAdapter(this, questions.clone() as ArrayList<Question>, quiz_grid) {
             }.apply {
                 quiz_grid.adapter = this
             }
         } else {
-            (currAdapter as AnswersAdapter).updateQuestions(questions)
+            (currAdapter as QuestionsAnswerAdapter).updateQuestions(questions)
         }
     }
 }

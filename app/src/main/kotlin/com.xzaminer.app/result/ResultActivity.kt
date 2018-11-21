@@ -56,7 +56,7 @@ class ResultActivity : SimpleActivity() {
                 unattempted_text.text = "Not Attempted:\n" + notAttempted.toString() + "/" + loadedQuiz.questions.size.toString()
 
                 see_answers.setOnClickListener {
-                    Intent(this, AnswersActivity::class.java).apply {
+                    Intent(this, QuizAnswersActivity::class.java).apply {
                         putExtra(CAT_ID, quizId)
                         startActivity(this)
                     }

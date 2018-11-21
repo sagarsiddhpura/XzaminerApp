@@ -47,10 +47,7 @@
                     android:paddingBottom="4dp"
                     android:paddingRight="4dp"
                     android:paddingLeft="4dp"
-                    tools:text="The decisions and actions of an IS auditor are MOST likely to affect which of the following types of risk?"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-
+                    tools:text="The decisions and actions of an IS auditor are MOST likely to affect which of the following types of risk?" />
 
         </android.support.v7.widget.LinearLayoutCompat>
 

@@ -1,25 +1,27 @@
-package com.xzaminer.app.quiz
+package com.xzaminer.app.studymaterial
 
-import android.graphics.Color
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.CardView
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
+import com.xzaminer.app.quiz.Question
+import com.xzaminer.app.quiz.QuizActivity
 import kotlinx.android.synthetic.main.question_item_grid.view.*
 import java.util.*
 
 
 
-class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
-                       itemClick: (Any) -> Unit) :
+class StudyMaterialAdapter(
+    activity: StudyMaterialActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
+    itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
     private var quizActivity: QuizActivity? = null
@@ -27,7 +29,6 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
 
     init {
         setupDragListener(true)
-        this.quizActivity = activity
     }
 
     override fun getActionMenuId() = R.menu.cab_empty
@@ -39,13 +40,13 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return createViewHolder(R.layout.question_item_grid, parent)
+        return createViewHolder(R.layout.study_material_item_grid, parent)
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val cat = questions.getOrNull(position) ?: return
         val view = holder.bindView(cat, true, false) { itemView, adapterPosition ->
-            setupView(itemView, cat)
+            setupView(itemView, cat, adapterPosition)
         }
         bindViewHolder(holder, position, view)
     }
@@ -69,39 +70,22 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
         notifyDataSetChanged()
     }
 
-    private fun setupView(view: View, question: Question) {
+    private fun setupView(view: View, question: Question, adapterPosition: Int) {
         view.apply {
-            question_text.text = "${question.id.toString()}. ${question.text}"
-            question_icon.setColorFilter(adjustedPrimaryColor)
+            question_text.text = "${adapterPosition + 1}. ${question.text}"
             val rootLayout = (view as CardView).getChildAt(0) as ConstraintLayout
-
-            question.options.forEachIndexed { index, option ->
-                val root = rootLayout.getChildAt(index + 2) as LinearLayout
-                val text = root.getChildAt(1) as MyTextView
-                val image = root.getChildAt(0) as ImageView
-                val optionText = getLetter(index) + option.text
-
-                if(question.selectedAnswer == option.id) {
-                    text.text = optionText.highlightTextPart(optionText, adjustedPrimaryColor)
-                    image.setColorFilter(adjustedPrimaryColor)
-                    image.beVisible()
+            for(i in 2 until rootLayout.childCount) {
+                if(i < question.options.size + 2) {
+                    val option = question.options[i - 2]
+                    val text = rootLayout.getChildAt(i) as MyTextView
+                    if(question.selectedAnswer == option.id) {
+                        text.text = option.text!!.highlightTextPart(option.text!!, adjustedPrimaryColor)
+                    } else {
+                        text.text = option.text!!
+                    }
                 } else {
-                    text.text = optionText
-                    image.beInvisible()
+                    rootLayout.getChildAt(i).beGone()
                 }
-                root.setOnClickListener { quizActivity?.optionClicked(question, option.id) }
-            }
-
-            if(question.isMarkedForLater) {
-                view.setCardBackgroundColor(resources.getColor(R.color.md_blue_100).adjustAlpha(1F))
-                question_icon.setImageResource(R.drawable.ic_marked_later)
-            } else {
-                view.setCardBackgroundColor(Color.WHITE)
-                question_icon.setImageResource(R.drawable.ic_mark_later)
-            }
-
-            question_icon.setOnClickListener {
-                quizActivity?.markForLater(question)
             }
         }
     }
@@ -111,6 +95,10 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
         if(index == 1) { return "B. " }
         if(index == 2) { return "C. " }
         if(index == 3) { return "D. " }
+        if(index == 4) { return "E. " }
+        if(index == 5) { return "F. " }
+        if(index == 6) { return "G. " }
+        if(index == 7) { return "H. " }
         return "A. "
     }
 }
