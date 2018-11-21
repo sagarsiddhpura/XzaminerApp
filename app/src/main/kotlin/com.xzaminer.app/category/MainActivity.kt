@@ -66,7 +66,6 @@ class MainActivity : SimpleActivity() {
         }
 
         storeStateVariables()
-        tryLoadCategories(catId)
 
         if(catId != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -114,7 +113,7 @@ class MainActivity : SimpleActivity() {
 
         categories_empty_text_label.setTextColor(config.textColor)
 
-        tryLoadCategories(catId)
+        tryLoadCategories(if(catId == null) 1 else catId)
     }
 
     override fun onPause() {
