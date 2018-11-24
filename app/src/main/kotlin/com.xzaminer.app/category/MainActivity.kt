@@ -435,7 +435,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
                         // Add purchase to user
                         val purchase = Purchase(purchaseTransactionDetails.productId, getProductName(purchaseTransactionDetails.productId),
-                            getProductType(purchaseTransactionDetails.productId), getExpiry(purchaseTransactionDetails.productId), json, getNowDate())
+                            getProductType(purchaseTransactionDetails.productId), "", "", getExpiry(purchaseTransactionDetails.productId), json, getNowDate())
                         user.purchases.add(purchase)
                         config.setLoggedInUser(user)
                         // save to db
@@ -503,7 +503,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
                             // Add purchase to user
                             val purchase = Purchase(subscriptionTransactionDetails.productId, getProductName(subscriptionTransactionDetails.productId),
-                                getProductType(subscriptionTransactionDetails.productId), getExpiry(subscriptionTransactionDetails.productId), json, getNowDate())
+                                getProductType(subscriptionTransactionDetails.productId), "", "", getExpiry(subscriptionTransactionDetails.productId), json, getNowDate())
                             user.purchases.add(purchase)
                             config.setLoggedInUser(user)
                             // save to db
