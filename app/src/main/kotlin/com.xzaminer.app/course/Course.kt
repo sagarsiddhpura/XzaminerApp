@@ -1,7 +1,6 @@
 package com.xzaminer.app.course
 
 import com.xzaminer.app.billing.Purchase
-import com.xzaminer.app.quiz.QuestionBank
 import com.xzaminer.app.studymaterial.StudyMaterial
 
 data class Course (
@@ -10,7 +9,7 @@ data class Course (
     var description: String? = null,
     var imageIcon: String? = null,
     var concepts: HashMap<String, StudyMaterial> = hashMapOf(),
-    var questionBanks: HashMap<String, QuestionBank> = hashMapOf(),
+    var questionBanks: HashMap<String, StudyMaterial> = hashMapOf(),
     var reviewManuals: HashMap<String, StudyMaterial> = hashMapOf(),
     var flashCards: HashMap<String, StudyMaterial> = hashMapOf(),
     val purchaseInfo: ArrayList<Purchase> = arrayListOf()

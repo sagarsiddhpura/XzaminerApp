@@ -8,13 +8,13 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
 import com.xzaminer.app.extensions.loadIcon
 import com.xzaminer.app.extensions.loadImage
-import com.xzaminer.app.quiz.QuestionBank
+import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.TYPE_IMAGES
 import kotlinx.android.synthetic.main.category_item_grid.view.*
 
 
 class CourseQuestionBanksAdapter(
-    activity: CourseActivity, var questionBanks: ArrayList<QuestionBank>, recyclerView: MyRecyclerView,
+    activity: CourseActivity, var questionBanks: ArrayList<StudyMaterial>, recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
@@ -50,7 +50,7 @@ class CourseQuestionBanksAdapter(
 
     override fun getIsItemSelectable(position: Int) = true
 
-    private fun setupView(view: View, questionBank: QuestionBank) {
+    private fun setupView(view: View, questionBank: StudyMaterial) {
         view.apply {
             cat_name.text = questionBank.name
             if(questionBank.imageIcon == "" || questionBank.imageIcon == null) {

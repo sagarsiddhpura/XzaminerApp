@@ -12,7 +12,7 @@ import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.quiz.Question
-import com.xzaminer.app.quiz.QuestionBank
+import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.CAT_ID
 import com.xzaminer.app.utils.QB_STATUS_FINISHED
 import kotlinx.android.synthetic.main.activity_quiz.*
@@ -59,7 +59,7 @@ class QuizAnswersActivity : SimpleActivity() {
         }
     }
 
-    private fun loadQuestionBank(loadedQuiz: QuestionBank) {
+    private fun loadQuestionBank(loadedQuiz: StudyMaterial) {
         if (loadedQuiz.questions.size <= 0) {
             toast("Error Showing Answers. No Questions in this Question Bank")
             finish()

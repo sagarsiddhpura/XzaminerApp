@@ -15,7 +15,6 @@ import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.quiz.QuestionBank
 import com.xzaminer.app.quiz.QuizActivity
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.StudyMaterialActivity
@@ -111,11 +110,11 @@ class CourseActivity : SimpleActivity() {
         layoutManager.spanCount = 1
     }
 
-    private fun setupAdapter(recyclerView: MyRecyclerView, values: ArrayList<QuestionBank>) {
+    private fun setupAdapter(recyclerView: MyRecyclerView, values: ArrayList<StudyMaterial>) {
         values.sortWith(compareBy { it.id })
-        CourseQuestionBanksAdapter(this, values.clone() as ArrayList<QuestionBank>, recyclerView) {
+        CourseQuestionBanksAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView) {
             Intent(this, QuizActivity::class.java).apply {
-                putExtra(QUIZ_ID, (it as QuestionBank).id)
+                putExtra(QUIZ_ID, (it as StudyMaterial).id)
                 putExtra(IS_NEW_QUIZ, true)
                 startActivity(this)
             }

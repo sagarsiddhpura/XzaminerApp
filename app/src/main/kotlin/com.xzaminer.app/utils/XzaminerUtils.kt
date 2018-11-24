@@ -1,6 +1,6 @@
 package com.xzaminer.app.utils
 
-import com.xzaminer.app.quiz.QuestionBank
+import com.xzaminer.app.studymaterial.StudyMaterial
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -52,7 +52,7 @@ fun getNowDate(): String? {
     return sdf.format(cal.time)
 }
 
-fun isAvailableForSubscription(questionBank: QuestionBank): Boolean {
+fun isAvailableForSubscription(questionBank: StudyMaterial): Boolean {
     var isAvailableForSubscription = false
     questionBank.purchaseInfo.forEach {
         if(it.type == PURCHASE_TYPE_SUBSCRIPTION) {
@@ -62,7 +62,7 @@ fun isAvailableForSubscription(questionBank: QuestionBank): Boolean {
     return isAvailableForSubscription
 }
 
-fun isAvailableForPurchase(questionBank: QuestionBank): Boolean {
+fun isAvailableForPurchase(questionBank: StudyMaterial): Boolean {
     var isAvailableForPurchase = false
     questionBank.purchaseInfo.forEach {
         if(it.type == PURCHASE_TYPE_IAP) {

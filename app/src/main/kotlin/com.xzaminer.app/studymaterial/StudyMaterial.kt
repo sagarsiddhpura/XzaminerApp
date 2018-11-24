@@ -2,10 +2,7 @@ package com.xzaminer.app.studymaterial
 
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.quiz.Question
-import com.xzaminer.app.utils.PURCHASE_TYPE_IAP
-import com.xzaminer.app.utils.TIMER_RUNNING_TIME
-import com.xzaminer.app.utils.TIMER_TOTAL_TIME
-import com.xzaminer.app.utils.convertToText
+import com.xzaminer.app.utils.*
 
 data class StudyMaterial (
     var id: Long = 0,
@@ -16,7 +13,8 @@ data class StudyMaterial (
     var properties : HashMap<String, ArrayList<String>> = hashMapOf(),
     var questions: ArrayList<Question> = arrayListOf(),
     val purchaseInfo: ArrayList<Purchase> = arrayListOf(),
-    var status: String = ""
+    var status: String = "",
+    var type: String = STUDY_MATERIAL_TYPE_STUDY_MATERIAL
     ) {
     fun getIapPurchase(): Purchase? {
         purchaseInfo.forEach {

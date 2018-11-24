@@ -7,9 +7,9 @@ import com.google.firebase.database.ValueEventListener
 import com.xzaminer.app.category.Category
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.quiz.Question
-import com.xzaminer.app.quiz.QuestionBank
 import com.xzaminer.app.quiz.QuestionOption
 import com.xzaminer.app.studymaterial.StudyMaterial
+import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_QUESTION_BANK
 
 
 class DebugDataSource {
@@ -112,17 +112,17 @@ class DebugDataSource {
         return linkedMapOf()
     }
 
-    private fun getQuestionBanks(id: Int): LinkedHashMap<String, QuestionBank> {
+    private fun getQuestionBanks(id: Int): LinkedHashMap<String, StudyMaterial> {
         if (id == 101) {
-            val questionBanks = linkedMapOf<String, QuestionBank>()
+            val questionBanks = linkedMapOf<String, StudyMaterial>()
             for (i in 101203..101232) {
                 Log.d("Xz", "creating "+i+"...")
-                val c = QuestionBank(
+                val c = StudyMaterial(
                     i.toLong(),
                     "Day " + (i - 101200),
                     "Day " + (i - 101200),
                     "images/im_question_bank.png", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), ""
+                    getQuestions(i), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
                 )
                 questionBanks[c.id.toString()] = c
             }
@@ -282,7 +282,7 @@ class DebugDataSource {
             dataSource.getDatabase().getReference(ref1)
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val questionBank = snapshot.getValue(QuestionBank::class.java)
+                val questionBank = snapshot.getValue(StudyMaterial::class.java)
                 if (questionBank != null) {
                     dataSource.getDatabase().getReference(target1).setValue(questionBank)
                 }
@@ -296,7 +296,7 @@ class DebugDataSource {
                 dataSource.getDatabase().getReference(ref2)
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val questionBank = snapshot.getValue(QuestionBank::class.java)
+                val questionBank = snapshot.getValue(StudyMaterial::class.java)
                 if (questionBank != null) {
                     dataSource.getDatabase().getReference(target2).setValue(questionBank)
                 }
@@ -310,7 +310,7 @@ class DebugDataSource {
                 dataSource.getDatabase().getReference(ref3)
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val questionBank = snapshot.getValue(QuestionBank::class.java)
+                val questionBank = snapshot.getValue(StudyMaterial::class.java)
                 if (questionBank != null) {
                     dataSource.getDatabase().getReference(target3).setValue(questionBank)
                 }

@@ -10,8 +10,8 @@ import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.quiz.Question
-import com.xzaminer.app.quiz.QuestionBank
 import com.xzaminer.app.quiz.QuestionOption
+import com.xzaminer.app.studymaterial.StudyMaterial
 import kotlinx.android.synthetic.main.activity_add_question_bank.*
 import java.io.BufferedReader
 import java.io.FileReader
@@ -19,7 +19,7 @@ import java.util.*
 
 class AddQuestionBankActivity : SimpleActivity() {
 
-    var questionBank = QuestionBank()
+    var questionBank = StudyMaterial()
     var selectedPath = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -7,7 +7,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.xzaminer.app.category.Category
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.extensions.config
-import com.xzaminer.app.quiz.QuestionBank
 import com.xzaminer.app.studymaterial.StudyMaterial
 import java.util.*
 
@@ -170,7 +169,7 @@ class DataSource {
         })
     }
 
-    fun getQuestionBank(qbId: Long?, callback: (questionBank: QuestionBank?) -> Unit) {
+    fun getQuestionBank(qbId: Long?, callback: (questionBank: StudyMaterial?) -> Unit) {
         if (qbId != null) {
             getCats { it ->
                 callback(searchQuestionBankById(qbId, it))
@@ -178,7 +177,7 @@ class DataSource {
         }
     }
 
-    private fun searchQuestionBankById(questionBankId: Long, localCategories: ArrayList<Category>): QuestionBank? {
+    private fun searchQuestionBankById(questionBankId: Long, localCategories: ArrayList<Category>): StudyMaterial? {
         // search across categories first
         localCategories.forEach { cat ->
             if (cat.courses != null) {
@@ -209,7 +208,7 @@ class DataSource {
         return null
     }
 
-    fun getQuestionBankFromUser(userId: String, quizId: Long?, callback: (quiz: QuestionBank?) -> Unit) {
+    fun getQuestionBankFromUser(userId: String, quizId: Long?, callback: (quiz: StudyMaterial?) -> Unit) {
         getUser(userId) {
             val quiz = it?.quizzes?.find { it != null && it.id == quizId }
             callback(quiz)
@@ -238,7 +237,7 @@ class DataSource {
         return null
     }
 
-    fun addQuestionBank(selectedPath: String, questionBank: QuestionBank) {
+    fun addQuestionBank(selectedPath: String, questionBank: StudyMaterial) {
         val catsDatabase = getCatsDatabase()
         val dept = catsDatabase.child("cats")
         dept.child(selectedPath).child(questionBank.id.toString()).setValue(questionBank)

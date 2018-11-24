@@ -19,6 +19,7 @@ import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.result.ResultActivity
+import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_quiz.*
 
@@ -75,7 +76,7 @@ class QuizActivity : SimpleActivity() {
         }
     }
 
-    private fun loadQuestionBank(loadedQuiz: QuestionBank?) {
+    private fun loadQuestionBank(loadedQuiz: StudyMaterial?) {
         if (loadedQuiz != null) {
             if (loadedQuiz.questions.size <= 0) {
                 toast("Error Opening Question Bank. No Questions in this Question Bank")
@@ -194,7 +195,7 @@ class QuizActivity : SimpleActivity() {
         finish()
     }
 
-    private fun getCurrentQuizFromUser(): QuestionBank? {
+    private fun getCurrentQuizFromUser(): StudyMaterial? {
         return user.quizzes.find { it.id == quizId }
     }
 
