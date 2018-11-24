@@ -10,4 +10,13 @@
     <string name="purchases">Purchases</string>
     <string name="title_activity_import_question_bank">Import Question Bank</string>
     <string name="logout">Logout</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_repeat_password">Repeat Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="loading">Please Wait...</string>
+    <string name="xzaminer_intro_text">Stay sharp by accessing over 40,000 Multiple Choice Questions, Study Material, Videos, Audio and Courses tailored to every profession...</string>
+    <string name="login_signup">Login / Signup</string>
 </resources>

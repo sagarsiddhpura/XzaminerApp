@@ -24,9 +24,11 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.BuildConfig
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
+import com.xzaminer.app.SplashActivity
 import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.extensions.config
+import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.extensions.getCategoriesFromDb
 import com.xzaminer.app.extensions.launchAbout
 import com.xzaminer.app.utils.CAT_ID
@@ -367,11 +369,11 @@ class MainActivity : SimpleActivity() {
                             resetSelection()
                         }
                         11L -> {
-//                            dataSource.logout()
-//                            config.setLoggedInUser(null)
-//                            startActivity(Intent(applicationContext, SplashActivity::class.java))
-//                            finish()
+                            dataSource.logout()
+                            config.setLoggedInUser(null)
+                            startActivity(Intent(applicationContext, SplashActivity::class.java))
                             resetSelection()
+                            finish()
                         }
                     }
                     return false

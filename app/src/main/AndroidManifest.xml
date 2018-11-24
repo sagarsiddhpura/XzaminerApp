@@ -36,6 +36,11 @@
         </activity>
         <activity android:name=".studymaterial.StudyMaterialActivity">
         </activity>
+        <activity android:name=".login.EmailPasswordActivity">
+        </activity>
+        <activity android:name=".login.PhoneNumberAuthActivity"
+                  android:theme="@style/FullScreenTheme">
+        </activity>
     </application>
 
 </manifest>

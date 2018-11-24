@@ -152,7 +152,7 @@ class DataSource {
         dbRef.child("users").child(loggedInUser.getId()).setValue(loggedInUser)
     }
 
-    private fun getUser(userId: String, callback: (user: User?) -> Unit) {
+    fun getUser(userId: String, callback: (user: User?) -> Unit) {
         val database = getUsersDatabase()
         val userRef = database.child("users").child(userId)
         userRef.keepSynced(true)
