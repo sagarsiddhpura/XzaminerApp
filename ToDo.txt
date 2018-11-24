@@ -26,8 +26,5 @@ Video Player
 https://medium.com/fungjai/playing-video-by-exoplayer-b97903be0b33
 https://github.com/mikkipastel/VideoPlanet/blob/develop/app/src/main/java/com/mikkipastel/videoplanet/player/PlayerService.java
 
-New quotation
-flag to hide things (course level and qb level)
-video to be in parts and download
-change name of section dynamcally
-audio download as attachment to study material 
+"C:\Program Files\Java\jdk1.8.0_25\bin\keytool.exe" -list -v -keystore "D:\Work\Android\ASWorkspace\Xzaminer\xzaminer.jks" -alias xzaminer -storepass xzaminer -keypass xzaminer
+F4:DE:B6:FC:1C:E4:1B:38:1E:04:C8:B5:11:2D:21:64:F4:4B:19:13

@@ -8,6 +8,7 @@
     <uses-permission android:name="com.android.vending.BILLING"/>
 
     <application
+            android:name="com.xzaminer.app.App"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -41,6 +42,9 @@
         <activity android:name=".login.PhoneNumberAuthActivity"
                   android:theme="@style/FullScreenTheme">
         </activity>
+        <meta-data
+                android:name="io.fabric.ApiKey"
+                android:value="b46ac0826df7eb1a4216ad2ffc59cb5f505f5a5a" />
     </application>
 
 </manifest>

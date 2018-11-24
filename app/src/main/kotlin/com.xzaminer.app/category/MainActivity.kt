@@ -10,11 +10,16 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.TransactionDetails
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.baseConfig
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.extensions.isGone
@@ -26,20 +31,17 @@ import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.SplashActivity
 import com.xzaminer.app.admin.AddQuestionBankActivity
+import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
-import com.xzaminer.app.extensions.config
-import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.extensions.getCategoriesFromDb
-import com.xzaminer.app.extensions.launchAbout
-import com.xzaminer.app.utils.CAT_ID
-import com.xzaminer.app.utils.COURSE_ID
-import com.xzaminer.app.utils.logEvent
+import com.xzaminer.app.data.User
+import com.xzaminer.app.extensions.*
+import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.view.*
 import java.util.HashMap
 import kotlin.collections.ArrayList
 
-class MainActivity : SimpleActivity() {
+class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
     private var catId: Long? = null
     private var toolbar: Toolbar? = null
@@ -49,6 +51,7 @@ class MainActivity : SimpleActivity() {
     private var mShouldStopFetching = false
     private var mLoadedInitialCategories = false
     private var drawer: Drawer? = null
+    private var billing: BillingProcessor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY)
@@ -75,6 +78,11 @@ class MainActivity : SimpleActivity() {
         } else {
             supportActionBar?.title = "Xzaminer"
             setupDrawer()
+        }
+
+        if(catId == null) {
+            checkBilling()
+            checkUser()
         }
 
         // debug
@@ -400,5 +408,158 @@ class MainActivity : SimpleActivity() {
 
     private fun resetSelection() {
         drawer?.setSelection(1L, false)
+    }
+
+    override fun onBillingInitialized() {
+        if (billing!!.loadOwnedPurchasesFromGoogle()) {
+            val user = config.getLoggedInUser() as User
+            val subs = billing!!.listOwnedSubscriptions()
+            val iaps = billing!!.listOwnedProducts()
+
+            //subs.add("com.audiboo.android.sub.yearly")
+//            toast("listOwnedProducts:"+iaps)
+
+            iaps.forEach {
+                val purchaseTransactionDetails = billing!!.getPurchaseTransactionDetails(it)
+
+                if (purchaseTransactionDetails != null) {
+                    if (!user.hasPurchase(purchaseTransactionDetails.productId) &&
+                        purchaseTransactionDetails.purchaseInfo != null &&
+                        purchaseTransactionDetails.purchaseInfo.purchaseData != null &&
+                        purchaseTransactionDetails.purchaseInfo.purchaseData.developerPayload != null &&
+                        purchaseTransactionDetails.purchaseInfo.purchaseData.developerPayload.contains(
+                            purchaseTransactionDetails.productId + "::user::" + user.getId())) {
+
+                        val listType = object : TypeToken<TransactionDetails>() {}.type
+                        val json = Gson().toJson(purchaseTransactionDetails, listType)
+
+                        // Add purchase to user
+                        val purchase = Purchase(purchaseTransactionDetails.productId, getProductName(purchaseTransactionDetails.productId),
+                            getProductType(purchaseTransactionDetails.productId), getExpiry(purchaseTransactionDetails.productId), json, getNowDate())
+                        user.purchases.add(purchase)
+                        config.setLoggedInUser(user)
+                        // save to db
+                        dataSource.addUser(user)
+                        ConfirmationDialog(this, "We have restored your purchase " + purchase.name + ". Please enjoy the benefits", R.string.yes, R.string.ok, 0) { }
+                        debugDataSource.addDebugObject(dataSource, "purchaseAddedCategoriesActivity", purchaseTransactionDetails)
+                    }
+
+                    debugDataSource.addDebugObject(dataSource, "purchaseCategoriesActivity", purchaseTransactionDetails)
+                }
+            }
+
+            subs.forEach {
+                val subscriptionTransactionDetails = billing!!.getSubscriptionTransactionDetails(it)
+//                val dbRef = dataSource.getDatabase().getReference("purchaseLog/v1/1541008680775/user/purchases/0/details")
+//
+//                dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        val string = snapshot.getValue(String::class.java)
+//                        val type = object : TypeToken<TransactionDetails>() {}.type
+//                        val det = Gson().fromJson<TransactionDetails>(string, type)
+//
+//                        val listType = object : TypeToken<TransactionDetails>() {}.type
+//                        val json = Gson().toJson(det, listType)
+//
+//                        if(!user.hasPurchase(det.productId) &&
+//                                det.purchaseInfo != null &&
+//                                det.purchaseInfo.purchaseData != null &&
+//                                det.purchaseInfo.purchaseData.developerPayload != null &&
+//                                det.purchaseInfo.purchaseData.developerPayload.contains(
+//                                        det.productId + "::user::" + user.getId())) {
+//                            // Add purchase to user
+//                            val purchase = Purchase(det.productId, getProductName(det.productId),
+//                                    getProductType(det.productId), getExpiry(det.productId), json)
+//                            user.purchases.add(purchase)
+//                            config.setLoggedInUser(user)
+//                            // save to db
+//                            dataSource.addUser(user)
+//                            ConfirmationDialog(this@CategoryActivity, "We have restored your purchase " + purchase.name + ". Please enjoy the benefits", R.string.yes, R.string.ok, 0) { }
+//                        }
+//
+//                        if(subs.contains(det.productId) && !det.purchaseInfo.purchaseData.autoRenewing) {
+//                            user.removePurchase(det.productId)
+//                            ConfirmationDialog(this@CategoryActivity, "You have cancelled your subscription. Please subscribe or renew it to enjoy Subscription benefits.", R.string.yes, R.string.ok, 0) { }
+//                            config.setLoggedInUser(user)
+//                            dataSource.addUser(user)
+//                        }
+//
+//                    }
+//
+//                    override fun onCancelled(databaseError: DatabaseError) {
+//                        println("The read failed: " + (databaseError.code))
+//                    }
+//                })
+
+                if(subscriptionTransactionDetails != null) {
+                    if( subscriptionTransactionDetails.purchaseInfo != null &&
+                        subscriptionTransactionDetails.purchaseInfo.purchaseData != null &&
+                        subscriptionTransactionDetails.purchaseInfo.purchaseData.developerPayload != null &&
+                        subscriptionTransactionDetails.purchaseInfo.purchaseData.developerPayload.contains(
+                            subscriptionTransactionDetails.productId + "::user::" + user.getId())) {
+                        if(!user.hasPurchase(subscriptionTransactionDetails.productId)) {
+                            val listType = object : TypeToken<TransactionDetails>() {}.type
+                            val json = Gson().toJson(subscriptionTransactionDetails, listType)
+
+                            // Add purchase to user
+                            val purchase = Purchase(subscriptionTransactionDetails.productId, getProductName(subscriptionTransactionDetails.productId),
+                                getProductType(subscriptionTransactionDetails.productId), getExpiry(subscriptionTransactionDetails.productId), json, getNowDate())
+                            user.purchases.add(purchase)
+                            config.setLoggedInUser(user)
+                            // save to db
+                            dataSource.addUser(user)
+                            ConfirmationDialog(this, "We have restored your purchase " + purchase.name + ". Please enjoy the benefits", R.string.yes, R.string.ok, 0) { }
+                            debugDataSource.addDebugObject(dataSource, "purchaseAddedCategoriesActivity", subscriptionTransactionDetails)
+                        }
+
+                        debugDataSource.addDebugObject(dataSource, "purchaseCategoriesActivity", subscriptionTransactionDetails)
+                        if(subs.contains(subscriptionTransactionDetails.productId) && !subscriptionTransactionDetails.purchaseInfo.purchaseData.autoRenewing) {
+                            user.removePurchase(subscriptionTransactionDetails.productId)
+                            ConfirmationDialog(this, "You have cancelled your subscription. Please subscribe or renew it to enjoy Subscription benefits.", R.string.yes, R.string.ok, 0) { }
+                            config.setLoggedInUser(user)
+                            dataSource.addUser(user)
+                        }
+                    }
+                }
+            }
+            if(!subs.contains(IAP_SUB_YEARLY) && user.hasPurchase(IAP_SUB_YEARLY)) {
+                user.removePurchase(IAP_SUB_YEARLY)
+                dataSource.addUser(user)
+            }
+            if(!subs.contains(IAP_SUB_MONTHLY) && user.hasPurchase(IAP_SUB_MONTHLY)) {
+                user.removePurchase(IAP_SUB_MONTHLY)
+                dataSource.addUser(user)
+            }
+        }
+    }
+
+    override fun onProductPurchased(productId: String, details: TransactionDetails?) {
+    }
+
+    override fun onBillingError(errorCode: Int, error: Throwable?) {
+    }
+
+    override fun onPurchaseHistoryRestored() {
+    }
+
+    private fun checkBilling() {
+        val isAvailable = BillingProcessor.isIabServiceAvailable(this)
+        if (!isAvailable) {
+            toast("You do not have Google Play installed. Please install Google Play Services to continue using this App.")
+            finish()
+            return
+        }
+        // refresh user purchases
+        billing = BillingProcessor(this, null, this)
+        billing!!.initialize()
+    }
+
+    private fun checkUser() {
+        val user = config.getLoggedInUser() as User
+        dataSource.getUser(user.getId()) {
+            if(it != null) {
+                config.setLoggedInUser(it)
+            }
+        }
     }
 }
