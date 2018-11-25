@@ -39,6 +39,8 @@
         </activity>
         <activity android:name=".login.EmailPasswordActivity">
         </activity>
+        <activity android:name=".course.CourseSectionActivity">
+        </activity>
         <activity android:name=".login.PhoneNumberAuthActivity"
                   android:theme="@style/FullScreenTheme">
         </activity>

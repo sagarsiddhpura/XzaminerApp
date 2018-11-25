@@ -44,28 +44,28 @@ class DebugDataSource {
             val s1 = CourseSection(
                 1011,
                 "30 Days Course (Concepts)",
-                "30 Days Course (Concepts)",
+                "",
                 "", getConcepts(1011), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
                 arrayListOf()
             )
             val s2 = CourseSection(
                 1012,
                 "30 Days Course (Questions)",
-                "30 Days Course (Questions)",
+                "",
                 "", getQuestionBanks(1012), STUDY_MATERIAL_TYPE_QUESTION_BANK,
                 arrayListOf()
             )
             val s3 = CourseSection(
                 1013,
                 "Review Manuals",
-                "Review Manuals",
+                "",
                 "", getReviewManuals(1013), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
                 arrayListOf()
             )
             val s4 = CourseSection(
                 1014,
                 "Flash Cards",
-                "Flash Cards",
+                "",
                 "", getFlashCards(1014), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
                 arrayListOf()
             )

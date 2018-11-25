@@ -184,8 +184,8 @@ class DataSource {
                 cat.courses!!.values.forEach { course ->
                     if(course != null) {
                         course.sections.values.forEach { section ->
-                            if (section != null) {
-                                return section.studyMaterials.values.find { it -> it != null && it.id == questionBankId }
+                            if (section != null && section.studyMaterials[questionBankId.toString()] != null) {
+                                return section.studyMaterials[questionBankId.toString()]
                             }
                         }
                     }
@@ -275,7 +275,7 @@ class DataSource {
     fun getCourseStudyMaterialById(courseId: Long, sectionId: Long, studyMaterialId: Long, callback: (course: StudyMaterial?) -> Unit) {
         getCourseById(courseId) {
             if(it != null && !it.sections.isEmpty()) {
-                callback(it.sections.values.find { it -> it != null && it.id == sectionId }?.studyMaterials?.values?.find { it -> it != null && it.id ==  studyMaterialId })
+                callback(it.sections[sectionId.toString()]?.studyMaterials?.get(studyMaterialId.toString()))
             }
         }
     }

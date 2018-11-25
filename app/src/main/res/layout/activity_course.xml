@@ -98,17 +98,37 @@ You probably never imagined you would find yourself working in the world of audi
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_desc_courses"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
-                <com.simplemobiletools.commons.views.MyTextView
-                        android:id="@+id/section_1_tv"
+                <android.support.v7.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:paddingBottom="2dp"
-                        android:paddingTop="20dp"
-                        android:text="30 Days Course (Concepts)"
-                        android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:id="@+id/section_1_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:layout_weight="1"
+                            android:text="30 Days Course (Concepts)"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:text="MORE"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
 
                 <com.simplemobiletools.commons.views.MyRecyclerView
                         android:id="@+id/section_1_rv"
@@ -131,15 +151,34 @@ You probably never imagined you would find yourself working in the world of audi
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                <com.simplemobiletools.commons.views.MyTextView
-                        android:id="@+id/section_2_tv"
+                <android.support.v7.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:paddingBottom="2dp"
-                        android:paddingTop="20dp"
-                        android:text="30 Days Course (Questions)"
-                        android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:id="@+id/section_2_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:layout_weight="1"
+                            android:text="30 Days Course (Concepts)"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:text="MORE"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
 
                 <com.simplemobiletools.commons.views.MyRecyclerView
                         android:id="@+id/section_2_rv"
@@ -162,15 +201,35 @@ You probably never imagined you would find yourself working in the world of audi
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                <com.simplemobiletools.commons.views.MyTextView
-                        android:id="@+id/section_3_tv"
+                <android.support.v7.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:paddingBottom="2dp"
-                        android:paddingTop="20dp"
-                        android:text="30 Days Course (Questions)"
-                        android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:id="@+id/section_3_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:layout_weight="1"
+                            android:text="30 Days Course (Concepts)"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:text="MORE"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
 
                 <com.simplemobiletools.commons.views.MyRecyclerView
                         android:id="@+id/section_3_rv"
@@ -193,15 +252,35 @@ You probably never imagined you would find yourself working in the world of audi
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                <com.simplemobiletools.commons.views.MyTextView
-                        android:id="@+id/section_4_tv"
+                <android.support.v7.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:paddingBottom="2dp"
-                        android:paddingTop="20dp"
-                        android:text="30 Days Course (Questions)"
-                        android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:id="@+id/section_4_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:layout_weight="1"
+                            android:text="30 Days Course (Concepts)"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:text="MORE"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
 
                 <com.simplemobiletools.commons.views.MyRecyclerView
                         android:id="@+id/section_4_rv"
@@ -224,15 +303,35 @@ You probably never imagined you would find yourself working in the world of audi
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                <com.simplemobiletools.commons.views.MyTextView
-                        android:id="@+id/section_5_tv"
+                <android.support.v7.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:paddingBottom="2dp"
-                        android:paddingTop="20dp"
-                        android:text="30 Days Course (Questions)"
-                        android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:id="@+id/section_5_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:layout_weight="1"
+                            android:text="30 Days Course (Concepts)"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="20dp"
+                            android:text="MORE"
+                            android:textSize="@dimen/bigger_text_size"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
 
                 <com.simplemobiletools.commons.views.MyRecyclerView
                         android:id="@+id/section_5_rv"

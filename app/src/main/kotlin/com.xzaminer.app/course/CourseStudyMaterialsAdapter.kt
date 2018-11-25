@@ -1,11 +1,13 @@
 package com.xzaminer.app.course
 
+import android.support.v7.widget.GridLayoutManager
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
+import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.loadImage
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.TYPE_IMAGES
@@ -13,7 +15,7 @@ import kotlinx.android.synthetic.main.category_item_grid.view.*
 
 
 class CourseStudyMaterialsAdapter(
-    activity: CourseActivity, var studyMaterials: ArrayList<StudyMaterial>, recyclerView: MyRecyclerView,
+    activity: SimpleActivity, var studyMaterials: ArrayList<StudyMaterial>, recyclerView: MyRecyclerView, val orientation: Int,
     itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
@@ -24,7 +26,11 @@ class CourseStudyMaterialsAdapter(
     override fun markViewHolderSelection(select: Boolean, viewHolder: ViewHolder?) { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return createViewHolder(R.layout.course_study_material_item_grid, parent)
+        if(orientation == GridLayoutManager.VERTICAL) {
+            return createViewHolder(R.layout.course_study_material_item_grid_vertical, parent)
+        } else {
+            return createViewHolder(R.layout.course_study_material_item_grid, parent)
+        }
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {

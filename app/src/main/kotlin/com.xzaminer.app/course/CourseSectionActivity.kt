@@ -3,16 +3,12 @@ package com.xzaminer.app.course
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.Toolbar
 import android.view.Window
 import com.simplemobiletools.commons.extensions.beGone
-import com.simplemobiletools.commons.extensions.beVisible
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.data.User
@@ -22,21 +18,22 @@ import com.xzaminer.app.studymaterial.QuizActivity
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.StudyMaterialActivity
 import com.xzaminer.app.utils.*
-import kotlinx.android.synthetic.main.activity_course.*
+import kotlinx.android.synthetic.main.activity_course_section.*
 
 
-class CourseActivity : SimpleActivity() {
+class CourseSectionActivity : SimpleActivity() {
 
     private var toolbar: Toolbar? = null
     private lateinit var user: User
     private var courseId: Long = -1
+    private var sectionId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_course)
+        setContentView(R.layout.activity_course_section)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -45,8 +42,9 @@ class CourseActivity : SimpleActivity() {
 
         intent.apply {
             courseId = getLongExtra(COURSE_ID, -1)
-            if(courseId == (-1).toLong()) {
-                toast("Error opening Course")
+            sectionId = getLongExtra(SECTION_ID, -1)
+            if(courseId == (-1).toLong() || sectionId == (-1).toLong()) {
+                toast("Error opening Section")
                 finish()
                 return
             }
@@ -54,9 +52,9 @@ class CourseActivity : SimpleActivity() {
         user = config.getLoggedInUser() as User
 
         dataSource.getCourseById(courseId) { course ->
-            if(course != null) {
+            if(course != null && course.sections[sectionId.toString()] != null) {
                 supportActionBar?.title = course.name
-                loadCourse(course)
+                loadSection(course.sections[sectionId.toString()]!!)
             } else {
                 toast("Error opening course.")
                 finish()
@@ -65,36 +63,15 @@ class CourseActivity : SimpleActivity() {
         }
     }
 
-    private fun loadCourse(loadedCourse: Course) {
-        course_title.text = loadedCourse.name
-        course_desc.text = loadedCourse.description
-        val sections = loadedCourse.fetchVisibleSections()
-        val offset = 4
-
-        for(i in offset until course_holder.childCount) {
-            if(i < sections.size + offset) {
-                val section = sections[i-offset]
-
-                val sectionRoot = course_holder.getChildAt(i) as LinearLayoutCompat
-                sectionRoot.beVisible()
-                val titleRoot = sectionRoot.getChildAt(0) as LinearLayoutCompat
-                val title = titleRoot.getChildAt(0) as MyTextView
-                title.text = section.name
-                title.setTextColor(getAdjustedPrimaryColor())
-
-                setupAdapter(sectionRoot.getChildAt(1) as MyRecyclerView, section)
-
-                sectionRoot.setOnClickListener {
-                    Intent(this, CourseSectionActivity::class.java).apply {
-                        putExtra(COURSE_ID, courseId)
-                        putExtra(SECTION_ID, section.id)
-                        startActivity(this)
-                    }
-                }
-            } else {
-                course_holder.getChildAt(i).beGone()
-            }
+    private fun loadSection(loadedSection: CourseSection) {
+        section_title.text = loadedSection.name
+        if(loadedSection.description != null && loadedSection.description != "") {
+            section_desc.text = loadedSection.description
+        } else {
+            section_desc.beGone()
+            divider_desc_courses.beGone()
         }
+        setupAdapter(section_rv, loadedSection)
     }
 
     private fun setupAdapter(recyclerView: MyRecyclerView, section: CourseSection) {
@@ -102,7 +79,7 @@ class CourseActivity : SimpleActivity() {
         values.sortWith(compareBy { it.id })
 
         if(section.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
-            CourseStudyMaterialsAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.HORIZONTAL) {
+            CourseStudyMaterialsAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.VERTICAL) {
                 Intent(this, StudyMaterialActivity::class.java).apply {
                     putExtra(STUDY_MATERIAL_ID, (it as StudyMaterial).id)
                     putExtra(COURSE_ID, courseId)
@@ -115,7 +92,7 @@ class CourseActivity : SimpleActivity() {
             }
         }
         if(section.type == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
-            CourseQuestionBanksAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.HORIZONTAL) {
+            CourseQuestionBanksAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.VERTICAL) {
                 Intent(this, QuizActivity::class.java).apply {
                     putExtra(QUIZ_ID, (it as StudyMaterial).id)
                     putExtra(COURSE_ID, courseId)
@@ -128,7 +105,7 @@ class CourseActivity : SimpleActivity() {
             }
         }
         val layoutManager = recyclerView.layoutManager as MyGridLayoutManager
-        layoutManager.orientation = GridLayoutManager.HORIZONTAL
-        layoutManager.spanCount = 1
+        layoutManager.orientation = GridLayoutManager.VERTICAL
+        layoutManager.spanCount = 3
     }
 }
