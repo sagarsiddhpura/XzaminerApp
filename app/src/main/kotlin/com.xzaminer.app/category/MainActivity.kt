@@ -101,13 +101,13 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //            Intent(this, AddQuestionBankActivity::class.java).apply {
 //                startActivity(this)
 //            }
-//            Intent(this, CourseActivity::class.java).apply {
-//                putExtra(COURSE_ID, 101L)
-//                startActivity(this)
-//            }
+            Intent(this, CourseActivity::class.java).apply {
+                putExtra(COURSE_ID, 101L)
+                startActivity(this)
+            }
         }
-//        debugDataSource.initMockDataRealtimeDatabase(dataSource)
-//        debugDataSource.copyQuestionBank(dataSource)
+        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+        debugDataSource.copyQuestionBank(dataSource)
     }
 
     override fun onResume() {

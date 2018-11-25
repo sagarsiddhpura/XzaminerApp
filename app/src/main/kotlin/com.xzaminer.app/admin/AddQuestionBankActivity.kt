@@ -9,8 +9,8 @@ import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.quiz.Question
-import com.xzaminer.app.quiz.QuestionOption
+import com.xzaminer.app.studymaterial.Question
+import com.xzaminer.app.studymaterial.QuestionOption
 import com.xzaminer.app.studymaterial.StudyMaterial
 import kotlinx.android.synthetic.main.activity_add_question_bank.*
 import java.io.BufferedReader

@@ -1,4 +1,4 @@
-package com.xzaminer.app.quiz
+package com.xzaminer.app.studymaterial
 
 data class QuestionOption (
     var id: Long = 0,

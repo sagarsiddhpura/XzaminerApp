@@ -1,4 +1,4 @@
-package com.xzaminer.app.quiz
+package com.xzaminer.app.studymaterial
 
 import android.app.Activity
 import android.support.v7.app.AlertDialog

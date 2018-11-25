@@ -1,4 +1,4 @@
-package com.xzaminer.app.quiz
+package com.xzaminer.app.studymaterial
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,7 +19,6 @@ import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.result.ResultActivity
-import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_quiz.*
 
@@ -128,7 +127,11 @@ class QuizActivity : SimpleActivity() {
     private fun setupAdapter(questions: ArrayList<Question>) {
         val currAdapter = quiz_grid.adapter
         if (currAdapter == null) {
-            QuestionsAdapter(this, questions.clone() as ArrayList<Question>, quiz_grid) {
+            QuestionsAdapter(
+                this,
+                questions.clone() as ArrayList<Question>,
+                quiz_grid
+            ) {
             }.apply {
                 quiz_grid.adapter = this
             }

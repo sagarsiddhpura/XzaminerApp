@@ -1,4 +1,4 @@
-package com.xzaminer.app.quiz
+package com.xzaminer.app.studymaterial
 
 import android.graphics.Color
 import android.support.constraint.ConstraintLayout

@@ -11,7 +11,7 @@ import com.xzaminer.app.studymaterial.StudyMaterial
 import java.util.*
 
 private var db: FirebaseDatabase? = null
-private var catsDbVersion = 3
+private var catsDbVersion = 1
 private var userDbVersion = 1
 private var storage: FirebaseStorage? = null
 
@@ -183,13 +183,9 @@ class DataSource {
             if (cat.courses != null) {
                 cat.courses!!.values.forEach { course ->
                     if(course != null) {
-                        if (course.questionBanks != null) {
-                            course.questionBanks!!.values.forEach { questionBank ->
-                                if(questionBank != null) {
-                                    if(questionBank.id == questionBankId) {
-                                        return questionBank
-                                    }
-                                }
+                        course.sections.values.forEach { section ->
+                            if (section != null) {
+                                return section.studyMaterials.values.find { it -> it != null && it.id == questionBankId }
                             }
                         }
                     }
@@ -276,26 +272,10 @@ class DataSource {
         return null
     }
 
-    fun getCourseConceptById(courseId: Long, studyMaterialId: Long, callback: (course: StudyMaterial?) -> Unit) {
+    fun getCourseStudyMaterialById(courseId: Long, sectionId: Long, studyMaterialId: Long, callback: (course: StudyMaterial?) -> Unit) {
         getCourseById(courseId) {
-            if(it != null && !it.concepts.isEmpty()) {
-                callback(it.getConceptById(studyMaterialId))
-            }
-        }
-    }
-
-    fun getCourseReviewById(courseId: Long, studyMaterialId: Long, callback: (course: StudyMaterial?) -> Unit) {
-        getCourseById(courseId) {
-            if(it != null && !it.reviewManuals.isEmpty()) {
-                callback(it.getReviewManualsById(studyMaterialId))
-            }
-        }
-    }
-
-    fun getCourseFlashCardsById(courseId: Long, studyMaterialId: Long, callback: (course: StudyMaterial?) -> Unit) {
-        getCourseById(courseId) {
-            if(it != null && !it.flashCards.isEmpty()) {
-                callback(it.getFlashCardsById(studyMaterialId))
+            if(it != null && !it.sections.isEmpty()) {
+                callback(it.sections.values.find { it -> it != null && it.id == sectionId }?.studyMaterials?.values?.find { it -> it != null && it.id ==  studyMaterialId })
             }
         }
     }

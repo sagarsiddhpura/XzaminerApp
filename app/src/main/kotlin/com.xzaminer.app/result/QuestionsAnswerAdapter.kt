@@ -14,7 +14,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
-import com.xzaminer.app.quiz.Question
+import com.xzaminer.app.studymaterial.Question
 import kotlinx.android.synthetic.main.answers_item_grid.view.*
 import java.util.*
 

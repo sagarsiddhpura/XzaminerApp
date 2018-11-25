@@ -1,7 +1,6 @@
 package com.xzaminer.app.studymaterial
 
 import com.xzaminer.app.billing.Purchase
-import com.xzaminer.app.quiz.Question
 import com.xzaminer.app.utils.*
 
 data class StudyMaterial (

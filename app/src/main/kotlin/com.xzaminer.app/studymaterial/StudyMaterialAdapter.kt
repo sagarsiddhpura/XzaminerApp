@@ -12,8 +12,6 @@ import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
-import com.xzaminer.app.quiz.Question
-import com.xzaminer.app.quiz.QuizActivity
 import kotlinx.android.synthetic.main.question_item_grid.view.*
 import java.util.*
 

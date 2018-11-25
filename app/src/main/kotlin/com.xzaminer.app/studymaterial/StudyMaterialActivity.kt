@@ -11,9 +11,11 @@ import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.quiz.Question
 import com.xzaminer.app.result.QuestionsAnswerAdapter
-import com.xzaminer.app.utils.*
+import com.xzaminer.app.utils.COURSE_ID
+import com.xzaminer.app.utils.SECTION_ID
+import com.xzaminer.app.utils.STUDY_MATERIAL_ID
+import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE
 import kotlinx.android.synthetic.main.activity_quiz.*
 
 
@@ -24,6 +26,7 @@ class StudyMaterialActivity : SimpleActivity() {
     private var toolbar: Toolbar? = null
     private lateinit var user: User
     private var courseId: Long = -1
+    private var sectionId: Long = -1
     private var studyMaterialType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +44,9 @@ class StudyMaterialActivity : SimpleActivity() {
         intent.apply {
             studyMaterialId = getLongExtra(STUDY_MATERIAL_ID, -1)
             courseId = getLongExtra(COURSE_ID, -1)
+            sectionId = getLongExtra(SECTION_ID, -1)
             studyMaterialType = getStringExtra(STUDY_MATERIAL_TYPE)
-            if(studyMaterialType == null || courseId == (-1).toLong() || studyMaterialId == (-1).toLong()) {
+            if(studyMaterialType == null || courseId == (-1).toLong() || sectionId == (-1).toLong() || studyMaterialId == (-1).toLong()) {
                 toast("Error opening Study Material")
                 finish()
                 return
@@ -51,35 +55,13 @@ class StudyMaterialActivity : SimpleActivity() {
         user = config.getLoggedInUser() as User
         setupGridLayoutManager()
 
-        if(studyMaterialType == STUDY_MATERIAL_TYPE_CONCEPT) {
-            dataSource.getCourseConceptById(courseId, studyMaterialId) { studyMaterial ->
-                if(studyMaterial != null) {
-                    loadStudyMaterial(studyMaterial)
-                } else {
-                    toast("Error opening Study Material")
-                    finish()
-                    return@getCourseConceptById
-                }
-            }
-        } else if(studyMaterialType == STUDY_MATERIAL_TYPE_REVIEW) {
-            dataSource.getCourseReviewById(courseId, studyMaterialId) { studyMaterial ->
-                if(studyMaterial != null) {
-                    loadStudyMaterial(studyMaterial)
-                } else {
-                    toast("Error opening Study Material")
-                    finish()
-                    return@getCourseReviewById
-                }
-            }
-        } else if(studyMaterialType == STUDY_MATERIAL_TYPE_FLASH) {
-            dataSource.getCourseFlashCardsById(courseId, studyMaterialId) { studyMaterial ->
-                if(studyMaterial != null) {
-                    loadStudyMaterial(studyMaterial)
-                } else {
-                    toast("Error opening Study Material")
-                    finish()
-                    return@getCourseFlashCardsById
-                }
+        dataSource.getCourseStudyMaterialById(courseId, sectionId, studyMaterialId) { studyMaterial ->
+            if(studyMaterial != null) {
+                loadStudyMaterial(studyMaterial)
+            } else {
+                toast("Error opening Study Material")
+                finish()
+                return@getCourseStudyMaterialById
             }
         }
     }
