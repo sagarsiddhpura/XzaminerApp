@@ -5,10 +5,10 @@ import android.os.Environment
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
-import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.dataSource
+import com.xzaminer.app.extensions.debugDataSource
 import com.xzaminer.app.studymaterial.Question
 import com.xzaminer.app.studymaterial.QuestionOption
 import com.xzaminer.app.studymaterial.StudyMaterial
@@ -31,22 +31,9 @@ class AddQuestionBankActivity : SimpleActivity() {
         image_edit_category.setColorFilter(getAdjustedPrimaryColor())
         image_edit_file.setColorFilter(getAdjustedPrimaryColor())
         category_root.setOnClickListener {
-            CategoryPickerDialog(this) { catId ->
-                dataSource.getCategoryPath(catId) {
-                    if(it != null) {
-                        selectedPath = it
-                    } else {
-                        toast("Error selecting category. Please try again")
-                    }
-                }
-
-                dataSource.getCategoryById(catId) { cat ->
-                    if(cat != null) {
-                        category_value.text = cat.name
-                    } else {
-                        toast("Error selecting category. Please try again")
-                    }
-                }
+            CategoryPickerDialog(this) { section ->
+                selectedPath = section.description!!
+                category_value.text = section.name
             }
         }
 
@@ -145,6 +132,7 @@ class AddQuestionBankActivity : SimpleActivity() {
             return
         } else {
             dataSource.addQuestionBank(selectedPath, questionBank)
+            debugDataSource.addDebugObject(dataSource, "studyMaterials/101203", questionBank)
             ConfirmationDialog(this, "Question Bank is Imported successfully", R.string.yes, R.string.ok, 0) { }
         }
     }

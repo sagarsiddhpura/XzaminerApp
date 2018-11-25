@@ -98,13 +98,13 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                putExtra(IS_NEW_QUIZ, catId != null)
 //                startActivity(this)
 //            }
-//            Intent(this, AddQuestionBankActivity::class.java).apply {
-//                startActivity(this)
-//            }
-            Intent(this, CourseActivity::class.java).apply {
-                putExtra(COURSE_ID, 101L)
+            Intent(this, AddQuestionBankActivity::class.java).apply {
                 startActivity(this)
             }
+//            Intent(this, CourseActivity::class.java).apply {
+//                putExtra(COURSE_ID, 101L)
+//                startActivity(this)
+//            }
         }
         debugDataSource.initMockDataRealtimeDatabase(dataSource)
         debugDataSource.copyQuestionBank(dataSource)

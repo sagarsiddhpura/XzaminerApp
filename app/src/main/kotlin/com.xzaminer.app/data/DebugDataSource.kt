@@ -153,12 +153,12 @@ class DebugDataSource {
     private fun getQuestionBanks(id: Int): LinkedHashMap<String, StudyMaterial> {
         if (id == 1012) {
             val questionBanks = linkedMapOf<String, StudyMaterial>()
-            for (i in 101203..101232) {
+            for (i in 101204..101233) {
                 Log.d("Xz", "creating "+i+"...")
                 val c = StudyMaterial(
                     i.toLong(),
-                    "Day " + (i - 101200),
-                    "Day " + (i - 101200),
+                    "Day " + (i - 101203),
+                    "Day " + (i - 101203),
                     "images/im_question_bank.png", 0, linkedMapOf(),
                     getQuestions(i), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
                 )
@@ -563,11 +563,11 @@ class DebugDataSource {
     }
 
     fun copyQuestionBank(dataSource: DataSource) {
-        val ref1 = "cats/v2/cats/1/subCategories/101/questionBanks/1542708404073"
+        val ref1 = "debug/studyMaterials/101200"
         val target1 = "cats/v1/cats/1/courses/101/sections/1012/studyMaterials/101200"
-        var reference =
+        var reference1 =
             dataSource.getDatabase().getReference(ref1)
-        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+        reference1.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val questionBank = snapshot.getValue(StudyMaterial::class.java)
                 if (questionBank != null) {
@@ -577,11 +577,11 @@ class DebugDataSource {
             override fun onCancelled(databaseError: DatabaseError) { }
         })
 
-        val ref2 = "cats/v2/cats/1/subCategories/101/questionBanks/1542708433953"
+        val ref2 = "debug/studyMaterials/101201"
         val target2 = "cats/v1/cats/1/courses/101/sections/1012/studyMaterials/101201"
-        reference =
+        var reference2 =
                 dataSource.getDatabase().getReference(ref2)
-        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+        reference2.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val questionBank = snapshot.getValue(StudyMaterial::class.java)
                 if (questionBank != null) {
@@ -591,15 +591,29 @@ class DebugDataSource {
             override fun onCancelled(databaseError: DatabaseError) { }
         })
 
-        val ref3 = "cats/v2/cats/1/subCategories/101/questionBanks/1542708444373"
+        val ref3 = "debug/studyMaterials/101202"
         val target3 = "cats/v1/cats/1/courses/101/sections/1012/studyMaterials/101202"
-        reference =
+        var reference3 =
                 dataSource.getDatabase().getReference(ref3)
-        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+        reference3.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val questionBank = snapshot.getValue(StudyMaterial::class.java)
                 if (questionBank != null) {
                     dataSource.getDatabase().getReference(target3).setValue(questionBank)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) { }
+        })
+
+        val ref4 = "debug/studyMaterials/101203"
+        val target4 = "cats/v1/cats/1/courses/101/sections/1012/studyMaterials/101203"
+        var reference4 =
+            dataSource.getDatabase().getReference(ref4)
+        reference4.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val questionBank = snapshot.getValue(StudyMaterial::class.java)
+                if (questionBank != null) {
+                    dataSource.getDatabase().getReference(target4).setValue(questionBank)
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) { }

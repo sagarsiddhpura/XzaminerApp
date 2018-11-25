@@ -61,3 +61,5 @@ Crashlytics and answers integration
 commit
 added view section activity
 Added more button to view section
+commit
+Fixed AddQuestionBank to accomodate new architecture
