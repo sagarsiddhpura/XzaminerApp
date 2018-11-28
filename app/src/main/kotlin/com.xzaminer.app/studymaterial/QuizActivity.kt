@@ -90,7 +90,7 @@ class QuizActivity : SimpleActivity() {
             dataSource.addUser(user)
 
             setupAdapter(loadedQuiz.questions)
-            setupTimer(loadedQuiz.getTotalOrResumeTimer())
+            setupTimer(loadedQuiz.fetchTotalOrResumeTimer())
         } else {
             toast("Error Opening Question Bank")
             finish()
@@ -229,7 +229,7 @@ class QuizActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        setupTimer(getCurrentQuizFromUser()?.getResumeTimer())
+        setupTimer(getCurrentQuizFromUser()?.fetchResumeTimer())
     }
 
     override fun onBackPressed() {

@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.ColorUtils
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
@@ -59,6 +60,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        Log.d("Xz_", "Main 1:"+System.nanoTime())
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -98,16 +100,20 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                putExtra(IS_NEW_QUIZ, catId != null)
 //                startActivity(this)
 //            }
-            Intent(this, AddQuestionBankActivity::class.java).apply {
-                startActivity(this)
-            }
-//            Intent(this, CourseActivity::class.java).apply {
-//                putExtra(COURSE_ID, 101L)
+//            Intent(this, AddQuestionBankActivity::class.java).apply {
 //                startActivity(this)
 //            }
+//            Intent(this, AddStudyMaterialActivity::class.java).apply {
+//                startActivity(this)
+//            }
+            Intent(this, CourseActivity::class.java).apply {
+                putExtra(COURSE_ID, 101L)
+                startActivity(this)
+            }
         }
-        debugDataSource.initMockDataRealtimeDatabase(dataSource)
-        debugDataSource.copyQuestionBank(dataSource)
+//        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+//        debugDataSource.copyQuestionBank(dataSource)
+//        debugDataSource.uploadImages(this, dataSource)
     }
 
     override fun onResume() {
@@ -161,7 +167,9 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         mShouldStopFetching = true
         mIsGettingCategories = true
 
+//        Log.d("Xz_", "Main 2:"+System.nanoTime())
         getCategoriesFromDb(catId) { cats: ArrayList<Category>, name: String ->
+            Log.d("Xz_", "Main 3:"+System.nanoTime())
             supportActionBar?.title = name
             gotCategories(cats)
         }
@@ -179,7 +187,6 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         val adapter = getRecyclerAdapter()
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                val aSectionTitle = adapter?.isASectionTitle(position)
                 return if (adapter?.isASectionTitle(position) == true) {
                     layoutManager.spanCount
                 } else {

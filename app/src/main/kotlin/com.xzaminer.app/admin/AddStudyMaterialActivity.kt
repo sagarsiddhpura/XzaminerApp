@@ -17,7 +17,7 @@ import java.io.BufferedReader
 import java.io.FileReader
 import java.util.*
 
-class AddQuestionBankActivity : SimpleActivity() {
+class AddStudyMaterialActivity : SimpleActivity() {
 
     var questionBank = StudyMaterial()
     var selectedPath = ""
@@ -25,7 +25,7 @@ class AddQuestionBankActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_question_bank)
-        supportActionBar?.title = "Import Question Bank"
+        supportActionBar?.title = "Import Study Material"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         image_edit_category.setColorFilter(getAdjustedPrimaryColor())
@@ -57,42 +57,20 @@ class AddQuestionBankActivity : SimpleActivity() {
         var counterQues = 1L
         while (line != null) {
             val ques = Question()
-            var corrAns = ""
             var counter = 1L
-            var tokens = line.split(",")
             ques.id = counterQues++
 
             // first line is text
-            ques.text = tokens[1]
-            corrAns = tokens[2]
+            ques.text = line
 
-            // second line is first option
             line = fileReader.readLine()
-            tokens = line.split(",")
-            if(corrAns == tokens[0]) { ques.correctAnswer = counter }
-            ques.options.add(QuestionOption(counter++, tokens[1], tokens[2]))
+            while(line != null && line != "") {
+                ques.options.add(QuestionOption(counter++, line, ""))
 
-            // third line is second option
-            line = fileReader.readLine()
-            tokens = line.split(",")
-            if(corrAns == tokens[0]) { ques.correctAnswer = counter }
-            ques.options.add(QuestionOption(counter++, tokens[1], tokens[2]))
-
-            // fourth line is third option
-            line = fileReader.readLine()
-            tokens = line.split(",")
-            if(corrAns == tokens[0]) { ques.correctAnswer = counter }
-            ques.options.add(QuestionOption(counter++, tokens[1], tokens[2]))
-
-            // fifth line is fourth option
-            line = fileReader.readLine()
-            tokens = line.split(",")
-            if(corrAns == tokens[0]) { ques.correctAnswer = counter }
-            ques.options.add(QuestionOption(counter++, tokens[1], tokens[2]))
-
+                line = fileReader.readLine()
+            }
             questionBank.questions.add(ques)
 
-            line = fileReader.readLine()
             if(line == null) { break }
             line = fileReader.readLine()
         }
@@ -104,7 +82,7 @@ class AddQuestionBankActivity : SimpleActivity() {
             return
         }
         if(name_value.text == null || name_value.text.toString() == "") {
-            ConfirmationDialog(this, "Please enter name for Question Bank", R.string.yes, R.string.ok, 0) { }
+            ConfirmationDialog(this, "Please enter name for Study Material", R.string.yes, R.string.ok, 0) { }
             return
         }
         if(file_value.text == null || file_value.text == "") {
@@ -132,8 +110,8 @@ class AddQuestionBankActivity : SimpleActivity() {
             return
         } else {
             dataSource.addQuestionBank(selectedPath, questionBank)
-            debugDataSource.addDebugObject(dataSource, "studyMaterials/101203", questionBank)
-            ConfirmationDialog(this, "Question Bank is Imported successfully", R.string.yes, R.string.ok, 0) { }
+            debugDataSource.addDebugObject(dataSource, "studyMaterials/101204", questionBank)
+            ConfirmationDialog(this, "Study Material is Imported successfully", R.string.yes, R.string.ok, 0) { }
         }
     }
 }

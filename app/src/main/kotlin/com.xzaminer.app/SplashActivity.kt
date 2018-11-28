@@ -3,7 +3,6 @@ package com.xzaminer.app
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import com.google.firebase.auth.FirebaseAuth
 import com.simplemobiletools.commons.activities.BaseSplashActivity
 import com.simplemobiletools.commons.extensions.appLaunched
 import com.simplemobiletools.commons.extensions.baseConfig
@@ -32,13 +31,14 @@ class SplashActivity : BaseSplashActivity() {
     }
 
     private fun navigate() {
+//        Log.d("Xz_", "Splash:"+System.nanoTime())
         val currentUser = config.getLoggedInUser()
-        if(currentUser == null || FirebaseAuth.getInstance().currentUser == null) {
+        if(currentUser == null) {
             startActivity(Intent(this, EmailPasswordActivity::class.java))
             finish()
             return
         } else {
-            if(currentUser.phone != null && FirebaseAuth.getInstance().currentUser != null) {
+            if(currentUser.phone != null) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
                 return

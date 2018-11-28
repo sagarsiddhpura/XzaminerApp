@@ -15,7 +15,7 @@ data class StudyMaterial (
     var status: String = "",
     var type: String = STUDY_MATERIAL_TYPE_STUDY_MATERIAL
     ) {
-    fun getIapPurchase(): Purchase? {
+    fun fetchIapPurchase(): Purchase? {
         purchaseInfo.forEach {
             if(it.type == PURCHASE_TYPE_IAP) {
                 return it
@@ -24,7 +24,7 @@ data class StudyMaterial (
         return null
     }
 
-    fun getCorrectPoints(): Int {
+    fun fetchCorrectPoints(): Int {
         var correct = 0
         questions.forEach {question ->
             if(question.correctAnswer == question.selectedAnswer) {
@@ -34,7 +34,7 @@ data class StudyMaterial (
         return correct
     }
 
-    fun getInCorrectPoints(): Int {
+    fun fetchInCorrectPoints(): Int {
         var incorrect = 0
         questions.forEach {question ->
             if(question.correctAnswer != question.selectedAnswer && question.selectedAnswer != 0L) {
@@ -44,7 +44,7 @@ data class StudyMaterial (
         return incorrect
     }
 
-    fun getNotAttemptedPoints(): Int {
+    fun fetchNotAttemptedPoints(): Int {
         var notAttempted = 0
         questions.forEach {question ->
             if(question.selectedAnswer == 0L) {
@@ -54,14 +54,14 @@ data class StudyMaterial (
         return notAttempted
     }
 
-    fun getResult(): Int? {
+    fun fetchResult(): Int? {
         if(questions.isEmpty()) {
             return 0
         }
-        return (getCorrectPoints()*100)/questions.size
+        return (fetchCorrectPoints()*100)/questions.size
     }
 
-    private fun getTotalTimer(): Long? {
+    private fun fetchTotalTimer(): Long? {
         if(properties[TIMER_TOTAL_TIME] != null) {
             var secs = 0L
             try {
@@ -79,11 +79,11 @@ data class StudyMaterial (
         properties[TIMER_RUNNING_TIME] = arrayListOf(convertToText(runningTimer))
     }
 
-    fun getTotalOrResumeTimer(): Long? {
-        if(getResumeTimer() != null) { return getResumeTimer() } else { return getTotalTimer() }
+    fun fetchTotalOrResumeTimer(): Long? {
+        if(fetchResumeTimer() != null) { return fetchResumeTimer() } else { return fetchTotalTimer() }
     }
 
-    fun getResumeTimer(): Long? {
+    fun fetchResumeTimer(): Long? {
         if(properties[TIMER_RUNNING_TIME] != null) {
             var secs = 0L
             try {

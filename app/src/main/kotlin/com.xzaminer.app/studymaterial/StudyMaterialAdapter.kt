@@ -1,18 +1,13 @@
 package com.xzaminer.app.studymaterial
 
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.CardView
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
-import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
-import kotlinx.android.synthetic.main.question_item_grid.view.*
+import kotlinx.android.synthetic.main.study_material_item_grid.view.*
 import java.util.*
 
 
@@ -71,20 +66,7 @@ class StudyMaterialAdapter(
     private fun setupView(view: View, question: Question, adapterPosition: Int) {
         view.apply {
             question_text.text = "${adapterPosition + 1}. ${question.text}"
-            val rootLayout = (view as CardView).getChildAt(0) as ConstraintLayout
-            for(i in 2 until rootLayout.childCount) {
-                if(i < question.options.size + 2) {
-                    val option = question.options[i - 2]
-                    val text = rootLayout.getChildAt(i) as MyTextView
-                    if(question.selectedAnswer == option.id) {
-                        text.text = option.text!!.highlightTextPart(option.text!!, adjustedPrimaryColor)
-                    } else {
-                        text.text = option.text!!
-                    }
-                } else {
-                    rootLayout.getChildAt(i).beGone()
-                }
-            }
+            option_text.text = question.options.joinToString (separator = "\n\n")  { it -> "${it.text}" }
         }
     }
 

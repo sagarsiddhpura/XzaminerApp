@@ -63,3 +63,7 @@ added view section activity
 Added more button to view section
 commit
 Fixed AddQuestionBank to accomodate new architecture
+commit
+Fixed study material showing only one option for question having 8 options
+commit
+fixed course activity layout as per commments

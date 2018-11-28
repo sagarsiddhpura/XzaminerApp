@@ -5,13 +5,14 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
-import com.xzaminer.app.extensions.loadImage
+import com.xzaminer.app.extensions.loadIconImageView
+import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.StudyMaterial
-import com.xzaminer.app.utils.TYPE_IMAGES
-import kotlinx.android.synthetic.main.category_item_grid.view.*
+import kotlinx.android.synthetic.main.course_study_material_item_grid.view.*
 
 
 class CourseStudyMaterialsAdapter(
@@ -55,10 +56,17 @@ class CourseStudyMaterialsAdapter(
 
     override fun getIsItemSelectable(position: Int) = true
 
+
     private fun setupView(view: View, studyMaterial: StudyMaterial) {
         view.apply {
             cat_name.text = studyMaterial.name
-            activity.loadImage(TYPE_IMAGES, studyMaterial.imageIcon!!, cat_thumbnail, false, false)
+            cat_name.beVisible()
+            if(studyMaterial.imageIcon != null) {
+                activity.loadImageImageView(studyMaterial.imageIcon!!, cat_image, false, cat_name)
+            } else {
+                val img : Int = R.drawable.im_placeholder
+                activity.loadIconImageView(img, cat_image, false)
+            }
         }
     }
 }

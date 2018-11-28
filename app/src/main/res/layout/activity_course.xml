@@ -6,7 +6,8 @@
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="@color/white">
 
     <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
@@ -36,18 +37,17 @@
                 android:id="@+id/course_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:padding="16dp">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/course_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:paddingTop="8dp"
-                android:paddingBottom="4dp"
-                android:paddingRight="4dp"
-                android:paddingLeft="4dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="16dp"
+                android:paddingRight="12dp"
+                android:paddingLeft="12dp"
                 android:textStyle="bold"
                 android:textSize="@dimen/big_text_size"
                 tools:text="CISA (Certified Information System Auditor)"
@@ -57,11 +57,11 @@
                 android:id="@+id/divider_title_desc"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginStart="@dimen/dimens_16dp"
-                android:layout_marginLeft="@dimen/dimens_16dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="6dp"
-                android:layout_marginEnd="@dimen/dimens_16dp"
-                android:layout_marginRight="@dimen/dimens_16dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@color/divider_grey"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/course_title"
@@ -71,7 +71,9 @@
                 android:id="@+id/course_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="12dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 tools:text="Congratulations on choosing to become a Certified Information Systems Auditor (CISA). Whether you have worked for several years in the field of information systems auditing or have just recently been introduced to the world of controls, assurance, and security, don’t underestimate the hard work and dedication required to obtain and maintain CISA certification. Although ambition and motivation are required, the rewards can far exceed the effort.
 You probably never imagined you would find yourself working in the world of auditing or looking to obtain a professional auditing certification. Perhaps the increase in legislative or regulatory requirements for information system security led to your introduction to this field. "
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,270 +83,321 @@ You probably never imagined you would find yourself working in the world of audi
                 android:id="@+id/divider_desc_courses"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginStart="@dimen/dimens_16dp"
-                android:layout_marginLeft="@dimen/dimens_16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="@dimen/dimens_16dp"
-                android:layout_marginRight="@dimen/dimens_16dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@color/divider_grey"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/course_desc"
                 android:layout_below="@+id/course_desc"/>
 
             <android.support.v7.widget.LinearLayoutCompat
-                    android:id="@+id/section_1_root"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider_desc_courses"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    tools:visibility="visible">
+                android:id="@+id/section_1_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_desc_courses"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="4dp"
+                    android:weightSum="1">
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:id="@+id/section_1_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:layout_weight="1"
-                            android:text="30 Days Course (Concepts)"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:id="@+id/section_1_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:text="30 Days Course (Concepts)"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:text="MORE"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="false"
+                        android:text="MORE"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
                 <com.simplemobiletools.commons.views.MyRecyclerView
-                        android:id="@+id/section_1_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
-                        app:spanCount="1"
-                        android:layout_margin="2dp"
-                        android:padding="0dp" />
+                    android:id="@+id/section_1_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                    app:spanCount="1"
+                    android:layout_margin="4dp"
+                    android:padding="0dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/divider_grey" />
 
             </android.support.v7.widget.LinearLayoutCompat>
 
             <android.support.v7.widget.LinearLayoutCompat
-                    android:id="@+id/section_2_root"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/section_1_root"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                android:id="@+id/section_2_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/section_1_root"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="4dp"
+                    android:weightSum="1">
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:id="@+id/section_2_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:layout_weight="1"
-                            android:text="30 Days Course (Concepts)"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:id="@+id/section_2_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:text="30 Days Course (Concepts)"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:text="MORE"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="false"
+                        android:text="MORE"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
                 <com.simplemobiletools.commons.views.MyRecyclerView
-                        android:id="@+id/section_2_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
-                        app:spanCount="1"
-                        android:layout_margin="2dp"
-                        android:padding="0dp" />
+                    android:id="@+id/section_2_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                    app:spanCount="1"
+                    android:layout_margin="2dp"
+                    android:padding="0dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/divider_grey" />
 
             </android.support.v7.widget.LinearLayoutCompat>
 
             <android.support.v7.widget.LinearLayoutCompat
-                    android:id="@+id/section_3_root"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/section_2_root"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                android:id="@+id/section_3_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/section_2_root"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="4dp"
+                    android:weightSum="1">
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:id="@+id/section_3_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:layout_weight="1"
-                            android:text="30 Days Course (Concepts)"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:id="@+id/section_3_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:text="30 Days Course (Concepts)"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:text="MORE"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="false"
+                        android:text="MORE"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
-
                 <com.simplemobiletools.commons.views.MyRecyclerView
-                        android:id="@+id/section_3_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
-                        app:spanCount="1"
-                        android:layout_margin="2dp"
-                        android:padding="0dp" />
+                    android:id="@+id/section_3_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                    app:spanCount="1"
+                    android:layout_margin="2dp"
+                    android:padding="0dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/divider_grey" />
 
             </android.support.v7.widget.LinearLayoutCompat>
 
             <android.support.v7.widget.LinearLayoutCompat
-                    android:id="@+id/section_4_root"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/section_3_root"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                android:id="@+id/section_4_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/section_3_root"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="4dp"
+                    android:weightSum="1">
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:id="@+id/section_4_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:layout_weight="1"
-                            android:text="30 Days Course (Concepts)"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:id="@+id/section_4_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:text="30 Days Course (Concepts)"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:text="MORE"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="false"
+                        android:text="MORE"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
-
                 <com.simplemobiletools.commons.views.MyRecyclerView
-                        android:id="@+id/section_4_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
-                        app:spanCount="1"
-                        android:layout_margin="2dp"
-                        android:padding="0dp" />
+                    android:id="@+id/section_4_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                    app:spanCount="1"
+                    android:layout_margin="2dp"
+                    android:padding="0dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/divider_grey" />
 
             </android.support.v7.widget.LinearLayoutCompat>
 
             <android.support.v7.widget.LinearLayoutCompat
-                    android:id="@+id/section_5_root"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/section_4_root"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                android:id="@+id/section_5_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/section_4_root"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="4dp"
+                    android:weightSum="1">
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:id="@+id/section_5_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:layout_weight="1"
-                            android:text="30 Days Course (Concepts)"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:id="@+id/section_5_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:text="30 Days Course (Concepts)"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                     <com.simplemobiletools.commons.views.MyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:paddingTop="20dp"
-                            android:text="MORE"
-                            android:textSize="@dimen/bigger_text_size"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="false"
+                        android:text="MORE"
+                        android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
-
                 <com.simplemobiletools.commons.views.MyRecyclerView
-                        android:id="@+id/section_5_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
-                        app:spanCount="1"
-                        android:layout_margin="2dp"
-                        android:padding="0dp" />
+                    android:id="@+id/section_5_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                    app:spanCount="1"
+                    android:layout_margin="2dp"
+                    android:padding="0dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/divider_grey" />
 
             </android.support.v7.widget.LinearLayoutCompat>
-
 
         </android.support.constraint.ConstraintLayout>
 

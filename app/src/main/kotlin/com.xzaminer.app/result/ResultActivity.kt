@@ -45,11 +45,11 @@ class ResultActivity : SimpleActivity() {
 
         dataSource.getQuestionBankFromUser(user.getId(), quizId) { loadedQuiz ->
             if (loadedQuiz != null) {
-                result_message.text = "Congratulations! You have completed the quiz.\n\nYour Score is " + loadedQuiz.getResult() + "%"
+                result_message.text = "Congratulations! You have completed the quiz.\n\nYour Score is " + loadedQuiz.fetchResult() + "%"
 
-                val correct = loadedQuiz.getCorrectPoints()
-                val incorrect = loadedQuiz.getInCorrectPoints()
-                val notAttempted = loadedQuiz.getNotAttemptedPoints()
+                val correct = loadedQuiz.fetchCorrectPoints()
+                val incorrect = loadedQuiz.fetchInCorrectPoints()
+                val notAttempted = loadedQuiz.fetchNotAttemptedPoints()
 
                 correct_text.text = "Correct:\n" + correct.toString() + "/" + loadedQuiz.questions.size.toString()
                 incorrect_text.text = "Incorrect:\n" + incorrect.toString() + "/" + loadedQuiz.questions.size.toString()

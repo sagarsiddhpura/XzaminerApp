@@ -1,6 +1,7 @@
 package com.xzaminer.app.data
 
 import android.app.Activity
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -75,6 +76,7 @@ class DataSource {
     }
 
     private fun getCats(callback: (cats: ArrayList<Category>) -> Unit) {
+//        Log.d("Xz_", "getCats:"+System.nanoTime())
         if (cats != null) {
             callback(cats!!)
         } else {
@@ -84,8 +86,8 @@ class DataSource {
 
             dept.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val genericTypeIndicator = object : GenericTypeIndicator<ArrayList<Category>>() {
-                    }
+//                    Log.d("Xz_", "getCats listener:"+System.nanoTime())
+                    val genericTypeIndicator = object : GenericTypeIndicator<ArrayList<Category>>() {}
                     var categories = snapshot.getValue(genericTypeIndicator)
                     if (categories != null) {
                         categories = categories.filter { it != null } as ArrayList<Category>
@@ -101,11 +103,10 @@ class DataSource {
 
             dept.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val genericTypeIndicator = object : GenericTypeIndicator<ArrayList<Category>>() {
-                    }
+                    val genericTypeIndicator = object : GenericTypeIndicator<ArrayList<Category>>() {}
                     var categories = snapshot.getValue(genericTypeIndicator)
                     if (categories != null) {
-                        categories = categories!!.filter { it != null } as ArrayList<Category>
+                        categories = (categories as ArrayList<Category>).filter { it != null } as ArrayList<Category>
                         cats = categories
                     }
                 }
@@ -119,6 +120,7 @@ class DataSource {
 
     fun getCategoryById(catId: Long, callback: (cat: Category?) -> Unit) {
         getCats { it ->
+            Log.d("Xz_", "getCategoryById:"+System.nanoTime())
             callback(searchCategoryById(catId, it))
         }
     }
