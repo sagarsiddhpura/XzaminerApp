@@ -28,10 +28,7 @@ import com.simplemobiletools.commons.extensions.isGone
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.views.MyGridLayoutManager
-import com.xzaminer.app.BuildConfig
-import com.xzaminer.app.R
-import com.xzaminer.app.SimpleActivity
-import com.xzaminer.app.SplashActivity
+import com.xzaminer.app.*
 import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.admin.AddStudyMaterialActivity
 import com.xzaminer.app.billing.Purchase
@@ -71,6 +68,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             catId = getLongExtra(CAT_ID, -1)
             if(catId == (-1).toLong()) {
                 catId = null
+                startActivity(Intent(applicationContext, IntroActivity::class.java))
             }
         }
 
@@ -108,10 +106,13 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //            Intent(this, AddStudyMaterialActivity::class.java).apply {
 //                startActivity(this)
 //            }
-            Intent(this, CourseActivity::class.java).apply {
-                putExtra(COURSE_ID, 101L)
-                startActivity(this)
-            }
+//            Intent(this, IntroActivity::class.java).apply {
+//                startActivity(this)
+//            }
+//            Intent(this, CourseActivity::class.java).apply {
+//                putExtra(COURSE_ID, 101L)
+//                startActivity(this)
+//            }
         }
 //        debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //        debugDataSource.copyQuestionBank(dataSource)
