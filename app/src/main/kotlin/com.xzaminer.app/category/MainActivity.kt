@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
+import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
@@ -32,6 +33,7 @@ import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.SplashActivity
 import com.xzaminer.app.admin.AddQuestionBankActivity
+import com.xzaminer.app.admin.AddStudyMaterialActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.data.User
@@ -281,20 +283,9 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             .withIcon(R.drawable.ic_drw_question_bank).withIconTintingEnabled(true)
         val logout = PrimaryDrawerItem().withIdentifier(11).withName(R.string.logout)
             .withIcon(R.drawable.ic_logout).withIconTintingEnabled(true)
+        val importStudyMaterial = PrimaryDrawerItem().withIdentifier(12).withName(R.string.title_activity_import_study_material)
+            .withIcon(R.drawable.ic_drw_question_bank).withIconTintingEnabled(true)
 
-//        val likeHeader = SectionDrawerItem().withName("Like this App?").withDivider(true)
-//        val share = PrimaryDrawerItem().withIdentifier(4).withName(R.string.share)
-//            .withIcon(R.drawable.ic_share).withIconTintingEnabled(true)
-//
-//        val rateUs = PrimaryDrawerItem().withIdentifier(6).withName(R.string.rate_us)
-//            .withIcon(R.drawable.ic_thumb_up).withIconTintingEnabled(true)
-//
-//        val dislikeHeader = SectionDrawerItem().withName("Missing Functionality / Issues / Problems").withDivider(true)
-//        val sendFeedback = PrimaryDrawerItem().withIdentifier(5).withName(R.string.send_feedback)
-//            .withIcon(R.drawable.ic_feedback).withIconTintingEnabled(true)
-        // Remaining
-        // Donate/Contribute
-        // tips & tutorials
         val idToMap = HashMap<Int, String>()
         idToMap.put(1, "Home")
         idToMap.put(2, "Settings")
@@ -307,6 +298,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         idToMap.put(9, "Purchases")
         idToMap.put(10, "ImportQuestionBank")
         idToMap.put(11, "Logout")
+        idToMap.put(12, "ImportStudyMaterial")
 
         val customPrimaryColor = baseConfig.primaryColor
         val view = LayoutInflater.from(this).inflate(R.layout.drawer_header, null)
@@ -390,6 +382,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                             resetSelection()
                             finish()
                         }
+                        12L -> {
+                            startActivity(Intent(applicationContext, AddStudyMaterialActivity::class.java))
+                            resetSelection()
+                        }
                     }
                     return false
                 }
@@ -398,8 +394,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             home,
             purchases,
             settings,
+            logout,
+            DividerDrawerItem(),
             importQuestionBank,
-            logout
+            importStudyMaterial
         )
         drawer = drawerBuilder.build()
 

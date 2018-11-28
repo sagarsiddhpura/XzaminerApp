@@ -132,7 +132,7 @@ class AddQuestionBankActivity : SimpleActivity() {
             return
         } else {
             dataSource.addQuestionBank(selectedPath, questionBank)
-            debugDataSource.addDebugObject(dataSource, "studyMaterials/101203", questionBank)
+            debugDataSource.addDebugObject(dataSource, "studyMaterials/" + Date().time, questionBank)
             ConfirmationDialog(this, "Question Bank is Imported successfully", R.string.yes, R.string.ok, 0) { }
         }
     }

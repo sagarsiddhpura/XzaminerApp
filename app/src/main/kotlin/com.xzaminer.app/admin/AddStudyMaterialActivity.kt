@@ -110,7 +110,7 @@ class AddStudyMaterialActivity : SimpleActivity() {
             return
         } else {
             dataSource.addQuestionBank(selectedPath, questionBank)
-            debugDataSource.addDebugObject(dataSource, "studyMaterials/101204", questionBank)
+            debugDataSource.addDebugObject(dataSource, "studyMaterials/" + Date().time, questionBank)
             ConfirmationDialog(this, "Study Material is Imported successfully", R.string.yes, R.string.ok, 0) { }
         }
     }
