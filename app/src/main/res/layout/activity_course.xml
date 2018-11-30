@@ -50,34 +50,22 @@
                 android:paddingLeft="12dp"
                 android:textStyle="bold"
                 android:textSize="@dimen/big_text_size"
+                android:textColor="@color/text_black"
                 tools:text="CISA (Certified Information System Auditor)"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <View
-                android:id="@+id/divider_title_desc"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/divider_grey"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/course_title"
-                android:layout_below="@+id/course_desc"/>
-
-            <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/course_desc"
+            <ss.com.bannerslider.Slider
+                android:id="@+id/desc_slider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="Congratulations on choosing to become a Certified Information Systems Auditor (CISA). Whether you have worked for several years in the field of information systems auditing or have just recently been introduced to the world of controls, assurance, and security, don’t underestimate the hard work and dedication required to obtain and maintain CISA certification. Although ambition and motivation are required, the rewards can far exceed the effort.
-You probably never imagined you would find yourself working in the world of auditing or looking to obtain a professional auditing certification. Perhaps the increase in legislative or regulatory requirements for information system security led to your introduction to this field. "
+                app:slider_interval="3000"
+                app:slider_loopSlides="true"
+                app:slider_animateIndicators="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider_title_desc" />
+                app:layout_constraintTop_toBottomOf="@+id/course_title"
+                android:layout_below="@+id/course_title"
+                android:layout_marginTop="16dp"
+                />
 
             <View
                 android:id="@+id/divider_desc_courses"
@@ -90,8 +78,8 @@ You probably never imagined you would find yourself working in the world of audi
                 android:layout_marginRight="20dp"
                 android:background="@color/divider_grey"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/course_desc"
-                android:layout_below="@+id/course_desc"/>
+                app:layout_constraintTop_toBottomOf="@+id/desc_slider"
+                android:layout_below="@+id/desc_slider"/>
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:id="@+id/section_1_root"
@@ -128,7 +116,7 @@ You probably never imagined you would find yourself working in the world of audi
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:clickable="false"
-                        android:text="MORE"
+                        android:text="SEE ALL"
                         android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
@@ -189,7 +177,7 @@ You probably never imagined you would find yourself working in the world of audi
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:clickable="false"
-                        android:text="MORE"
+                        android:text="SEE ALL"
                         android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
@@ -250,7 +238,7 @@ You probably never imagined you would find yourself working in the world of audi
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:clickable="false"
-                        android:text="MORE"
+                        android:text="SEE ALL"
                         android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
@@ -311,7 +299,7 @@ You probably never imagined you would find yourself working in the world of audi
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:clickable="false"
-                        android:text="MORE"
+                        android:text="SEE ALL"
                         android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
@@ -372,13 +360,74 @@ You probably never imagined you would find yourself working in the world of audi
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:clickable="false"
-                        android:text="MORE"
+                        android:text="SEE ALL"
                         android:textSize="@dimen/bigger_text_size"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
                 <com.simplemobiletools.commons.views.MyRecyclerView
                     android:id="@+id/section_5_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                    app:spanCount="1"
+                    android:layout_margin="2dp"
+                    android:padding="0dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/divider_grey" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/section_6_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/section_5_root"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="4dp"
+                    android:weightSum="1">
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                        android:id="@+id/section_6_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:text="30 Days Course (Concepts)"
+                        android:textSize="@dimen/bigger_text_size"/>
+
+                    <com.simplemobiletools.commons.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="false"
+                        android:text="SEE ALL"
+                        android:textSize="@dimen/bigger_text_size"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <com.simplemobiletools.commons.views.MyRecyclerView
+                    android:id="@+id/section_6_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"

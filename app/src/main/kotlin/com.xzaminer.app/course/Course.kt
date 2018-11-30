@@ -8,7 +8,8 @@ data class Course (
     var description: String? = null,
     var imageIcon: String? = null,
     var sections: HashMap<String, CourseSection> = hashMapOf(),
-    val purchaseInfo: ArrayList<Purchase> = arrayListOf()
+    val purchaseInfo: ArrayList<Purchase> = arrayListOf(),
+    val descImages: ArrayList<String> = arrayListOf()
     ) {
         override fun toString(): String {
             return "$name:::$description"
@@ -17,7 +18,7 @@ data class Course (
     fun fetchVisibleSections(): ArrayList<CourseSection> {
         val arrayList =
             ArrayList(sections.values.filter { it -> it != null && it.isVisible && !it.studyMaterials.isEmpty() })
-        if(!arrayList.isEmpty()) {arrayList.sortWith (compareBy { it.id })}
+        if(!arrayList.isEmpty()) {arrayList.sortWith (compareBy { it.order })}
         return arrayList
     }
 }

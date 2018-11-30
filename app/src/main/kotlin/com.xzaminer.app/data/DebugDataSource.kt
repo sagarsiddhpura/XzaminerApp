@@ -1,7 +1,6 @@
 package com.xzaminer.app.data
 
 import android.net.Uri
-import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -32,11 +31,11 @@ class DebugDataSource {
         if (id == 1) {
             val c1 = Course(
                 101,
-                "CISA (Certified Information System Auditor)",
+                "CISA\n(Certified Information System Auditor)",
                 "Congratulations on choosing to become a Certified Information Systems Auditor (CISA). Whether you have worked for several years in the field of information systems auditing or have just recently been introduced to the world of controls, assurance, and security, don’t underestimate the hard work and dedication required to obtain and maintain CISA certification. Although ambition and motivation are required, the rewards can far exceed the effort.\n" +
                         "You probably never imagined you would find yourself working in the world of auditing or looking to obtain a professional auditing certification. Perhaps the increase in legislative or regulatory requirements for information system security led to your introduction to this field. ",
                 "images/cat_2.png",
-                getSections(101), arrayListOf()
+                getSections(101), arrayListOf(), arrayListOf("images/cisa/desc_1.jpg", "images/cisa/desc_2.jpg", "images/cisa/desc_3.jpg", "images/cisa/desc_4.jpg", "images/cisa/desc_5.jpg", "images/cisa/desc_6.jpg")
             )
             return linkedMapOf(c1.id.toString() to c1)
         }
@@ -47,33 +46,40 @@ class DebugDataSource {
         if (id == 101) {
             val s1 = CourseSection(
                 1011,
-                "30 Days Course (Concepts)",
+                "31 Days Course (Concepts)",
                 "",
                 "", getConcepts(1011), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
-                arrayListOf()
+                arrayListOf(), 2
             )
             val s2 = CourseSection(
                 1012,
-                "30 Days Course (Questions)",
+                "31 Days Course (Questions)",
                 "",
                 "", getQuestionBanks(1012), STUDY_MATERIAL_TYPE_QUESTION_BANK,
-                arrayListOf()
+                arrayListOf(), 3
             )
             val s3 = CourseSection(
                 1013,
                 "Review Manuals",
                 "",
                 "", getReviewManuals(1013), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
-                arrayListOf()
+                arrayListOf(), 6
             )
             val s4 = CourseSection(
                 1014,
                 "Flash Cards",
                 "",
                 "", getFlashCards(1014), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
-                arrayListOf()
+                arrayListOf(), 5
             )
-            val sections = linkedMapOf(s1.id.toString() to s1, s2.id.toString() to s2, s3.id.toString() to s3, s4.id.toString() to s4)
+            val s5 = CourseSection(
+                1015,
+                "Question Banks",
+                "",
+                "", getQuestionBanks(1015), STUDY_MATERIAL_TYPE_QUESTION_BANK,
+                arrayListOf(), 5
+            )
+            val sections = linkedMapOf(s1.id.toString() to s1, s2.id.toString() to s2, s3.id.toString() to s3, s4.id.toString() to s4, s5.id.toString() to s5)
             return sections
         }
         return hashMapOf()
@@ -92,9 +98,9 @@ class DebugDataSource {
             for (i in 101402..101405) {
                 val c = StudyMaterial(
                     i.toLong(),
-                    "Domain 0" + (i - 101401),
-                    "Domain 0" + (i - 101401),
-                    "images/cisa/fc_" + (i - 101401) + ".jpg", 0, linkedMapOf(),
+                    "Domain 0" + (i - 101400),
+                    "Domain 0" + (i - 101400),
+                    "images/cisa/fc_" + (i - 101400) + ".jpg", 0, linkedMapOf(),
                     getQuestions(i), arrayListOf(), ""
                 )
                 flashCards[c.id.toString()] = c
@@ -142,14 +148,14 @@ class DebugDataSource {
     private fun getConcepts(id: Int): LinkedHashMap<String, StudyMaterial> {
         if (id == 1011) {
             val c1 = StudyMaterial(
-                101101,
+                101133,
                 "CISA 30 Days Course (Concepts)",
                 "CISA 30 Days Course (Concepts)",
                 "images/cisa/co_1.jpg", 0, linkedMapOf(),
                 getQuestions(1011), arrayListOf(), ""
             )
             val studyMats = linkedMapOf(c1.id.toString() to c1)
-            for (i in 101102..101131) {
+            for (i in 101102..101132) {
                 val c = StudyMaterial(
                     i.toLong(),
                     "Day " + (i - 101101),
@@ -167,13 +173,28 @@ class DebugDataSource {
     private fun getQuestionBanks(id: Int): LinkedHashMap<String, StudyMaterial> {
         if (id == 1012) {
             val questionBanks = linkedMapOf<String, StudyMaterial>()
-            for (i in 101204..101233) {
-                Log.d("Xz", "creating "+i+"...")
+            for (i in 101204..101234) {
+//                Log.d("Xz", "creating "+i+"...")
                 val c = StudyMaterial(
                     i.toLong(),
                     "Day " + (i - 101203),
                     "Day " + (i - 101203),
-                    "images/cisa/qb_" + (i - 101203) + ".jpg", 0, linkedMapOf(),
+                    "images/cisa/qb_2_" + (i - 101203) + ".jpg", 0, linkedMapOf(),
+                    getQuestions(i), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
+                )
+                questionBanks[c.id.toString()] = c
+            }
+            return questionBanks
+        }
+        if (id == 1015) {
+            val questionBanks = linkedMapOf<String, StudyMaterial>()
+            for (i in 101501..101510) {
+//                Log.d("Xz", "creating "+i+"...")
+                val c = StudyMaterial(
+                    i.toLong(),
+                    "Day " + (i - 101500),
+                    "Day " + (i - 101500),
+                    "images/cisa/qb_" + (i - 101500) + ".jpg", 0, linkedMapOf(),
                     getQuestions(i), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
                 )
                 questionBanks[c.id.toString()] = c
@@ -578,9 +599,10 @@ class DebugDataSource {
 
     fun copyQuestionBank(dataSource: DataSource) {
         val ref1 = "debug/studyMaterials/101200"
-        val target1 = "cats/v1/cats/1/courses/101/sections/1012/studyMaterials/101200"
+        val target1 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101511"
         var reference1 =
             dataSource.getDatabase().getReference(ref1)
+        reference1.keepSynced(true)
         reference1.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val questionBank = snapshot.getValue(StudyMaterial::class.java)
@@ -592,9 +614,10 @@ class DebugDataSource {
         })
 
         val ref2 = "debug/studyMaterials/101201"
-        val target2 = "cats/v1/cats/1/courses/101/sections/1012/studyMaterials/101201"
+        val target2 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101512"
         var reference2 =
                 dataSource.getDatabase().getReference(ref2)
+        reference2.keepSynced(true)
         reference2.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val questionBank = snapshot.getValue(StudyMaterial::class.java)
@@ -606,9 +629,10 @@ class DebugDataSource {
         })
 
         val ref3 = "debug/studyMaterials/101202"
-        val target3 = "cats/v1/cats/1/courses/101/sections/1012/studyMaterials/101202"
+        val target3 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101513"
         var reference3 =
                 dataSource.getDatabase().getReference(ref3)
+        reference3.keepSynced(true)
         reference3.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val questionBank = snapshot.getValue(StudyMaterial::class.java)
@@ -620,9 +644,10 @@ class DebugDataSource {
         })
 
         val ref4 = "debug/studyMaterials/101203"
-        val target4 = "cats/v1/cats/1/courses/101/sections/1012/studyMaterials/101203"
+        val target4 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101514"
         var reference4 =
             dataSource.getDatabase().getReference(ref4)
+        reference4.keepSynced(true)
         reference4.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val questionBank = snapshot.getValue(StudyMaterial::class.java)
@@ -634,9 +659,10 @@ class DebugDataSource {
         })
 
         val ref5 = "debug/studyMaterials/101204"
-        val target5 = "cats/v1/cats/1/courses/101/sections/1013/studyMaterials/101301"
+        val target5 = "cats/v2/cats/1/courses/101/sections/1013/studyMaterials/101301"
         var reference5 =
             dataSource.getDatabase().getReference(ref5)
+        reference5.keepSynced(true)
         reference5.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val questionBank = snapshot.getValue(StudyMaterial::class.java)
@@ -651,7 +677,7 @@ class DebugDataSource {
     fun uploadImages(activity: SimpleActivity, dataSource: DataSource) {
         val files = File(activity.getInternalStoragePath(), "Xzaminer")
         files.listFiles().forEach {
-            val riversRef = dataSource.getStorage().getReference("images/cisa").child("co_${it.name}")
+            val riversRef = dataSource.getStorage().getReference("images/cisa").child("qb_2_${it.name}")
             riversRef.putFile(Uri.fromFile(it))
         }
     }

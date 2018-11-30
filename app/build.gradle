@@ -69,6 +69,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.9.0'
     implementation 'com.anjlab.android.iab.v3:library:1.0.44'
     implementation 'co.zsmb:materialdrawer-kt:1.3.6'
+    compile 'com.ss.bannerslider:bannerslider:2.0.0'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true

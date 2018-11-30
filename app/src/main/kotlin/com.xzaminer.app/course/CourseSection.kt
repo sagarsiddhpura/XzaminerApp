@@ -12,6 +12,7 @@ data class CourseSection (
     var studyMaterials: HashMap<String, StudyMaterial> = hashMapOf(),
     var type: String = STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
     val purchaseInfo: ArrayList<Purchase> = arrayListOf(),
+    var order: Int = 0,
     var isVisible: Boolean = true
     ) {
         override fun toString(): String {

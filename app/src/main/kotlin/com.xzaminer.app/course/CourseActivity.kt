@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.Toolbar
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.Window
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
@@ -23,6 +25,7 @@ import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.StudyMaterialActivity
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_course.*
+import ss.com.bannerslider.Slider
 
 
 class CourseActivity : SimpleActivity() {
@@ -67,7 +70,13 @@ class CourseActivity : SimpleActivity() {
 
     private fun loadCourse(loadedCourse: Course) {
         course_title.text = loadedCourse.name
-        course_desc.text = loadedCourse.description
+        if(loadedCourse.descImages.isEmpty()) {
+            desc_slider.beGone()
+        } else {
+            Slider.init(PicassoImageLoadingService(this))
+            desc_slider.setAdapter(CourseDescriptionImageAdapter(loadedCourse.descImages))
+        }
+
         val sections = loadedCourse.fetchVisibleSections()
         val offset = 4
 
@@ -79,7 +88,9 @@ class CourseActivity : SimpleActivity() {
                 sectionRoot.beVisible()
                 val titleRoot = sectionRoot.getChildAt(0) as LinearLayoutCompat
                 val title = titleRoot.getChildAt(0) as MyTextView
-                title.text = section.name
+                val content = SpannableString(section.name)
+                content.setSpan(UnderlineSpan(), 0, content.length, 0)
+                title.text = content
                 title.setTextColor(getAdjustedPrimaryColor())
 
                 setupAdapter(sectionRoot.getChildAt(1) as MyRecyclerView, section)

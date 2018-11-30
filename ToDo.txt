@@ -1,5 +1,6 @@
 Issues:
 Explanation is cut off if too long
+Starting new quiz resets previous quiz?
 
 
 Next release
@@ -14,6 +15,9 @@ Links
 https://www.uplabs.com/posts/exam-app-exam-categories
 https://www.iconfinder.com/iconsets/finance-152
 https://www.iconfinder.com/iconsets/handy-vol-1-2
+
+slider lib
+https://github.com/saeedsh92/Banner-Slider
 
 https://www.iconfinder.com/iconsets/circle-icons-1
 https://www.iconfinder.com/iconsets/flat-line-valentine-1

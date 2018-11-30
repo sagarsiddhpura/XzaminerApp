@@ -68,7 +68,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             catId = getLongExtra(CAT_ID, -1)
             if(catId == (-1).toLong()) {
                 catId = null
-                startActivity(Intent(applicationContext, IntroActivity::class.java))
+                // TODO: debug
+                if(!BuildConfig.DEBUG) {
+                    startActivity(Intent(applicationContext, IntroActivity::class.java))
+                }
             }
         }
 
@@ -94,7 +97,6 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    putExtra(QUIZ_ID, 10111L)
 //                    startActivity(this)
 //                }
-            }
 //            Intent(this, QuizActivity::class.java).apply {
 //                putExtra(CAT_ID, 10111L)
 //                putExtra(IS_NEW_QUIZ, catId != null)
@@ -109,12 +111,13 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //            Intent(this, IntroActivity::class.java).apply {
 //                startActivity(this)
 //            }
-//            Intent(this, CourseActivity::class.java).apply {
-//                putExtra(COURSE_ID, 101L)
-//                startActivity(this)
-//            }
+                Intent(this, CourseActivity::class.java).apply {
+                    putExtra(COURSE_ID, 101L)
+                    startActivity(this)
+                }
+            }
         }
-//        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+        debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //        debugDataSource.copyQuestionBank(dataSource)
 //        debugDataSource.uploadImages(this, dataSource)
     }

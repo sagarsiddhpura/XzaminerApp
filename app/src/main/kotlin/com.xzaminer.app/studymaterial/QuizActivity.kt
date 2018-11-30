@@ -21,7 +21,7 @@ import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.result.ResultActivity
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_quiz.*
-
+import kotlin.concurrent.thread
 
 
 class QuizActivity : SimpleActivity() {
@@ -84,6 +84,8 @@ class QuizActivity : SimpleActivity() {
             }
 
             supportActionBar?.title = loadedQuiz.name
+            loadedQuiz.id = System.nanoTime()
+            quizId = loadedQuiz.id
 
             user.startQuiz(loadedQuiz)
             config.setLoggedInUser(user)
@@ -149,8 +151,8 @@ class QuizActivity : SimpleActivity() {
             currentQuestion.selectedAnswer = id
             currentQuestion.isMarkedForLater = false
         }
-        dataSource.addUser(user)
         refreshQuestions(questions)
+        thread { dataSource.addUser(user) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -174,9 +176,11 @@ class QuizActivity : SimpleActivity() {
 
     fun markForLater(question: Question) {
         val questions = getCurrentQuizQuestionsFromUser()
-        val currentQuestion = questions.find { it.id == question.id }
-        currentQuestion!!.isMarkedForLater = !currentQuestion.isMarkedForLater
-        dataSource.addUser(user)
+        val currentQuestion = questions.find { it.id == question.id } as Question
+        // Mark change
+        currentQuestion.isMarkedForLater = !currentQuestion.isMarkedForLater
+        if(currentQuestion.isMarkedForLater) { currentQuestion.selectedAnswer = 0 }
+        // Refresh Questions
         refreshQuestions(questions)
         toast( if(currentQuestion.isMarkedForLater) "Marking Question for Later" else "Question removed from Marked for Later" )
         dataSource.addUser(user)

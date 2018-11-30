@@ -12,7 +12,7 @@ import com.xzaminer.app.studymaterial.StudyMaterial
 import java.util.*
 
 private var db: FirebaseDatabase? = null
-private var catsDbVersion = 1
+private var catsDbVersion = 2
 private var userDbVersion = 1
 private var storage: FirebaseStorage? = null
 
@@ -277,7 +277,7 @@ class DataSource {
     fun getCourseStudyMaterialById(courseId: Long, sectionId: Long, studyMaterialId: Long, callback: (course: StudyMaterial?) -> Unit) {
         getCourseById(courseId) {
             if(it != null && !it.sections.isEmpty()) {
-                callback(it.sections[sectionId.toString()]?.studyMaterials?.get(studyMaterialId.toString()))
+                callback(it.sections.values.find { section -> section.id == sectionId }?.studyMaterials?.values?.find { studyMat -> studyMat.id == studyMaterialId })
             }
         }
     }
