@@ -30,7 +30,8 @@
             android:paddingLeft="4dp"
             tools:text="The decisions and actions of an IS auditor are MOST likely to affect which of the following types of risk?"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/text_black"/>
 
         <View
             android:id="@+id/divider_question_options"
@@ -53,7 +54,8 @@
             android:layout_marginTop="4dp"
             tools:text="Ensure the risk assessement is aligned to management's risk assessement process"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider_question_options"/>
+            app:layout_constraintTop_toBottomOf="@+id/divider_question_options"
+            android:textColor="@color/text_black"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

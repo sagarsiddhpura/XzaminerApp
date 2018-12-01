@@ -66,7 +66,7 @@ class StudyMaterialAdapter(
     private fun setupView(view: View, question: Question, adapterPosition: Int) {
         view.apply {
             question_text.text = "${adapterPosition + 1}. ${question.text}"
-            option_text.text = question.options.joinToString (separator = "\n\n")  { it -> "${it.text}" }
+            option_text.text = question.options.joinToString (separator = "\n\n")  { it -> "\u25CF  ${it.text}" }
         }
     }
 

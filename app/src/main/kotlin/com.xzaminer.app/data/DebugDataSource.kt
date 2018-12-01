@@ -145,7 +145,7 @@ class DebugDataSource {
                 "Domain 01",
                 "Domain 01",
                 "images/cisa/fc_1.jpg", 0, linkedMapOf(),
-                getQuestions(1013), arrayListOf(), arrayListOf(), ""
+                getQuestions(101401), arrayListOf(), arrayListOf(), ""
             )
             val flashCards = linkedMapOf(c1.id.toString() to c1)
             for (i in 101402..101405) {
@@ -262,7 +262,7 @@ class DebugDataSource {
     }
 
     private fun getQuestions(i: Int): ArrayList<Question> {
-        if(i == 101304) {
+        if(i == 101401) {
             return  arrayListOf(
                 Question(
                     1, "For compliance testing which sampling method is more useful ?", "",
@@ -666,50 +666,50 @@ class DebugDataSource {
             override fun onCancelled(databaseError: DatabaseError) { }
         })
 
-        val ref2 = "debug/studyMaterials/101201"
-        val target2 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101512"
-        var reference2 =
-                dataSource.getDatabase().getReference(ref2)
-        reference2.keepSynced(true)
-        reference2.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val questionBank = snapshot.getValue(StudyMaterial::class.java)
-                if (questionBank != null) {
-                    dataSource.getDatabase().getReference(target2).setValue(questionBank)
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) { }
-        })
-
-        val ref3 = "debug/studyMaterials/101202"
-        val target3 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101513"
-        var reference3 =
-                dataSource.getDatabase().getReference(ref3)
-        reference3.keepSynced(true)
-        reference3.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val questionBank = snapshot.getValue(StudyMaterial::class.java)
-                if (questionBank != null) {
-                    dataSource.getDatabase().getReference(target3).setValue(questionBank)
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) { }
-        })
-
-        val ref4 = "debug/studyMaterials/101203"
-        val target4 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101514"
-        var reference4 =
-            dataSource.getDatabase().getReference(ref4)
-        reference4.keepSynced(true)
-        reference4.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val questionBank = snapshot.getValue(StudyMaterial::class.java)
-                if (questionBank != null) {
-                    dataSource.getDatabase().getReference(target4).setValue(questionBank)
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) { }
-        })
+//        val ref2 = "debug/studyMaterials/101201"
+//        val target2 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101512"
+//        var reference2 =
+//                dataSource.getDatabase().getReference(ref2)
+//        reference2.keepSynced(true)
+//        reference2.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val questionBank = snapshot.getValue(StudyMaterial::class.java)
+//                if (questionBank != null) {
+//                    dataSource.getDatabase().getReference(target2).setValue(questionBank)
+//                }
+//            }
+//            override fun onCancelled(databaseError: DatabaseError) { }
+//        })
+//
+//        val ref3 = "debug/studyMaterials/101202"
+//        val target3 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101513"
+//        var reference3 =
+//                dataSource.getDatabase().getReference(ref3)
+//        reference3.keepSynced(true)
+//        reference3.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val questionBank = snapshot.getValue(StudyMaterial::class.java)
+//                if (questionBank != null) {
+//                    dataSource.getDatabase().getReference(target3).setValue(questionBank)
+//                }
+//            }
+//            override fun onCancelled(databaseError: DatabaseError) { }
+//        })
+//
+//        val ref4 = "debug/studyMaterials/101203"
+//        val target4 = "cats/v2/cats/1/courses/101/sections/1015/studyMaterials/101514"
+//        var reference4 =
+//            dataSource.getDatabase().getReference(ref4)
+//        reference4.keepSynced(true)
+//        reference4.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val questionBank = snapshot.getValue(StudyMaterial::class.java)
+//                if (questionBank != null) {
+//                    dataSource.getDatabase().getReference(target4).setValue(questionBank)
+//                }
+//            }
+//            override fun onCancelled(databaseError: DatabaseError) { }
+//        })
 
         val ref5 = "debug/studyMaterials/101204"
         val target5 = "cats/v2/cats/1/courses/101/sections/1013/studyMaterials/101301"

@@ -76,7 +76,7 @@ added 31 question images
 added 31 qb section
 added 10 days qb section
 added ordering functionality in sections and show by order
-added underline to sections
+Is it possible to underline the titles since it doesn't looks distinct, it should form part of the images mentioned below.
 changed more to see all
 Marking question for later will remove answer selection if any
 added image carousel in description
@@ -86,3 +86,6 @@ added shortname functionality
 added support for videos (clicking on see all opens up correctly)
 show videos of domain activity
 added video play avtivity
+CISA(Certified Information System Auditor) name header should be properly arranged, in separately line
+Kindly highlight the questions in bold and in a different colour, maybe Navy Blue.
+Also for Materials/Flash "option_a_text" data should be bulleted.

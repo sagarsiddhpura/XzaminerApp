@@ -47,6 +47,7 @@
                     android:paddingBottom="4dp"
                     android:paddingRight="4dp"
                     android:paddingLeft="4dp"
+                    android:textStyle="bold"
                     tools:text="The decisions and actions of an IS auditor are MOST likely to affect which of the following types of risk?"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
@@ -94,6 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
+                    android:textColor="@color/text_black"
                     tools:text="Ensure the risk assessement is aligned to management's risk assessement process"/>
 
         </LinearLayout>
@@ -125,6 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
+                    android:textColor="@color/text_black"
                     tools:text="Ensure the risk assessement is aligned to management's risk assessement process"/>
 
         </LinearLayout>
@@ -156,6 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
+                    android:textColor="@color/text_black"
                     tools:text="Ensure the risk assessement is aligned to management's risk assessement process"/>
 
         </LinearLayout>
@@ -190,6 +194,7 @@
                     android:paddingBottom="8dp"
                     android:paddingRight="4dp"
                     android:paddingLeft="4dp"
+                    android:textColor="@color/text_black"
                     tools:text="Ensure the risk assessement is aligned to management's risk assessement process"/>
 
         </LinearLayout>

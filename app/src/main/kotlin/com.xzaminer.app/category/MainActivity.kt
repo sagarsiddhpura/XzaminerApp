@@ -35,7 +35,6 @@ import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.*
-import com.xzaminer.app.studymaterial.VideoActivity
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.view.*
@@ -112,20 +111,20 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //            Intent(this, IntroActivity::class.java).apply {
 //                startActivity(this)
 //            }
-//                Intent(this, CourseActivity::class.java).apply {
-//                    putExtra(COURSE_ID, 101L)
-//                    startActivity(this)
-//                }
-                Intent(this, VideoActivity::class.java).apply {
+                Intent(this, CourseActivity::class.java).apply {
                     putExtra(COURSE_ID, 101L)
-                    putExtra(SECTION_ID, 1016L)
-                    putExtra(DOMAIN_ID, 101601L)
-                    putExtra(VIDEO_ID, 1016001L)
                     startActivity(this)
                 }
+//                Intent(this, VideoActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    putExtra(SECTION_ID, 1016L)
+//                    putExtra(DOMAIN_ID, 101601L)
+//                    putExtra(VIDEO_ID, 1016001L)
+//                    startActivity(this)
+//                }
             }
         }
-        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+//        debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //        debugDataSource.copyQuestionBank(dataSource)
 //        debugDataSource.uploadImages(this, dataSource)
     }
