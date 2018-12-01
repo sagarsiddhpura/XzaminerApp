@@ -58,7 +58,6 @@ class CourseActivity : SimpleActivity() {
 
         dataSource.getCourseById(courseId) { course ->
             if(course != null) {
-                supportActionBar?.title = course.name
                 loadCourse(course)
             } else {
                 toast("Error opening course.")
@@ -70,7 +69,9 @@ class CourseActivity : SimpleActivity() {
 
     private fun loadCourse(loadedCourse: Course) {
         course_title.text = loadedCourse.name
-        if(loadedCourse.descImages.isEmpty()) {
+        supportActionBar?.title = loadedCourse.shortName ?: loadedCourse.name
+
+         if(loadedCourse.descImages.isEmpty()) {
             desc_slider.beGone()
         } else {
             Slider.init(PicassoImageLoadingService(this))
@@ -78,7 +79,7 @@ class CourseActivity : SimpleActivity() {
         }
 
         val sections = loadedCourse.fetchVisibleSections()
-        val offset = 4
+        val offset = 3
 
         for(i in offset until course_holder.childCount) {
             if(i < sections.size + offset) {
@@ -112,8 +113,8 @@ class CourseActivity : SimpleActivity() {
         val values = ArrayList(section.studyMaterials.values)
         values.sortWith(compareBy { it.id })
 
-        if(section.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
-            CourseStudyMaterialsAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.HORIZONTAL) {
+        CourseStudyMaterialsAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.HORIZONTAL) {
+            if(it is StudyMaterial && it.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
                 Intent(this, StudyMaterialActivity::class.java).apply {
                     putExtra(STUDY_MATERIAL_ID, (it as StudyMaterial).id)
                     putExtra(COURSE_ID, courseId)
@@ -121,22 +122,24 @@ class CourseActivity : SimpleActivity() {
                     putExtra(STUDY_MATERIAL_TYPE, section.type)
                     startActivity(this)
                 }
-            }.apply {
-                recyclerView.adapter = this
-            }
-        }
-        if(section.type == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
-            CourseQuestionBanksAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.HORIZONTAL) {
+            } else if((it as StudyMaterial).type == STUDY_MATERIAL_TYPE_QUESTION_BANK ) {
                 Intent(this, QuizActivity::class.java).apply {
-                    putExtra(QUIZ_ID, (it as StudyMaterial).id)
+                    putExtra(QUIZ_ID, (it).id)
                     putExtra(COURSE_ID, courseId)
                     putExtra(SECTION_ID, section.id)
                     putExtra(IS_NEW_QUIZ, true)
                     startActivity(this)
                 }
-            }.apply {
-                recyclerView.adapter = this
+            } else if((it as StudyMaterial).type == STUDY_MATERIAL_TYPE_VIDEO ) {
+                Intent(this, CourseSectionVideosDomainActivity::class.java).apply {
+                    putExtra(DOMAIN_ID, (it).id)
+                    putExtra(COURSE_ID, courseId)
+                    putExtra(SECTION_ID, section.id)
+                    startActivity(this)
+                }
             }
+        }.apply {
+            recyclerView.adapter = this
         }
         val layoutManager = recyclerView.layoutManager as MyGridLayoutManager
         layoutManager.orientation = GridLayoutManager.HORIZONTAL

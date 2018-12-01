@@ -6,14 +6,17 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.simplemobiletools.commons.extensions.getInternalStoragePath
 import com.xzaminer.app.SimpleActivity
+import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.category.Category
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.course.CourseSection
 import com.xzaminer.app.studymaterial.Question
 import com.xzaminer.app.studymaterial.QuestionOption
 import com.xzaminer.app.studymaterial.StudyMaterial
+import com.xzaminer.app.studymaterial.Video
 import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_QUESTION_BANK
 import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_STUDY_MATERIAL
+import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_VIDEO
 import java.io.File
 
 
@@ -35,7 +38,8 @@ class DebugDataSource {
                 "Congratulations on choosing to become a Certified Information Systems Auditor (CISA). Whether you have worked for several years in the field of information systems auditing or have just recently been introduced to the world of controls, assurance, and security, don’t underestimate the hard work and dedication required to obtain and maintain CISA certification. Although ambition and motivation are required, the rewards can far exceed the effort.\n" +
                         "You probably never imagined you would find yourself working in the world of auditing or looking to obtain a professional auditing certification. Perhaps the increase in legislative or regulatory requirements for information system security led to your introduction to this field. ",
                 "images/cat_2.png",
-                getSections(101), arrayListOf(), arrayListOf("images/cisa/desc_1.jpg", "images/cisa/desc_2.jpg", "images/cisa/desc_3.jpg", "images/cisa/desc_4.jpg", "images/cisa/desc_5.jpg", "images/cisa/desc_6.jpg")
+                getSections(101), arrayListOf(), arrayListOf("images/cisa/desc_1.jpg", "images/cisa/desc_2.jpg", "images/cisa/desc_3.jpg", "images/cisa/desc_4.jpg", "images/cisa/desc_5.jpg"),
+                "CISA"
             )
             return linkedMapOf(c1.id.toString() to c1)
         }
@@ -79,9 +83,58 @@ class DebugDataSource {
                 "", getQuestionBanks(1015), STUDY_MATERIAL_TYPE_QUESTION_BANK,
                 arrayListOf(), 5
             )
-            val sections = linkedMapOf(s1.id.toString() to s1, s2.id.toString() to s2, s3.id.toString() to s3, s4.id.toString() to s4, s5.id.toString() to s5)
-            return sections
+            val s6 = CourseSection(
+                1016,
+                "Videos",
+                "",
+                "", getVideosSection(1016), STUDY_MATERIAL_TYPE_VIDEO,
+                arrayListOf(), 1
+            )
+            return linkedMapOf(s1.id.toString() to s1, s2.id.toString() to s2, s3.id.toString() to s3, s4.id.toString() to s4, s5.id.toString() to s5, s6.id.toString() to s6)
         }
+        return hashMapOf()
+    }
+
+    private fun getVideosSection(id: Int): HashMap<String, StudyMaterial> {
+        if (id == 1016) {
+            val videos = hashMapOf<String, StudyMaterial>()
+            for (i in 101601..101605) {
+                val c = StudyMaterial(
+                    i.toLong(),
+                    "Domain 0" + (i - 101600),
+                    "",
+                    "images/cisa/vi_se_" + (i - 101600) + ".jpg", 0, getStudyMaterialProperties(),
+                     getQuestions(i), getVideos(i), getSectionPurchaseInfo(), "", STUDY_MATERIAL_TYPE_VIDEO
+                )
+                videos[c.id.toString()] = c
+            }
+            return videos
+        }
+        return hashMapOf()
+    }
+
+    private fun getVideos(id: Int): ArrayList<Video> {
+        if(id in 101601..101605) {
+            val videos = arrayListOf<Video>()
+            for (i in 1016001..1016005) {
+                val c = Video(
+                    i.toLong(),
+                    "Video 0" + (i - 1016000),
+                    "Video 0" + (i - 1016000),
+                    "images/cisa/video.png", "video_101601_" + (i - 1016000) + ".mp4", "courses/101/", "", (i - 1016000)
+                )
+                videos.add(c)
+            }
+            return videos
+        }
+        return arrayListOf()
+    }
+
+    private fun getSectionPurchaseInfo(): ArrayList<Purchase> {
+        return arrayListOf()
+    }
+
+    private fun getStudyMaterialProperties(): HashMap<String, ArrayList<String>> {
         return hashMapOf()
     }
 
@@ -92,7 +145,7 @@ class DebugDataSource {
                 "Domain 01",
                 "Domain 01",
                 "images/cisa/fc_1.jpg", 0, linkedMapOf(),
-                getQuestions(1013), arrayListOf(), ""
+                getQuestions(1013), arrayListOf(), arrayListOf(), ""
             )
             val flashCards = linkedMapOf(c1.id.toString() to c1)
             for (i in 101402..101405) {
@@ -101,7 +154,7 @@ class DebugDataSource {
                     "Domain 0" + (i - 101400),
                     "Domain 0" + (i - 101400),
                     "images/cisa/fc_" + (i - 101400) + ".jpg", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), ""
+                    getQuestions(i), arrayListOf(), arrayListOf(), ""
                 )
                 flashCards[c.id.toString()] = c
             }
@@ -117,28 +170,28 @@ class DebugDataSource {
                 "Domain 02",
                 "Domain 02",
                 "images/cisa/rm_2.jpg", 0, linkedMapOf(),
-                getQuestions(101302), arrayListOf(), ""
+                getQuestions(101302), arrayListOf(), arrayListOf(), ""
             )
             val c3 = StudyMaterial(
                 101303,
                 "Domain 03",
                 "Domain 03",
                 "images/cisa/rm_3.jpg", 0, linkedMapOf(),
-                getQuestions(101303), arrayListOf(), ""
+                getQuestions(101303), arrayListOf(), arrayListOf(), ""
             )
             val c4 = StudyMaterial(
                 101304,
                 "Domain 04",
                 "Domain 04",
                 "images/cisa/rm_4.jpg", 0, linkedMapOf(),
-                getQuestions(101304), arrayListOf(), ""
+                getQuestions(101304), arrayListOf(), arrayListOf(), ""
             )
             val c5 = StudyMaterial(
                 101305,
                 "Domain 05",
                 "Domain 05",
                 "images/cisa/rm_5.jpg", 0, linkedMapOf(),
-                getQuestions(101305), arrayListOf(), ""
+                getQuestions(101305), arrayListOf(), arrayListOf(), ""
             )
             return linkedMapOf(c2.id.toString() to c2, c3.id.toString() to c3, c4.id.toString() to c4, c5.id.toString() to c5)
         }
@@ -152,7 +205,7 @@ class DebugDataSource {
                 "CISA 30 Days Course (Concepts)",
                 "CISA 30 Days Course (Concepts)",
                 "images/cisa/co_1.jpg", 0, linkedMapOf(),
-                getQuestions(1011), arrayListOf(), ""
+                getQuestions(1011), arrayListOf(), arrayListOf(), ""
             )
             val studyMats = linkedMapOf(c1.id.toString() to c1)
             for (i in 101102..101132) {
@@ -161,7 +214,7 @@ class DebugDataSource {
                     "Day " + (i - 101101),
                     "Day " + (i - 101101),
                     "images/cisa/co_" + (i - 101101) + ".jpg", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), ""
+                    getQuestions(i), arrayListOf(), arrayListOf(), ""
                 )
                 studyMats[c.id.toString()] = c
             }
@@ -180,7 +233,7 @@ class DebugDataSource {
                     "Day " + (i - 101203),
                     "Day " + (i - 101203),
                     "images/cisa/qb_2_" + (i - 101203) + ".jpg", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
+                    getQuestions(i), arrayListOf(), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
                 )
                 questionBanks[c.id.toString()] = c
             }
@@ -195,7 +248,7 @@ class DebugDataSource {
                     "Day " + (i - 101500),
                     "Day " + (i - 101500),
                     "images/cisa/qb_" + (i - 101500) + ".jpg", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
+                    getQuestions(i), arrayListOf(), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
                 )
                 questionBanks[c.id.toString()] = c
             }

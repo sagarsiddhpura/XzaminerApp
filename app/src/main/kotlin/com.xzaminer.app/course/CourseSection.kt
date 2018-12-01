@@ -19,10 +19,14 @@ data class CourseSection (
             return "$name:::$description"
         }
 
-    fun getStudyMaterialById(studyMaterialId: Long): @ParameterName(name = "course") StudyMaterial? {
+    fun fetchStudyMaterialById(studyMaterialId: Long): @ParameterName(name = "course") StudyMaterial? {
         if(!studyMaterials.isEmpty()) {
             return studyMaterials.values.find { it -> (it != null && it.id == studyMaterialId) }
         }
         return null
+    }
+
+    fun fetchDomain(domainId: Long) {
+
     }
 }

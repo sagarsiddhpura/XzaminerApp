@@ -11,6 +11,7 @@ data class StudyMaterial (
     var openCount: Int = 0,
     var properties : HashMap<String, ArrayList<String>> = hashMapOf(),
     var questions: ArrayList<Question> = arrayListOf(),
+    var videos: ArrayList<Video> = arrayListOf(),
     val purchaseInfo: ArrayList<Purchase> = arrayListOf(),
     var status: String = "",
     var type: String = STUDY_MATERIAL_TYPE_STUDY_MATERIAL
@@ -99,5 +100,9 @@ data class StudyMaterial (
 
     fun addTotalTimer(timer: String) {
         properties[TIMER_RUNNING_TIME] = arrayListOf(timer)
+    }
+
+    fun fetchVideo(videoId: Long): Video? {
+        return videos.find { it -> it.id == videoId }
     }
 }
