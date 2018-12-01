@@ -121,7 +121,7 @@ class DebugDataSource {
                     i.toLong(),
                     "Video 0" + (i - 1016000),
                     "Video 0" + (i - 1016000),
-                    "images/cisa/video.png", "video_101601_" + (i - 1016000) + ".mp4", "courses/101/", "", (i - 1016000)
+                    "", "video_101601_" + (i - 1016000) + ".mp4", "courses/101/", "", (i - 1016000)
                 )
                 videos.add(c)
             }

@@ -124,8 +124,8 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                }
             }
         }
-//        debugDataSource.initMockDataRealtimeDatabase(dataSource)
-//        debugDataSource.copyQuestionBank(dataSource)
+        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+        debugDataSource.copyQuestionBank(dataSource)
 //        debugDataSource.uploadImages(this, dataSource)
     }
 

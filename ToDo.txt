@@ -2,8 +2,7 @@ Issues:
 Explanation is cut off if too long
 Starting new quiz resets previous quiz?
 have user refresh local copy by online copy by flag
-bullet points in review manual
-
+update videos screen to list oneq
 
 Next release
 The problem is the person if he has completed his/her certification exams may give the login to others and without cost they will start using the same account. This will not be a advantageous situation for us, hence need to have an alternate or only mobile otp verification. Kindly suggest if you think any other strategy would help.

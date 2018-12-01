@@ -61,7 +61,7 @@ class CourseSectionDomainVideosAdapter(
         view.apply {
             cat_name.text = video.name
             cat_name.beVisible()
-            if(video.thumbnail != null) {
+            if(video.thumbnail != null && video.thumbnail != "") {
                 activity.loadImageImageView(video.thumbnail!!, cat_image, false, cat_name, R.drawable.im_placeholder_video)
             } else {
                 val img : Int = R.drawable.im_placeholder_video
