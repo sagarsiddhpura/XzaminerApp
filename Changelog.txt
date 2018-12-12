@@ -89,3 +89,12 @@ added video play avtivity
 CISA(Certified Information System Auditor) name header should be properly arranged, in separately line
 Kindly highlight the questions in bold and in a different colour, maybe Navy Blue.
 Also for Materials/Flash "option_a_text" data should be bulleted.
+
+2.12
+Changed concept section to video section
+New layout for domain screen
+Show error and close video if invalid video url
+updated images for all sections
+New course section layout
+
+feedback

@@ -11,7 +11,7 @@ The problem is the person if he has completed his/her certification exams may gi
 xzamminer@gmail.com
 Googleplay@345
 
-adb connect 192.168.0.101:5555
+adb connect 192.168.0.102:5555
 
 Links
 https://www.uplabs.com/posts/exam-app-exam-categories

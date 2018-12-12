@@ -1,0 +1,62 @@
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/section_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_desc_courses"
+        android:orientation="vertical">
+
+    <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp"
+            android:weightSum="1">
+
+        <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/section_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="30 Days Course (Concepts)"
+                android:textSize="@dimen/bigger_text_size"/>
+
+        <com.simplemobiletools.commons.views.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:text="SEE ALL"
+                android:textSize="@dimen/bigger_text_size"/>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <com.simplemobiletools.commons.views.MyRecyclerView
+            android:id="@+id/section_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+            app:spanCount="1"
+            android:layout_margin="4dp"
+            android:padding="0dp" />
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/divider_grey" />
+
+</android.support.v7.widget.LinearLayoutCompat>

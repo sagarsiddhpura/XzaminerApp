@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.xzaminer.app.billing.PurchaseLog
 import com.xzaminer.app.category.Category
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.extensions.config
@@ -15,6 +16,7 @@ private var db: FirebaseDatabase? = null
 private var catsDbVersion = 2
 private var userDbVersion = 1
 private var storage: FirebaseStorage? = null
+private var purchaseLogDbVersion = 1
 
 class DataSource {
 
@@ -280,5 +282,14 @@ class DataSource {
                 callback(it.sections.values.find { section -> section.id == sectionId }?.studyMaterials?.values?.find { studyMat -> studyMat.id == studyMaterialId })
             }
         }
+    }
+
+    fun addPurchaseLog(purLog: PurchaseLog) {
+        val dbRef = getPurchaseLogDatabase()
+        dbRef.child(Calendar.getInstance().time.time.toString()).setValue(purLog)
+    }
+
+    private fun getPurchaseLogDatabase(): DatabaseReference {
+        return getDatabase().getReference("purchaseLog/v$purchaseLogDbVersion")
     }
 }

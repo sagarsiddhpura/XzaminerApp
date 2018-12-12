@@ -8,5 +8,6 @@ data class Video (
     var fileName: String? = null,
     var url: String? = null,
     var localFile: String? = null,
-    var order: Int = 0
+    var order: Int = 0,
+    var duration: String = ""
 )

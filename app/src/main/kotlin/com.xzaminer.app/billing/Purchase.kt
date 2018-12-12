@@ -5,8 +5,8 @@ data class Purchase(
         val name: String = "",
         val type: String = "",
         val actualPrice: String = "",
-        val orignalPrice: String = "",
+        val originalPrice: String = "",
+        val showPurchase: Boolean = false,
         val expiry: String? = null,
-        val details: String? = null,
-        val purchased: String? = null) {
-}
+        var details: String? = null,
+        val purchased: String? = null)

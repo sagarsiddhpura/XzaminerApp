@@ -6,6 +6,7 @@
 
     <color name="intro_bg">#1e1e23</color>
     <color name="background_grey">#f8f9fb</color>
+    <color name="background_grey_darker">#ffffff</color>
     <color name="text_black">#ee000000</color>
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_300">#E0E0E0</color>

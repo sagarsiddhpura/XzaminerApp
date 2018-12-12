@@ -26,4 +26,11 @@ data class Course (
     fun fetchSection(sectionId: Long): CourseSection? {
         return sections.values.find { it -> it.id == sectionId }
     }
+
+    fun fetchVisiblePurchases(): List<Purchase> {
+        if(!purchaseInfo.isEmpty()) {
+            return purchaseInfo.filter { it.showPurchase }
+        }
+        return arrayListOf()
+    }
 }

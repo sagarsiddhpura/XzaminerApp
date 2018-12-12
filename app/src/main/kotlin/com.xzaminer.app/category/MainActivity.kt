@@ -122,10 +122,17 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    putExtra(VIDEO_ID, 1016001L)
 //                    startActivity(this)
 //                }
+//                Intent(this, CourseSectionVideosDomainActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    putExtra(SECTION_ID, 1016L)
+//                    putExtra(DOMAIN_ID, 101601L)
+//                    startActivity(this)
+//                }
+
             }
         }
         debugDataSource.initMockDataRealtimeDatabase(dataSource)
-        debugDataSource.copyQuestionBank(dataSource)
+//        debugDataSource.copyQuestionBank(dataSource)
 //        debugDataSource.uploadImages(this, dataSource)
     }
 
@@ -451,7 +458,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
                         // Add purchase to user
                         val purchase = Purchase(purchaseTransactionDetails.productId, getProductName(purchaseTransactionDetails.productId),
-                            getProductType(purchaseTransactionDetails.productId), "", "", getExpiry(purchaseTransactionDetails.productId), json, getNowDate())
+                            getProductType(purchaseTransactionDetails.productId), "", "", true, getExpiry(purchaseTransactionDetails.productId), json, getNowDate())
                         user.purchases.add(purchase)
                         config.setLoggedInUser(user)
                         // save to db
@@ -519,7 +526,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
                             // Add purchase to user
                             val purchase = Purchase(subscriptionTransactionDetails.productId, getProductName(subscriptionTransactionDetails.productId),
-                                getProductType(subscriptionTransactionDetails.productId), "", "", getExpiry(subscriptionTransactionDetails.productId), json, getNowDate())
+                                getProductType(subscriptionTransactionDetails.productId), "", "", true, getExpiry(subscriptionTransactionDetails.productId), json, getNowDate())
                             user.purchases.add(purchase)
                             config.setLoggedInUser(user)
                             // save to db

@@ -14,9 +14,7 @@ import com.xzaminer.app.studymaterial.Question
 import com.xzaminer.app.studymaterial.QuestionOption
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.Video
-import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_QUESTION_BANK
-import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_STUDY_MATERIAL
-import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_VIDEO
+import com.xzaminer.app.utils.*
 import java.io.File
 
 
@@ -38,7 +36,7 @@ class DebugDataSource {
                 "Congratulations on choosing to become a Certified Information Systems Auditor (CISA). Whether you have worked for several years in the field of information systems auditing or have just recently been introduced to the world of controls, assurance, and security, don’t underestimate the hard work and dedication required to obtain and maintain CISA certification. Although ambition and motivation are required, the rewards can far exceed the effort.\n" +
                         "You probably never imagined you would find yourself working in the world of auditing or looking to obtain a professional auditing certification. Perhaps the increase in legislative or regulatory requirements for information system security led to your introduction to this field. ",
                 "images/cat_2.png",
-                getSections(101), arrayListOf(), arrayListOf("images/cisa/desc_1.jpg", "images/cisa/desc_2.jpg", "images/cisa/desc_3.jpg", "images/cisa/desc_4.jpg", "images/cisa/desc_5.jpg"),
+                getSections(101), getPurchaseInfo(101), arrayListOf("images/cisa/desc_1.jpg", "images/cisa/desc_2.jpg", "images/cisa/desc_3.jpg", "images/cisa/desc_4.jpg", "images/cisa/desc_5.jpg"),
                 "CISA"
             )
             return linkedMapOf(c1.id.toString() to c1)
@@ -48,13 +46,13 @@ class DebugDataSource {
 
     private fun getSections(id: Int): HashMap<String, CourseSection> {
         if (id == 101) {
-            val s1 = CourseSection(
-                1011,
-                "31 Days Course (Concepts)",
-                "",
-                "", getConcepts(1011), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
-                arrayListOf(), 2
-            )
+//            val s1 = CourseSection(
+//                1011,
+//                "31 Days Course (Concepts)",
+//                "",
+//                "", getConcepts(1011), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
+//                arrayListOf(), 2
+//            )
             val s2 = CourseSection(
                 1012,
                 "31 Days Course (Questions)",
@@ -62,13 +60,13 @@ class DebugDataSource {
                 "", getQuestionBanks(1012), STUDY_MATERIAL_TYPE_QUESTION_BANK,
                 arrayListOf(), 3
             )
-            val s3 = CourseSection(
-                1013,
-                "Review Manuals",
-                "",
-                "", getReviewManuals(1013), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
-                arrayListOf(), 6
-            )
+//            val s3 = CourseSection(
+//                1013,
+//                "Review Manuals",
+//                "",
+//                "", getReviewManuals(1013), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
+//                arrayListOf(), 6
+//            )
             val s4 = CourseSection(
                 1014,
                 "Flash Cards",
@@ -81,7 +79,7 @@ class DebugDataSource {
                 "Question Banks",
                 "",
                 "", getQuestionBanks(1015), STUDY_MATERIAL_TYPE_QUESTION_BANK,
-                arrayListOf(), 5
+                arrayListOf(), 4
             )
             val s6 = CourseSection(
                 1016,
@@ -90,7 +88,15 @@ class DebugDataSource {
                 "", getVideosSection(1016), STUDY_MATERIAL_TYPE_VIDEO,
                 arrayListOf(), 1
             )
-            return linkedMapOf(s1.id.toString() to s1, s2.id.toString() to s2, s3.id.toString() to s3, s4.id.toString() to s4, s5.id.toString() to s5, s6.id.toString() to s6)
+            val s7 = CourseSection(
+                1017,
+                "31 Days Course",
+                "",
+                "", getVideosSection(1017), STUDY_MATERIAL_TYPE_VIDEO,
+                arrayListOf(), 2
+            )
+            return hashMapOf(s2.id.toString() to s2, s4.id.toString() to s4, s5.id.toString() to s5, s6.id.toString() to s6, s7.id.toString() to s7)
+//            return linkedMapOf(s1.id.toString() to s1, s2.id.toString() to s2, s3.id.toString() to s3, s4.id.toString() to s4, s5.id.toString() to s5, s6.id.toString() to s6)
         }
         return hashMapOf()
     }
@@ -103,11 +109,56 @@ class DebugDataSource {
                     i.toLong(),
                     "Domain 0" + (i - 101600),
                     "",
-                    "images/cisa/vi_se_" + (i - 101600) + ".jpg", 0, getStudyMaterialProperties(),
-                     getQuestions(i), getVideos(i), getSectionPurchaseInfo(), "", STUDY_MATERIAL_TYPE_VIDEO
+                    "courses/101/title_01_h_0" + (i - 101600) + ".jpg", 0, getStudyMaterialProperties(),
+                     getQuestions(i), getVideos(i), getPurchaseInfo(i), "", STUDY_MATERIAL_TYPE_VIDEO
                 )
                 videos[c.id.toString()] = c
             }
+            return videos
+        }
+        if (id == 1017) {
+            val videos = hashMapOf<String, StudyMaterial>()
+            val c1 = StudyMaterial(
+                101701,
+                "Day 1-7",
+                "",
+                "courses/101/title_02_h_01.jpg", 0, getStudyMaterialProperties(),
+                getQuestions(101701), getVideos(101701), getPurchaseInfo(101701), "", STUDY_MATERIAL_TYPE_VIDEO
+            )
+            videos[c1.id.toString()] = c1
+            val c2 = StudyMaterial(
+                101708,
+                "Day 8-14",
+                "",
+                "courses/101/title_02_h_02.jpg", 0, getStudyMaterialProperties(),
+                getQuestions(101708), getVideos(101708), getPurchaseInfo(101708), "", STUDY_MATERIAL_TYPE_VIDEO
+            )
+            videos[c2.id.toString()] = c2
+            val c3 = StudyMaterial(
+                101715,
+                "Day 15-21",
+                "",
+                "courses/101/title_02_h_03.jpg", 0, getStudyMaterialProperties(),
+                getQuestions(101715), getVideos(101715), getPurchaseInfo(101715), "", STUDY_MATERIAL_TYPE_VIDEO
+            )
+            videos[c3.id.toString()] = c3
+            val c4 = StudyMaterial(
+                101722,
+                "Day 22-28",
+                "",
+                "courses/101/title_02_h_04.jpg", 0, getStudyMaterialProperties(),
+                getQuestions(101722), getVideos(101722), getPurchaseInfo(101722), "", STUDY_MATERIAL_TYPE_VIDEO
+            )
+            videos[c4.id.toString()] = c4
+            val c5 = StudyMaterial(
+                101729,
+                "Day 29-31",
+                "",
+                "courses/101/title_02_h_05.jpg", 0, getStudyMaterialProperties(),
+                getQuestions(101729), getVideos(101729), getPurchaseInfo(101729), "", STUDY_MATERIAL_TYPE_VIDEO
+            )
+            videos[c5.id.toString()] = c5
+
             return videos
         }
         return hashMapOf()
@@ -120,17 +171,35 @@ class DebugDataSource {
                 val c = Video(
                     i.toLong(),
                     "Video 0" + (i - 1016000),
-                    "Video 0" + (i - 1016000),
-                    "", "video_101601_" + (i - 1016000) + ".mp4", "courses/101/", "", (i - 1016000)
+                    "This video covers the details of Certified Information systems Auditor in detail",
+                    "", "video_101601_" + (i - 1016000) + ".mp4", "courses/101/", "", (i - 1016000), "08:23"
                 )
                 videos.add(c)
+            }
+            return videos
+        }
+        if(id in 101701..101729) {
+            val videos = arrayListOf<Video>()
+            var i = 0
+            while(i < 7 && ((id - 101729 + i) < 3)) {
+                val c = Video(
+                    i.toLong(),
+                    "Day " + (id + i + 1 - 101701),
+                    "This video covers the details of Day for course Certified Information systems Auditor",
+                    "", "video_101601_" + (i + 1) + ".mp4", "courses/101/", "", (i + 1), "08:23"
+                )
+                videos.add(c)
+                i++
             }
             return videos
         }
         return arrayListOf()
     }
 
-    private fun getSectionPurchaseInfo(): ArrayList<Purchase> {
+    private fun getPurchaseInfo(id: Int): ArrayList<Purchase> {
+        if (id == 101) {
+            return arrayListOf(Purchase(PURCHASE_COURSE_IAP+"101", "CISA Course", PURCHASE_TYPE_IAP, "2500", "5000", true))
+        }
         return arrayListOf()
     }
 
@@ -144,7 +213,7 @@ class DebugDataSource {
                 101401,
                 "Domain 01",
                 "Domain 01",
-                "images/cisa/fc_1.jpg", 0, linkedMapOf(),
+                "courses/101/title_05_h_01.jpg", 0, linkedMapOf(),
                 getQuestions(101401), arrayListOf(), arrayListOf(), ""
             )
             val flashCards = linkedMapOf(c1.id.toString() to c1)
@@ -153,7 +222,7 @@ class DebugDataSource {
                     i.toLong(),
                     "Domain 0" + (i - 101400),
                     "Domain 0" + (i - 101400),
-                    "images/cisa/fc_" + (i - 101400) + ".jpg", 0, linkedMapOf(),
+                    "courses/101/title_05_h_0" + (i - 101400) + ".jpg", 0, linkedMapOf(),
                     getQuestions(i), arrayListOf(), arrayListOf(), ""
                 )
                 flashCards[c.id.toString()] = c
@@ -232,7 +301,7 @@ class DebugDataSource {
                     i.toLong(),
                     "Day " + (i - 101203),
                     "Day " + (i - 101203),
-                    "images/cisa/qb_2_" + (i - 101203) + ".jpg", 0, linkedMapOf(),
+                    "courses/101/title_03_h_0" + (i - 101203) + ".jpg", 0, linkedMapOf(),
                     getQuestions(i), arrayListOf(), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
                 )
                 questionBanks[c.id.toString()] = c
@@ -247,7 +316,7 @@ class DebugDataSource {
                     i.toLong(),
                     "Day " + (i - 101500),
                     "Day " + (i - 101500),
-                    "images/cisa/qb_" + (i - 101500) + ".jpg", 0, linkedMapOf(),
+                    "courses/101/title_04_h_0" + (i - 101500) + ".jpg", 0, linkedMapOf(),
                     getQuestions(i), arrayListOf(), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
                 )
                 questionBanks[c.id.toString()] = c
@@ -729,8 +798,8 @@ class DebugDataSource {
 
     fun uploadImages(activity: SimpleActivity, dataSource: DataSource) {
         val files = File(activity.getInternalStoragePath(), "Xzaminer")
-        files.listFiles().forEach {
-            val riversRef = dataSource.getStorage().getReference("images/cisa").child("qb_2_${it.name}")
+        files.listFiles()?.forEach {
+            val riversRef = dataSource.getStorage().getReference("courses/101").child(it.name)
             riversRef.putFile(Uri.fromFile(it))
         }
     }

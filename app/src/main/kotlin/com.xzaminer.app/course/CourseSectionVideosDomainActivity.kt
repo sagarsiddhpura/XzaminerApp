@@ -37,7 +37,7 @@ class CourseSectionVideosDomainActivity : SimpleActivity() {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_course_section)
+        setContentView(R.layout.activity_course_section_video_domain)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -71,12 +71,6 @@ class CourseSectionVideosDomainActivity : SimpleActivity() {
 
     private fun loadDomain(loadedSection: StudyMaterial) {
         section_title.text = loadedSection.name
-        if(loadedSection.description != null && loadedSection.description != "") {
-            section_desc.text = loadedSection.description
-        } else {
-            section_desc.beGone()
-            divider_desc_courses.beGone()
-        }
         setupAdapter(section_rv, loadedSection)
     }
 
@@ -84,7 +78,7 @@ class CourseSectionVideosDomainActivity : SimpleActivity() {
         val values = ArrayList(studyMaterial.videos)
         values.sortWith(compareBy { it.order })
 
-        CourseSectionDomainVideosAdapter(this, values.clone() as ArrayList<Video>, recyclerView, GridLayoutManager.VERTICAL) {
+        CourseSectionDomainVideosAdapter(this, values.clone() as ArrayList<Video>, recyclerView) {
             Intent(this, VideoActivity::class.java).apply {
                 putExtra(COURSE_ID, courseId)
                 putExtra(SECTION_ID, sectionId)
@@ -94,9 +88,10 @@ class CourseSectionVideosDomainActivity : SimpleActivity() {
             }
         }.apply {
             recyclerView.adapter = this
+            addVerticalDividers(true)
         }
         val layoutManager = recyclerView.layoutManager as MyGridLayoutManager
         layoutManager.orientation = GridLayoutManager.VERTICAL
-        layoutManager.spanCount = 3
+        layoutManager.spanCount = 1
     }
 }

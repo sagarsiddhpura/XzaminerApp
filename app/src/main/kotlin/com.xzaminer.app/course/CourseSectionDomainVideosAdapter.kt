@@ -12,11 +12,12 @@ import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.loadIconImageView
 import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.Video
+import kotlinx.android.synthetic.main.course_domain_video_item.view.*
 import kotlinx.android.synthetic.main.course_study_material_item_grid.view.*
 
 
 class CourseSectionDomainVideosAdapter(
-    activity: SimpleActivity, var videos: ArrayList<Video>, recyclerView: MyRecyclerView, val orientation: Int,
+    activity: SimpleActivity, var videos: ArrayList<Video>, recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
@@ -27,11 +28,7 @@ class CourseSectionDomainVideosAdapter(
     override fun markViewHolderSelection(select: Boolean, viewHolder: ViewHolder?) { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        if(orientation == GridLayoutManager.VERTICAL) {
-            return createViewHolder(R.layout.course_study_material_item_grid_vertical, parent)
-        } else {
-            return createViewHolder(R.layout.course_study_material_item_grid, parent)
-        }
+        return createViewHolder(R.layout.course_domain_video_item, parent)
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
@@ -59,13 +56,14 @@ class CourseSectionDomainVideosAdapter(
 
     private fun setupView(view: View, video: Video) {
         view.apply {
-            cat_name.text = video.name
-            cat_name.beVisible()
+            vid_name.text = video.name
+            vid_desc.text = video.description
+            vid_time.text = video.duration
             if(video.thumbnail != null && video.thumbnail != "") {
-                activity.loadImageImageView(video.thumbnail!!, cat_image, false, cat_name, R.drawable.im_placeholder_video)
+                activity.loadImageImageView(video.thumbnail!!, vid_image, false, cat_name, R.drawable.im_placeholder_video)
             } else {
                 val img : Int = R.drawable.im_placeholder_video
-                activity.loadIconImageView(img, cat_image, false)
+                activity.loadIconImageView(img, vid_image, false)
             }
         }
     }

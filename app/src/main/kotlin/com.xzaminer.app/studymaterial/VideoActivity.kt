@@ -66,6 +66,9 @@ class VideoActivity : SimpleActivity() {
             if (video != null) {
                 FirebaseStorage.getInstance().getReference(video.url + video.fileName).downloadUrl.addOnSuccessListener { uri ->
                     loadVideo(uri)
+                }.addOnFailureListener {
+                    toast("Error opening video")
+                    finish()
                 }
             } else {
                 toast("Error opening Video")
