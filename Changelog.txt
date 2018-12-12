@@ -96,5 +96,5 @@ New layout for domain screen
 Show error and close video if invalid video url
 updated images for all sections
 New course section layout
-
+In App purchase for course
 feedback

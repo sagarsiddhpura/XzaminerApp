@@ -130,8 +130,9 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                }
 
             }
+            debugDataSource.initMockDataRealtimeDatabase(dataSource)
         }
-        debugDataSource.initMockDataRealtimeDatabase(dataSource)
+
 //        debugDataSource.copyQuestionBank(dataSource)
 //        debugDataSource.uploadImages(this, dataSource)
     }
@@ -464,10 +465,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                         // save to db
                         dataSource.addUser(user)
                         ConfirmationDialog(this, "We have restored your purchase " + purchase.name + ". Please enjoy the benefits", R.string.yes, R.string.ok, 0) { }
-                        debugDataSource.addDebugObject(dataSource, "purchaseAddedCategoriesActivity", purchaseTransactionDetails)
+                        debugDataSource.addDebugObject(dataSource, "purchases/purchaseRestoredCategoriesActivity", purchaseTransactionDetails)
                     }
 
-                    debugDataSource.addDebugObject(dataSource, "purchaseCategoriesActivity", purchaseTransactionDetails)
+                    debugDataSource.addDebugObject(dataSource, "purchases/purchaseFoundCategoriesActivity", purchaseTransactionDetails)
                 }
             }
 

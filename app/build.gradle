@@ -15,8 +15,8 @@ android {
         applicationId "com.xzaminer.app"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 31
-        versionName "2.11debug"
+        versionCode 32
+        versionName "2.12"
         multiDexEnabled true
     }
     buildTypes {

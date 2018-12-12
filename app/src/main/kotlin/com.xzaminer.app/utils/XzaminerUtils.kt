@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun getProductName(id: String): String {
-    if(id == IAP_SUB_YEARLY) {
-        return "Yearly Subscription"
+    if(id.startsWith(PURCHASE_COURSE_IAP)) {
+        return "Course"
     }
-    if(id == IAP_SUB_MONTHLY) {
-        return "Monthly Subscription"
+    if(id.startsWith(PURCHASE_COURSE_IAP)) {
+        return "Purchase"
     }
     return QUESTION_BANK_NAME
 }

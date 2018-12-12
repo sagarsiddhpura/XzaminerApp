@@ -40,7 +40,6 @@ import ss.com.bannerslider.Slider
 class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
     private var toolbar: Toolbar? = null
-    private lateinit var user: User
     private var courseId: Long = -1
     private var isBillingInitialized: Boolean = false
     private var billing: BillingProcessor? = null
@@ -66,7 +65,6 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                 return
             }
         }
-        user = config.getLoggedInUser() as User
 
         dataSource.getCourseById(courseId) { course ->
             if(course != null) {
@@ -169,29 +167,37 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
     }
 
     private fun initPurchases(loadedCourse: Course) {
+
+        if(!isBillingInitialized) {
+            billing = BillingProcessor(this, null, this)
+            billing!!.initialize()
+        }
+
         val purchases = loadedCourse.fetchVisiblePurchases()
         if(!purchases.isEmpty()) {
             val purchase = purchases.first()
+            val user = config.getLoggedInUser() as User
 
-            if(purchase.originalPrice != "") {
-                val content = SpannableString(purchase.originalPrice + " " + purchase.actualPrice)
-                content.setSpan(StrikethroughSpan(), 0, purchase.originalPrice.length, 0)
-                price_value.text = content
-            } else {
-                price_value.text = purchase.actualPrice
-            }
-
-            price_buy.setOnClickListener {
-                val user = config.getLoggedInUser() as User
-                if(isBillingInitialized) {
-                    val extraParams = Bundle()
-                    extraParams.putString("accountId", user.getId())
-                    billing!!.subscribe(this@CourseActivity, purchase.id, "::purchaseid::" + purchase.id + "::user::" + user.getId(), extraParams)
+            if(!user.hasPurchase(purchase.id)) {
+                if(purchase.originalPrice != "") {
+                    val content = SpannableString(purchase.originalPrice + " " + purchase.actualPrice)
+                    content.setSpan(StrikethroughSpan(), 0, purchase.originalPrice.length, 0)
+                    price_value.text = content
+                } else {
+                    price_value.text = purchase.actualPrice
                 }
-            }
 
-            billing = BillingProcessor(this, null, this)
-            billing!!.initialize()
+                price_buy.setOnClickListener {
+                    val user = config.getLoggedInUser() as User
+                    if(isBillingInitialized) {
+                        val extraParams = Bundle()
+                        extraParams.putString("accountId", user.getId())
+                        billing!!.purchase(this@CourseActivity, purchase.id, "::purchaseid::" + purchase.id + "::user::" + user.getId(), extraParams)
+                    }
+                }
+            } else {
+                price_course_root.beGone()
+            }
         } else {
             price_course_root.beGone()
         }
@@ -214,6 +220,8 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             user.purchases.add(purchaseFromCourse)
             // save to db
             dataSource.addUser(user)
+            // save to local
+            config.setLoggedInUser(user)
         }
 
         initPurchases(course!!)
@@ -224,7 +232,7 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
-        toast("Billing error:"+errorCode+", details:"+ (error?.message ?: ""))
+        toast("Billing error: " + errorCode + ", details:" + (error?.message ?: ""))
     }
 
     override fun onPurchaseHistoryRestored() {
