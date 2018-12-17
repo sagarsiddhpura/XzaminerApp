@@ -203,13 +203,13 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
     private fun setupGridLayoutManager() {
         val layoutManager = categories_grid.layoutManager as MyGridLayoutManager
         layoutManager.orientation = GridLayoutManager.VERTICAL
-        layoutManager.spanCount = config.dirColumnCnt
+        layoutManager.spanCount = 1
 
         val adapter = getRecyclerAdapter()
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter?.isASectionTitle(position) == true) {
-                    layoutManager.spanCount
+                    1
                 } else {
                     1
                 }

@@ -2,7 +2,6 @@ package com.xzaminer.app.category
 
 import android.content.res.Resources
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +14,10 @@ import com.simplemobiletools.commons.extensions.isActivityDestroyed
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
 import com.xzaminer.app.extensions.config
-import com.xzaminer.app.extensions.loadIcon
-import com.xzaminer.app.extensions.loadImage
-import com.xzaminer.app.utils.TYPE_IMAGES
+import com.xzaminer.app.extensions.loadIconImageView
+import com.xzaminer.app.extensions.loadImageImageView
 import kotlinx.android.synthetic.main.category_item_grid.view.*
+import kotlinx.android.synthetic.main.course_item.view.*
 import kotlinx.android.synthetic.main.thumbnail_section.view.*
 import java.util.*
 
@@ -56,7 +55,7 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
         val layoutType = if (viewType == ITEM_SECTION) {
             R.layout.thumbnail_section
         } else {
-            R.layout.category_item_grid
+            R.layout.course_item
         }
         return createViewHolder(layoutType, parent)
     }
@@ -117,16 +116,14 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
 
     private fun setupView(view: View, category: Category) {
         view.apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                cat_thumbnail.clipToOutline = true
-            }
-
-            cat_name.text = category.name
-            if(category.image == "" || category.image == null) {
-                val img : Int = R.drawable.im_placeholder
-                activity.loadIcon(img, cat_thumbnail, false)
+            course_name.text = category.name
+            course_desc.text = category.description
+            course_subtitle.text = "Systematic 31 Day wise planning included"
+            if(category.image != null && category.image != "") {
+                activity.loadImageImageView(category.image!!, course_image, false, null, R.drawable.im_placeholder_video)
             } else {
-                activity.loadImage(TYPE_IMAGES, category.image!!, cat_thumbnail, false, false)
+                val img : Int = R.drawable.im_placeholder
+                activity.loadIconImageView(img, course_image, false)
             }
         }
     }

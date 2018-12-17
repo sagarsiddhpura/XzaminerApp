@@ -1,11 +1,9 @@
 package com.xzaminer.app.course
 
-import android.support.v7.widget.GridLayoutManager
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
@@ -13,7 +11,6 @@ import com.xzaminer.app.extensions.loadIconImageView
 import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.Video
 import kotlinx.android.synthetic.main.course_domain_video_item.view.*
-import kotlinx.android.synthetic.main.course_study_material_item_grid.view.*
 
 
 class CourseSectionDomainVideosAdapter(
@@ -60,7 +57,7 @@ class CourseSectionDomainVideosAdapter(
             vid_desc.text = video.description
             vid_time.text = video.duration
             if(video.thumbnail != null && video.thumbnail != "") {
-                activity.loadImageImageView(video.thumbnail!!, vid_image, false, cat_name, R.drawable.im_placeholder_video)
+                activity.loadImageImageView(video.thumbnail!!, vid_image, false, null, R.drawable.im_placeholder_video)
             } else {
                 val img : Int = R.drawable.im_placeholder_video
                 activity.loadIconImageView(img, vid_image, false)

@@ -32,9 +32,7 @@ class DebugDataSource {
         if (id == 1) {
             val c1 = Course(
                 101,
-                "CISA\n(Certified Information System Auditor)",
-                "Congratulations on choosing to become a Certified Information Systems Auditor (CISA). Whether you have worked for several years in the field of information systems auditing or have just recently been introduced to the world of controls, assurance, and security, don’t underestimate the hard work and dedication required to obtain and maintain CISA certification. Although ambition and motivation are required, the rewards can far exceed the effort.\n" +
-                        "You probably never imagined you would find yourself working in the world of auditing or looking to obtain a professional auditing certification. Perhaps the increase in legislative or regulatory requirements for information system security led to your introduction to this field. ",
+                "CISA\n(Certified Information System Auditor)", "65 Videos + 41 Question Banks + 5 Flash Cards",
                 "images/cat_2.png",
                 getSections(101), getPurchaseInfo(101), arrayListOf("images/cisa/desc_1.jpg", "images/cisa/desc_2.jpg", "images/cisa/desc_3.jpg", "images/cisa/desc_4.jpg", "images/cisa/desc_5.jpg"),
                 "CISA"
