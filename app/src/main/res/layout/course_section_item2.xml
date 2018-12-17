@@ -49,6 +49,50 @@
 
         </android.support.v7.widget.LinearLayoutCompat>
 
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/section_buy_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="4dp"
+                android:weightSum="1">
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:layout_weight="1"
+                    android:text="Complete Section"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="@dimen/bigger_text_size"
+                    android:gravity="left"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/section_buy_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:text="1500"
+                    android:textSize="@dimen/bigger_text_size"/>
+
+            <com.simplemobiletools.commons.views.MyButton
+                    android:text="Buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/section_buy"
+                    android:layout_below="@+id/price_value"
+                    android:layout_centerHorizontal="true"
+                    android:theme="@style/ColouredButton"
+                    android:drawableLeft="@drawable/ic_drw_purchases"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+
         <com.simplemobiletools.commons.views.MyRecyclerView
                 android:id="@+id/section_rv"
                 android:layout_width="match_parent"

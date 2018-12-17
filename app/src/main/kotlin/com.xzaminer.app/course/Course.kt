@@ -33,4 +33,22 @@ data class Course (
         }
         return arrayListOf()
     }
+
+    fun fetchPurchaseById(productId: String): Purchase? {
+        fetchVisiblePurchases().forEach {
+            if(it.id == productId) {
+                return it
+            }
+        }
+
+        sections.values.forEach {
+            it.fetchVisiblePurchases().forEach { purchaseSection ->
+                if(purchaseSection.id == productId) {
+                    return purchaseSection
+                }
+            }
+        }
+
+        return null
+    }
 }

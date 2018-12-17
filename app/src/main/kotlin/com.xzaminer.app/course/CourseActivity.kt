@@ -19,11 +19,13 @@ import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.views.MyButton
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
+import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.billing.PurchaseLog
 import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
@@ -89,9 +91,12 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             desc_slider.setAdapter(CourseDescriptionImageAdapter(loadedCourse.descImages))
         }
 
-        initPurchases(loadedCourse)
+        initPurchases()
+        initSections()
+    }
 
-        val sections = loadedCourse.fetchVisibleSections()
+    private fun initSections() {
+        val sections = course!!.fetchVisibleSections()
         sections_root.removeAllViews()
         for(i in 0 until sections.size) {
             val section = sections[i]
@@ -126,6 +131,8 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                     startActivity(this)
                 }
             }
+
+            initSectionPurchase(section, view)
         }
     }
 
@@ -166,14 +173,14 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         layoutManager.spanCount = 1
     }
 
-    private fun initPurchases(loadedCourse: Course) {
+    private fun initPurchases() {
 
         if(!isBillingInitialized) {
             billing = BillingProcessor(this, null, this)
             billing!!.initialize()
         }
 
-        val purchases = loadedCourse.fetchVisiblePurchases()
+        val purchases = course!!.fetchVisiblePurchases()
         if(!purchases.isEmpty()) {
             val purchase = purchases.first()
             val user = config.getLoggedInUser() as User
@@ -203,32 +210,75 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         }
     }
 
-    override fun onBillingInitialized() {
-        isBillingInitialized = true
+    private fun initSectionPurchase(section: CourseSection, view: View) {
+        val user = config.getLoggedInUser() as User
+        val purchasesSection = course!!.fetchVisiblePurchases()
+        if(!purchasesSection.isEmpty()) {
+            val purchase = purchasesSection.first()
+            if(user.hasPurchase(purchase.id)) {
+                view.findViewById<MyTextView>(R.id.section_buy_root).beGone()
+                return
+            }
+        }
+
+        val purchases = section.fetchVisiblePurchases()
+        if(!purchases.isEmpty()) {
+            val purchase = purchases.first()
+
+            if(!user.hasPurchase(purchase.id)) {
+                if(purchase.originalPrice != "") {
+                    val content = SpannableString(purchase.originalPrice + " " + purchase.actualPrice)
+                    content.setSpan(StrikethroughSpan(), 0, purchase.originalPrice.length, 0)
+                    view.findViewById<MyTextView>(R.id.section_buy_price).text = content
+                } else {
+                    view.findViewById<MyTextView>(R.id.section_buy_price).text = purchase.actualPrice
+                }
+
+                view.findViewById<MyButton>(R.id.section_buy).setOnClickListener {
+                    val user = config.getLoggedInUser() as User
+                    if(isBillingInitialized) {
+                        val extraParams = Bundle()
+                        extraParams.putString("accountId", user.getId())
+                        billing!!.purchase(this@CourseActivity, purchase.id, "::purchaseid::" + purchase.id + "::user::" + user.getId(), extraParams)
+                    }
+                }
+            } else {
+                view.findViewById<MyTextView>(R.id.section_buy_root).beGone()
+            }
+        } else {
+            view.findViewById<MyTextView>(R.id.section_buy_root).beGone()
+        }
     }
 
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
         val listType = object : TypeToken<TransactionDetails>() {}.type
         val json = Gson().toJson(details, listType)
-        val purchaseFromCourse = course!!.fetchVisiblePurchases().first()
-        purchaseFromCourse.details = json
+        val purchase = course!!.fetchPurchaseById(productId) as Purchase
+        purchase.details = json
 
         val user = config.getLoggedInUser() as User
 
         if(!user.hasPurchase(productId)) {
             // Add purchase to user
-            user.purchases.add(purchaseFromCourse)
+            user.purchases.add(purchase)
             // save to db
             dataSource.addUser(user)
             // save to local
             config.setLoggedInUser(user)
         }
 
-        initPurchases(course!!)
+        initPurchases()
+        initSections()
 
         val purLog = PurchaseLog(productId, details, user)
         dataSource.addPurchaseLog(purLog)
         debugDataSource.addDebugObject(dataSource, "purchases/PurchaseAudiobookActivity", details!!)
+    }
+
+    override fun onBillingInitialized() {
+        isBillingInitialized = true
+        billing!!.consumePurchase(PURCHASE_COURSE_IAP+"101")
+        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1017")
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {

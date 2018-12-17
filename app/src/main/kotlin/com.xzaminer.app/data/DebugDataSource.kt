@@ -58,7 +58,7 @@ class DebugDataSource {
                 "31 Days Course (Questions)",
                 "",
                 "", getQuestionBanks(1012), STUDY_MATERIAL_TYPE_QUESTION_BANK,
-                arrayListOf(), 3
+                getPurchaseInfo(1012), 3
             )
 //            val s3 = CourseSection(
 //                1013,
@@ -72,33 +72,48 @@ class DebugDataSource {
                 "Flash Cards",
                 "",
                 "", getFlashCards(1014), STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
-                arrayListOf(), 5
+                getPurchaseInfo(1014), 5
             )
             val s5 = CourseSection(
                 1015,
                 "Question Banks",
                 "",
                 "", getQuestionBanks(1015), STUDY_MATERIAL_TYPE_QUESTION_BANK,
-                arrayListOf(), 4
+                getPurchaseInfo(1015), 4
             )
             val s6 = CourseSection(
                 1016,
                 "Videos",
                 "",
                 "", getVideosSection(1016), STUDY_MATERIAL_TYPE_VIDEO,
-                arrayListOf(), 1
+                getPurchaseInfo(1016), 1
             )
             val s7 = CourseSection(
                 1017,
                 "31 Days Course",
                 "",
                 "", getVideosSection(1017), STUDY_MATERIAL_TYPE_VIDEO,
-                arrayListOf(), 2
+                getPurchaseInfo(1017), 2
             )
             return hashMapOf(s2.id.toString() to s2, s4.id.toString() to s4, s5.id.toString() to s5, s6.id.toString() to s6, s7.id.toString() to s7)
 //            return linkedMapOf(s1.id.toString() to s1, s2.id.toString() to s2, s3.id.toString() to s3, s4.id.toString() to s4, s5.id.toString() to s5, s6.id.toString() to s6)
         }
         return hashMapOf()
+    }
+
+    private fun getPurchaseInfo(id: Int): ArrayList<Purchase> {
+        if (id == 101) {
+            return arrayListOf(Purchase(PURCHASE_COURSE_IAP+"101", "CISA Course", PURCHASE_TYPE_IAP, "2500", "5000", true))
+        } else if (id == 1012) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1012", "CISA 30 Day Question Banks", PURCHASE_TYPE_IAP, "1000", "", true))
+        } else if (id == 1014) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1014", "CISA Flash Cards", PURCHASE_TYPE_IAP, "500", "", true))
+        } else if (id == 1015) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1015", "CISA Question Banks", PURCHASE_TYPE_IAP, "1500", "", true))
+        } else if (id == 1017) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1017", "CISA 31 Days Course", PURCHASE_TYPE_IAP, "1000", "", true))
+        }
+        return arrayListOf()
     }
 
     private fun getVideosSection(id: Int): HashMap<String, StudyMaterial> {
@@ -192,13 +207,6 @@ class DebugDataSource {
                 i++
             }
             return videos
-        }
-        return arrayListOf()
-    }
-
-    private fun getPurchaseInfo(id: Int): ArrayList<Purchase> {
-        if (id == 101) {
-            return arrayListOf(Purchase(PURCHASE_COURSE_IAP+"101", "CISA Course", PURCHASE_TYPE_IAP, "2500", "5000", true))
         }
         return arrayListOf()
     }

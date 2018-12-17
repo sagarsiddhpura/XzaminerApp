@@ -98,3 +98,6 @@ updated images for all sections
 New course section layout
 In App purchase for course
 feedback
+
+2.14
+Implement IAP at section level

@@ -25,4 +25,5 @@ const val STUDY_MATERIAL_TYPE_QUESTION_BANK = "study_material_type_question_bank
 const val STUDY_MATERIAL_TYPE_VIDEO = "study_material_type_video"
 
 const val PURCHASE_COURSE_IAP = "com.xzaminer.iap.course."
+const val PURCHASE_SECTION_IAP = "com.xzaminer.iap.section."
 const val PURCHASE_TYPE_IAP = "com.xzaminer.iap"
