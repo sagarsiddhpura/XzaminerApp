@@ -1,6 +1,5 @@
 package com.xzaminer.app.course
 
-import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.GridLayoutManager
 import android.util.TypedValue
 import android.view.Menu
@@ -63,7 +62,7 @@ class CourseStudyMaterialsAdapter(
             cat_name.text = studyMaterial.name
             cat_name.beVisible()
             if(studyMaterial.imageIcon != null) {
-                activity.loadImageImageView(studyMaterial.imageIcon!!, cat_image, false, cat_name)
+                activity.loadImageImageView(studyMaterial.imageIcon!!, cat_image, false, cat_name, true)
             } else {
                 val img : Int = R.drawable.im_placeholder
                 activity.loadIconImageView(img, cat_image, false)
@@ -73,13 +72,13 @@ class CourseStudyMaterialsAdapter(
                 val layoutParams = view.layoutParams as (GridLayoutManager.LayoutParams)
                 if(position == 0) {
                     val marginInDp = TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP, 10F, resources
+                        TypedValue.COMPLEX_UNIT_DIP, 0F, resources
                             .displayMetrics
                     ).toInt()
                     layoutParams.setMargins(marginInDp, 0, 0, 0)
                 } else if(position == studyMaterials.size-1) {
                     val marginInDp = TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP, 10F, resources
+                        TypedValue.COMPLEX_UNIT_DIP, 0F, resources
                             .displayMetrics
                     ).toInt()
                     layoutParams.setMargins(0, 0, marginInDp, 0)

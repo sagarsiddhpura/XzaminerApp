@@ -17,7 +17,6 @@ import com.anjlab.android.iab.v3.TransactionDetails
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.beGone
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyButton
 import com.simplemobiletools.commons.views.MyGridLayoutManager
@@ -118,7 +117,6 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             val content = SpannableString(section.name)
             content.setSpan(UnderlineSpan(), 0, content.length, 0)
             title.text = content
-            title.setTextColor(getAdjustedPrimaryColor())
 
             val rv = view.findViewById<MyRecyclerView>(R.id.section_rv)
             setupAdapter(rv, section)
@@ -187,11 +185,11 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
             if(!user.hasPurchase(purchase.id)) {
                 if(purchase.originalPrice != "") {
-                    val content = SpannableString(purchase.originalPrice + " " + purchase.actualPrice)
-                    content.setSpan(StrikethroughSpan(), 0, purchase.originalPrice.length, 0)
+                    val content = SpannableString("INR "+ purchase.originalPrice + " " + purchase.actualPrice)
+                    content.setSpan(StrikethroughSpan(), 4, purchase.originalPrice.length + 4, 0)
                     price_value.text = content
                 } else {
-                    price_value.text = purchase.actualPrice
+                    price_value.text = "INR "+ purchase.actualPrice
                 }
 
                 price_buy.setOnClickListener {
@@ -227,11 +225,11 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
             if(!user.hasPurchase(purchase.id)) {
                 if(purchase.originalPrice != "") {
-                    val content = SpannableString(purchase.originalPrice + " " + purchase.actualPrice)
-                    content.setSpan(StrikethroughSpan(), 0, purchase.originalPrice.length, 0)
+                    val content = SpannableString("INR "+ purchase.originalPrice + " " + purchase.actualPrice)
+                    content.setSpan(StrikethroughSpan(), 4, purchase.originalPrice.length + 4, 0)
                     view.findViewById<MyTextView>(R.id.section_buy_price).text = content
                 } else {
-                    view.findViewById<MyTextView>(R.id.section_buy_price).text = purchase.actualPrice
+                    view.findViewById<MyTextView>(R.id.section_buy_price).text = "INR "+ purchase.actualPrice
                 }
 
                 view.findViewById<MyButton>(R.id.section_buy).setOnClickListener {

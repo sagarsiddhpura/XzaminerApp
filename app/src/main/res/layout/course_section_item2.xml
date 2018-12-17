@@ -10,7 +10,9 @@
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="2dp"
-        app:cardElevation="2dp">
+        app:cardElevation="0dp"
+        android:paddingTop="8dp"
+        app:cardBackgroundColor="@color/md_indigo_800">
 
     <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -24,8 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:paddingTop="16dp"
                 android:weightSum="1">
 
@@ -36,14 +38,17 @@
                     android:clickable="false"
                     android:layout_weight="1"
                     android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:theme="@style/ColouredTextBox"
                     android:text="30 Days Course (Concepts)"
-                    android:textSize="@dimen/bigger_text_size"/>
+                    android:textSize="18sp"/>
 
             <com.simplemobiletools.commons.views.MyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:clickable="false"
+                    android:theme="@style/ColouredTextBox"
                     android:text="SEE ALL"
                     android:textSize="@dimen/bigger_text_size"/>
 
@@ -54,8 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:paddingTop="4dp"
                 android:weightSum="1">
 
@@ -64,7 +69,8 @@
                     android:layout_height="wrap_content"
                     android:clickable="false"
                     android:layout_weight="1"
-                    android:text="Complete Section"
+                    android:text="Buy Complete Section"
+                    android:theme="@style/ColouredTextBox"
                     android:layout_marginRight="4dp"
                     android:layout_marginLeft="4dp"
                     android:textSize="@dimen/bigger_text_size"
@@ -75,6 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="false"
+                    android:theme="@style/ColouredTextBox"
                     android:layout_weight="1"
                     android:padding="8dp"
                     android:text="1500"
@@ -92,7 +99,6 @@
 
         </android.support.v7.widget.LinearLayoutCompat>
 
-
         <com.simplemobiletools.commons.views.MyRecyclerView
                 android:id="@+id/section_rv"
                 android:layout_width="match_parent"
@@ -100,7 +106,8 @@
                 android:scrollbars="none"
                 app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
                 app:spanCount="1"
-                android:padding="0dp" />
+                android:padding="0dp"
+                android:layout_marginTop="8dp"/>
 
     </android.support.v7.widget.LinearLayoutCompat>
 
