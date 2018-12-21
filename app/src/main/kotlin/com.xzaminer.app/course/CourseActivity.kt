@@ -142,8 +142,8 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             if(it is StudyMaterial && it.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
                 Intent(this, StudyMaterialActivity::class.java).apply {
                     putExtra(STUDY_MATERIAL_ID, (it as StudyMaterial).id)
-                    putExtra(COURSE_ID, courseId)
                     putExtra(SECTION_ID, section.id)
+                    putExtra(COURSE_ID, courseId)
                     putExtra(STUDY_MATERIAL_TYPE, section.type)
                     startActivity(this)
                 }
@@ -158,8 +158,8 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             } else if((it).type == STUDY_MATERIAL_TYPE_VIDEO ) {
                 Intent(this, CourseSectionVideosDomainActivity::class.java).apply {
                     putExtra(DOMAIN_ID, (it).id)
-                    putExtra(COURSE_ID, courseId)
                     putExtra(SECTION_ID, section.id)
+                    putExtra(COURSE_ID, courseId)
                     startActivity(this)
                 }
             }
@@ -275,9 +275,9 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
     override fun onBillingInitialized() {
         isBillingInitialized = true
-//        billing!!.consumePurchase(PURCHASE_COURSE_IAP+"101")
-//        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1017")
-//        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1015")
+        billing!!.consumePurchase(PURCHASE_COURSE_IAP+"101")
+        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1017")
+        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1015")
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
@@ -302,7 +302,10 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
     override fun onResume() {
         super.onResume()
-        initPurchases()
-        initSections()
+
+        if(course != null) {
+            initPurchases()
+            initSections()
+        }
     }
 }

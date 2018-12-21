@@ -183,8 +183,8 @@ class ShowPurchasesActivity : SimpleActivity(), BillingProcessor.IBillingHandler
             if(studyMaterial!!.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
                 Intent(this, StudyMaterialActivity::class.java).apply {
                     putExtra(STUDY_MATERIAL_ID, studyMaterial!!.id)
-                    putExtra(COURSE_ID, courseId)
                     putExtra(SECTION_ID, section!!.id)
+                    putExtra(COURSE_ID, courseId)
                     putExtra(STUDY_MATERIAL_TYPE, section!!.type)
                     startActivity(this)
                 }
@@ -205,8 +205,8 @@ class ShowPurchasesActivity : SimpleActivity(), BillingProcessor.IBillingHandler
             } else if(studyMaterial!!.type == STUDY_MATERIAL_TYPE_VIDEO ) {
                 Intent(this, CourseSectionVideosDomainActivity::class.java).apply {
                     putExtra(DOMAIN_ID, studyMaterial!!.id)
-                    putExtra(COURSE_ID, courseId)
                     putExtra(SECTION_ID, section!!.id)
+                    putExtra(COURSE_ID, courseId)
                     startActivity(this)
                 }
 

@@ -105,4 +105,4 @@ Updated layout of main screen to card
 Updated layout of Course Screen
 
 2.16
-Implement IAP at study material and quiz level
+Implement IAP at study material. quiz and video level
