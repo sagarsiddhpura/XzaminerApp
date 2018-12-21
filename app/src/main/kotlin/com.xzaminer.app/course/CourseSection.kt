@@ -26,10 +26,6 @@ data class CourseSection (
         return null
     }
 
-    fun fetchDomain(domainId: Long) {
-
-    }
-
     fun fetchVisiblePurchases(): List<Purchase> {
         if(!purchaseInfo.isEmpty()) {
             return purchaseInfo.filter { it.showPurchase }

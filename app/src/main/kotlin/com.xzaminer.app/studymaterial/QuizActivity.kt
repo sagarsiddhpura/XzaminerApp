@@ -15,6 +15,7 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
+import com.xzaminer.app.billing.ShowPurchasesActivity
 import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
@@ -26,13 +27,15 @@ import kotlin.concurrent.thread
 
 class QuizActivity : SimpleActivity() {
 
-    private var quizId: Long? = null
+    private var quizId: Long = -1
     private var toolbar: Toolbar? = null
     private lateinit var user: User
     private var isMarkedForLaterQuestionsShown: Boolean = false
     private var isNewQuiz: Boolean = true
     private var runningTimer: Long = -1L
     private var timer : CountDownTimer? = null
+    private var courseId: Long = -1
+    private var sectionId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY)
@@ -49,9 +52,10 @@ class QuizActivity : SimpleActivity() {
         intent.apply {
             quizId = getLongExtra(QUIZ_ID, -1)
             isNewQuiz = getBooleanExtra(IS_NEW_QUIZ, true)
-            if(quizId == (-1).toLong()) {
-                toast("Error Opening Question Bank")
-                finish()
+            courseId = getLongExtra(COURSE_ID, -1)
+            sectionId = getLongExtra(SECTION_ID, -1)
+            if(courseId == (-1).toLong() || sectionId == (-1).toLong() || quizId == (-1).toLong()) {
+                showErrorAndExit()
                 return
             }
         }
@@ -59,8 +63,41 @@ class QuizActivity : SimpleActivity() {
         setupGridLayoutManager()
 
         if(isNewQuiz) {
-            dataSource.getQuestionBank(quizId) { loadedQuiz ->
-                loadQuestionBank(loadedQuiz)
+//            dataSource.getQuestionBank(quizId) { loadedQuiz ->
+//                loadQuestionBank(loadedQuiz)
+//            }
+            dataSource.getCourseById(courseId) { course ->
+                if(course != null) {
+                    val section = course.fetchSection(sectionId)
+                    if(section != null) {
+                        val studyMaterial = section.fetchStudyMaterialById(quizId)
+                        if(studyMaterial != null) {
+                            val studyMaterialPurchased = user.isStudyMaterialPurchased(course, section, studyMaterial)
+                            if(studyMaterialPurchased) {
+                                loadQuestionBank(studyMaterial)
+                            } else {
+                                // show purchase popup
+                                Intent(this, ShowPurchasesActivity::class.java).apply {
+                                    putExtra(COURSE_ID, courseId)
+                                    putExtra(SECTION_ID, sectionId)
+                                    putExtra(STUDY_MATERIAL_ID, quizId)
+                                    startActivity(this)
+                                }
+                                finish()
+                                return@getCourseById
+                            }
+                        } else {
+                            showErrorAndExit()
+                            return@getCourseById
+                        }
+                    }  else {
+                        showErrorAndExit()
+                        return@getCourseById
+                    }
+                } else {
+                    showErrorAndExit()
+                    return@getCourseById
+                }
             }
         } else {
             dataSource.getQuestionBankFromUser(user.getId(), quizId) { loadedQuiz ->
@@ -73,6 +110,11 @@ class QuizActivity : SimpleActivity() {
                 }
             }
         }
+    }
+
+    private fun showErrorAndExit() {
+        toast("Error Opening Question Bank")
+        finish()
     }
 
     private fun loadQuestionBank(loadedQuiz: StudyMaterial?) {

@@ -1,5 +1,6 @@
 package com.xzaminer.app.studymaterial
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
@@ -8,6 +9,7 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
+import com.xzaminer.app.billing.ShowPurchasesActivity
 import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
@@ -47,23 +49,51 @@ class StudyMaterialActivity : SimpleActivity() {
             sectionId = getLongExtra(SECTION_ID, -1)
             studyMaterialType = getStringExtra(STUDY_MATERIAL_TYPE)
             if(studyMaterialType == null || courseId == (-1).toLong() || sectionId == (-1).toLong() || studyMaterialId == (-1).toLong()) {
-                toast("Error opening Study Material")
-                finish()
+                showErrorAndExit()
                 return
             }
         }
         user = config.getLoggedInUser() as User
         setupGridLayoutManager()
 
-        dataSource.getCourseStudyMaterialById(courseId, sectionId, studyMaterialId) { studyMaterial ->
-            if(studyMaterial != null) {
-                loadStudyMaterial(studyMaterial)
+        dataSource.getCourseById(courseId) { course ->
+            if(course != null) {
+                val section = course.fetchSection(sectionId)
+                if(section != null) {
+                    val studyMaterial = section.fetchStudyMaterialById(studyMaterialId)
+                    if(studyMaterial != null) {
+                        val studyMaterialPurchased = user.isStudyMaterialPurchased(course, section, studyMaterial)
+                        if(studyMaterialPurchased) {
+                            loadStudyMaterial(studyMaterial)
+                        } else {
+                            // show purchase popup
+                            Intent(this, ShowPurchasesActivity::class.java).apply {
+                                putExtra(COURSE_ID, courseId)
+                                putExtra(SECTION_ID, sectionId)
+                                putExtra(STUDY_MATERIAL_ID, studyMaterialId)
+                                startActivity(this)
+                            }
+                            finish()
+                            return@getCourseById
+                        }
+                    } else {
+                        showErrorAndExit()
+                        return@getCourseById
+                    }
+                }  else {
+                    showErrorAndExit()
+                    return@getCourseById
+                }
             } else {
-                toast("Error opening Study Material")
-                finish()
-                return@getCourseStudyMaterialById
+                showErrorAndExit()
+                return@getCourseById
             }
         }
+    }
+
+    private fun showErrorAndExit() {
+        toast("Error opening Study Material.")
+        finish()
     }
 
     private fun loadStudyMaterial(studyMaterial: StudyMaterial) {

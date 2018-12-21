@@ -105,4 +105,11 @@ data class StudyMaterial (
     fun fetchVideo(videoId: Long): Video? {
         return videos.find { it -> it.id == videoId }
     }
+
+    fun fetchVisiblePurchases(): List<Purchase> {
+        if(!purchaseInfo.isEmpty()) {
+            return purchaseInfo.filter { it.showPurchase }
+        }
+        return arrayListOf()
+    }
 }

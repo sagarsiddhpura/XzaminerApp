@@ -1,6 +1,8 @@
 package com.xzaminer.app.data
 
 import com.xzaminer.app.billing.Purchase
+import com.xzaminer.app.course.Course
+import com.xzaminer.app.course.CourseSection
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.QB_STATUS_IN_PROGRESS
 import java.text.SimpleDateFormat
@@ -60,6 +62,21 @@ data class User(
     fun startQuiz(questionBank: StudyMaterial) {
         questionBank.status = QB_STATUS_IN_PROGRESS
         quizzes.add(questionBank)
+    }
+
+    fun isStudyMaterialPurchased(course: Course, section: CourseSection, studyMaterial: StudyMaterial): Boolean {
+
+        if(!studyMaterial.fetchVisiblePurchases().isEmpty() && hasPurchase(studyMaterial.fetchVisiblePurchases().first().id)) {
+            return true
+        }
+        if(!section.fetchVisiblePurchases().isEmpty() && hasPurchase(section.fetchVisiblePurchases().first().id)) {
+            return true
+        }
+        if(!course.fetchVisiblePurchases().isEmpty() && hasPurchase(course.fetchVisiblePurchases().first().id)) {
+            return true
+        }
+
+        return false
     }
 
     companion object {

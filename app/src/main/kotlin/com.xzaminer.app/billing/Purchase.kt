@@ -3,6 +3,7 @@ package com.xzaminer.app.billing
 data class Purchase(
         val id: String = "",
         val name: String = "",
+        val desc: String = "",
         val type: String = "",
         val actualPrice: String = "",
         val originalPrice: String = "",

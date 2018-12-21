@@ -150,8 +150,8 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             } else if((it as StudyMaterial).type == STUDY_MATERIAL_TYPE_QUESTION_BANK ) {
                 Intent(this, QuizActivity::class.java).apply {
                     putExtra(QUIZ_ID, (it).id)
-                    putExtra(COURSE_ID, courseId)
                     putExtra(SECTION_ID, section.id)
+                    putExtra(COURSE_ID, courseId)
                     putExtra(IS_NEW_QUIZ, true)
                     startActivity(this)
                 }
@@ -275,8 +275,9 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
     override fun onBillingInitialized() {
         isBillingInitialized = true
-        billing!!.consumePurchase(PURCHASE_COURSE_IAP+"101")
-        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1017")
+//        billing!!.consumePurchase(PURCHASE_COURSE_IAP+"101")
+//        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1017")
+//        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1015")
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
@@ -297,5 +298,11 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             billing!!.release()
         }
         super.onDestroy()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initPurchases()
+        initSections()
     }
 }

@@ -101,3 +101,8 @@ feedback
 
 2.14
 Implement IAP at section level
+Updated layout of main screen to card
+Updated layout of Course Screen
+
+2.16
+Implement IAP at study material and quiz level

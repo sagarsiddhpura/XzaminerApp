@@ -34,7 +34,7 @@ class DebugDataSource {
                 101,
                 "CISA\n(Certified Information System Auditor)", "65 Videos + 41 Question Banks + 5 Flash Cards",
                 "images/cat_2.png",
-                getSections(101), getPurchaseInfo(101), arrayListOf("images/cisa/desc_1.jpg", "images/cisa/desc_2.jpg", "images/cisa/desc_3.jpg", "images/cisa/desc_4.jpg", "images/cisa/desc_5.jpg"),
+                getSections(101), getPurchaseInfo(101), arrayListOf("courses/101/desc_1.jpg", "courses/101/desc_2.jpg", "courses/101/desc_3.jpg", "courses/101/desc_4.jpg", "courses/101/desc_5.jpg"),
                 "CISA"
             )
             return linkedMapOf(c1.id.toString() to c1)
@@ -101,15 +101,26 @@ class DebugDataSource {
 
     private fun getPurchaseInfo(id: Int): ArrayList<Purchase> {
         if (id == 101) {
-            return arrayListOf(Purchase(PURCHASE_COURSE_IAP+"101", "CISA Course", PURCHASE_TYPE_IAP, "2500", "5000", true))
+            return arrayListOf(Purchase(PURCHASE_COURSE_IAP+"101", "CISA Course", "Purchase entire course including 65 Videos + 41 Question Banks + 5 Flash Cards for 50% discount",
+                PURCHASE_TYPE_IAP, "2500", "5000", true))
         } else if (id == 1012) {
-            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1012", "CISA 30 Day Question Banks", PURCHASE_TYPE_IAP, "1000", "", true))
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1012", "CISA 30 Day Question Banks","Purchase entire Question Banks section including 31 Question Banks for 50% discount",
+                PURCHASE_TYPE_IAP, "1000", "", true))
         } else if (id == 1014) {
-            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1014", "CISA Flash Cards", PURCHASE_TYPE_IAP, "500", "", true))
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1014", "CISA Flash Cards","Purchase entire Flash Cards section including 5 Flash Cards for 50% discount",
+                PURCHASE_TYPE_IAP, "500", "", true))
         } else if (id == 1015) {
-            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1015", "CISA Question Banks", PURCHASE_TYPE_IAP, "1500", "", true))
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1015", "CISA Question Banks","Purchase entire Question Banks section including 10 Question Banks for 50% discount",
+                PURCHASE_TYPE_IAP, "1500", "", true))
         } else if (id == 1017) {
-            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1017", "CISA 31 Days Course", PURCHASE_TYPE_IAP, "1000", "", true))
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1017", "CISA 31 Days Course","Purchase entire 31 Days Course section including Video for each day for 50% discount",
+                PURCHASE_TYPE_IAP, "1000", "", true))
+        } else if (id == 101401) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101401", "CISA Review Manual - Domain 01","Purchase review manual for Domain 01",
+                PURCHASE_TYPE_IAP, "100", "", true))
+        } else if (id == 101402) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101402", "CISA Review Manual - Domain 02","Purchase review manual for Domain 02",
+                PURCHASE_TYPE_IAP, "100", "", true))
         }
         return arrayListOf()
     }
@@ -220,7 +231,7 @@ class DebugDataSource {
                 "Domain 01",
                 "Domain 01",
                 "courses/101/title_05_h_01.jpg", 0, linkedMapOf(),
-                getQuestions(101401), arrayListOf(), arrayListOf(), ""
+                getQuestions(101401), arrayListOf(), getPurchaseInfo(101401), ""
             )
             val flashCards = linkedMapOf(c1.id.toString() to c1)
             for (i in 101402..101405) {
@@ -229,7 +240,7 @@ class DebugDataSource {
                     "Domain 0" + (i - 101400),
                     "Domain 0" + (i - 101400),
                     "courses/101/title_05_h_0" + (i - 101400) + ".jpg", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), arrayListOf(), ""
+                    getQuestions(i), arrayListOf(), getPurchaseInfo(i), ""
                 )
                 flashCards[c.id.toString()] = c
             }

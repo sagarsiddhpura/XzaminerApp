@@ -90,8 +90,8 @@ class CourseSectionActivity : SimpleActivity() {
             } else if((it as StudyMaterial).type == STUDY_MATERIAL_TYPE_QUESTION_BANK ) {
                 Intent(this, QuizActivity::class.java).apply {
                     putExtra(QUIZ_ID, (it as StudyMaterial).id)
-                    putExtra(COURSE_ID, courseId)
                     putExtra(SECTION_ID, section.id)
+                    putExtra(COURSE_ID, courseId)
                     putExtra(IS_NEW_QUIZ, true)
                     startActivity(this)
                 }
