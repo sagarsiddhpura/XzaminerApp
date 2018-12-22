@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.helpers.BaseConfig
 import com.xzaminer.app.R
-import com.xzaminer.app.data.User
+import com.xzaminer.app.user.User
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {

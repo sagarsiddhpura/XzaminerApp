@@ -102,28 +102,28 @@ class DebugDataSource {
     private fun getPurchaseInfo(id: Int): ArrayList<Purchase> {
         if (id == 101) {
             return arrayListOf(Purchase(PURCHASE_COURSE_IAP+"101", "CISA Course", "Purchase entire course including 65 Videos + 41 Question Banks + 5 Flash Cards for 50% discount",
-                PURCHASE_TYPE_IAP, "2500", "5000", true))
+                PURCHASE_TYPE_IAP, "2500", "5000", true, null, null, "Entire Course CISA"))
         } else if (id == 1012) {
             return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1012", "CISA 30 Day Question Banks","Purchase entire Question Banks section including 31 Question Banks for 50% discount",
-                PURCHASE_TYPE_IAP, "1000", "", true))
+                PURCHASE_TYPE_IAP, "1000", "", true, null, null, "Entire Section of Course: CISA"))
         } else if (id == 1014) {
             return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1014", "CISA Flash Cards","Purchase entire Flash Cards section including 5 Flash Cards for 50% discount",
-                PURCHASE_TYPE_IAP, "500", "", true))
+                PURCHASE_TYPE_IAP, "500", "", true, null, null, "Entire Section of Course: CISA"))
         } else if (id == 1015) {
             return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1015", "CISA Question Banks","Purchase entire Question Banks section including 10 Question Banks for 50% discount",
-                PURCHASE_TYPE_IAP, "1500", "", true))
+                PURCHASE_TYPE_IAP, "1500", "", true, null, null, "Entire Section of Course: CISA"))
         } else if (id == 1017) {
             return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1017", "CISA 31 Days Course","Purchase entire 31 Days Course section including Video for each day for 50% discount",
-                PURCHASE_TYPE_IAP, "1000", "", true))
+                PURCHASE_TYPE_IAP, "1000", "", true, null, null, "Entire Section of Course: CISA"))
         } else if (id == 101401) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101401", "CISA Review Manual - Domain 01","Purchase review manual for Domain 01",
-                PURCHASE_TYPE_TRIAL, "100", "", true))
+                PURCHASE_TYPE_TRIAL, "100", "", true, null, null, "Study Material of Section: CISA Review Manual of Course: CISA"))
         } else if (id == 101402) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101402", "CISA Review Manual - Domain 02","Purchase review manual for Domain 02",
-                PURCHASE_TYPE_IAP, "100", "", true))
+                PURCHASE_TYPE_IAP, "100", "", true, null, null, "Study Material of Section: CISA Review Manual of Course: CISA"))
         } else if (id == 101204) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101204", "CISA Question Banks - Question Bank 01","Purchase CISA Question Banks - Question Bank 01",
-                PURCHASE_TYPE_TRIAL, "100", "", true))
+                PURCHASE_TYPE_TRIAL, "100", "", true, null, null, "Question Bank of Section: CISA Question Banks of Course: CISA"))
         }
         return arrayListOf()
     }
@@ -800,20 +800,20 @@ class DebugDataSource {
 //            override fun onCancelled(databaseError: DatabaseError) { }
 //        })
 
-        val ref5 = "debug/studyMaterials/101204"
-        val target5 = "cats/v2/cats/1/courses/101/sections/1013/studyMaterials/101301"
-        var reference5 =
-            dataSource.getDatabase().getReference(ref5)
-        reference5.keepSynced(true)
-        reference5.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val questionBank = snapshot.getValue(StudyMaterial::class.java)
-                if (questionBank != null) {
-                    dataSource.getDatabase().getReference(target5).setValue(questionBank)
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) { }
-        })
+//        val ref5 = "debug/studyMaterials/101204"
+//        val target5 = "cats/v2/cats/1/courses/101/sections/1013/studyMaterials/101301"
+//        var reference5 =
+//            dataSource.getDatabase().getReference(ref5)
+//        reference5.keepSynced(true)
+//        reference5.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val questionBank = snapshot.getValue(StudyMaterial::class.java)
+//                if (questionBank != null) {
+//                    dataSource.getDatabase().getReference(target5).setValue(questionBank)
+//                }
+//            }
+//            override fun onCancelled(databaseError: DatabaseError) { }
+//        })
     }
 
     fun uploadImages(activity: SimpleActivity, dataSource: DataSource) {

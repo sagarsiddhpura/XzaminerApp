@@ -10,4 +10,5 @@ data class Purchase(
         val showPurchase: Boolean = false,
         val expiry: String? = null,
         var details: String? = null,
-        val purchased: String? = null)
+        val extraPurchaseInfo: String? = null,
+        var purchased: String? = null)

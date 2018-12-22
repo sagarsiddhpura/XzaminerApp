@@ -10,6 +10,7 @@ import com.xzaminer.app.category.Category
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.studymaterial.StudyMaterial
+import com.xzaminer.app.user.User
 import java.util.*
 
 private var db: FirebaseDatabase? = null
@@ -186,11 +187,9 @@ class DataSource {
         localCategories.forEach { cat ->
             if (cat.courses != null) {
                 cat.courses!!.values.forEach { course ->
-                    if(course != null) {
-                        course.sections.values.forEach { section ->
-                            if (section != null && section.studyMaterials[questionBankId.toString()] != null) {
-                                return section.studyMaterials[questionBankId.toString()]
-                            }
+                    course?.sections.values.forEach { section ->
+                        if (section != null && section.studyMaterials[questionBankId.toString()] != null) {
+                            return section.studyMaterials[questionBankId.toString()]
                         }
                     }
                 }
@@ -210,7 +209,7 @@ class DataSource {
 
     fun getQuestionBankFromUser(userId: String, quizId: Long?, callback: (quiz: StudyMaterial?) -> Unit) {
         getUser(userId) {
-            val quiz = it?.quizzes?.find { it != null && it.id == quizId }
+            val quiz = it?.quizzes?.values?.find { it != null && it.id == quizId }
             callback(quiz)
         }
     }

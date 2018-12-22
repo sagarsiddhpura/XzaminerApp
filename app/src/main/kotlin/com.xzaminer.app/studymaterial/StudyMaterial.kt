@@ -55,7 +55,7 @@ data class StudyMaterial (
         return notAttempted
     }
 
-    fun fetchResult(): Int? {
+    fun fetchResult(): Int {
         if(questions.isEmpty()) {
             return 0
         }
@@ -111,5 +111,18 @@ data class StudyMaterial (
             return purchaseInfo.filter { it.showPurchase }
         }
         return arrayListOf()
+    }
+
+    fun updateLastAccessed() {
+        properties[QB_LAST_ACCESSED] = arrayListOf(getNowDateTime())
+    }
+
+    fun startQuiz() {
+        status = QB_STATUS_IN_PROGRESS
+        properties[QB_STARTED_ON] = arrayListOf(getNowDateTime())
+    }
+
+    fun updateCompleted() {
+        properties[QB_COMPLETED] = arrayListOf(getNowDateTime())
     }
 }

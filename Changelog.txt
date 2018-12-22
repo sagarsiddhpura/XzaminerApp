@@ -109,3 +109,6 @@ Implement IAP at study material. quiz and video level
 
 2.18
 Added trial functionality
+Added User Profile screen
+Added Unfinished quizzes screen
+Added User Purchases screen

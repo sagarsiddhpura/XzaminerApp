@@ -1,7 +1,7 @@
 package com.xzaminer.app.billing
 
 import com.anjlab.android.iab.v3.TransactionDetails
-import com.xzaminer.app.data.User
+import com.xzaminer.app.user.User
 
 data class PurchaseLog(
         val productId: String = "",

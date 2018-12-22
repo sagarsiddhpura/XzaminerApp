@@ -48,6 +48,12 @@
         </activity>
         <activity android:name=".billing.ShowPurchasesActivity">
         </activity>
+        <activity android:name=".user.UserProfileActivity">
+        </activity>
+        <activity android:name=".studymaterial.ListUnfinishedQuizzesActivity">
+        </activity>
+        <activity android:name=".billing.ListUserPurchasesActivity">
+        </activity>
         <activity android:name=".login.EmailPasswordActivity">
         </activity>
         <activity android:name=".course.CourseSectionActivity">

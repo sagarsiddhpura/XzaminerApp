@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Softwares/Installed/Android/AndroidStudio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_remove_circle_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Softwares/Installed/Android/AndroidStudio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_chevron_right_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,9 +33,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_answer_not_attempted" />
+                                      <entry key="outputName" value="ic_arrow_right_simple" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="f0ee19" />
+                                      <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>
                                 </PersistentState>

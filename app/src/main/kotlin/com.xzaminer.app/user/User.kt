@@ -1,10 +1,11 @@
-package com.xzaminer.app.data
+package com.xzaminer.app.user
 
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.course.CourseSection
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.PURCHASE_TYPE_TRIAL
+import com.xzaminer.app.utils.QB_STATUS_FINISHED
 import com.xzaminer.app.utils.QB_STATUS_IN_PROGRESS
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,9 +23,12 @@ data class User(
     var purchases: ArrayList<Purchase> = arrayListOf(),
     val lastLoggedIn: String = "",
     val status: String = "enabled",
-    val quizzes: ArrayList<StudyMaterial> = arrayListOf()) {
+    val quizzes: HashMap<String, StudyMaterial> = hashMapOf<String, StudyMaterial>()
+) {
     fun getId(): String {
-        return replace(email) + replace(phone?: "")
+        return replace(email) + replace(
+            phone ?: ""
+        )
     }
 
     fun hasPurchase(productId: String): Boolean {
@@ -61,8 +65,9 @@ data class User(
     }
 
     fun startQuiz(questionBank: StudyMaterial) {
-        questionBank.status = QB_STATUS_IN_PROGRESS
-        quizzes.add(questionBank)
+        questionBank.startQuiz()
+        questionBank.updateLastAccessed()
+        quizzes[questionBank.id.toString()] = questionBank
     }
 
     fun isStudyMaterialPurchased(course: Course, section: CourseSection, studyMaterial: StudyMaterial): Boolean {
@@ -81,6 +86,21 @@ data class User(
         }
 
         return false
+    }
+
+    fun fetchAttemptedNumberOfQuizzes(): String {
+        return quizzes.values.filter { it-> it.status == QB_STATUS_FINISHED}.size.toString()
+    }
+
+    fun fetchAttemptedQuizzesAverage(): Double {
+        if(quizzes.values.filter { it-> it.status == QB_STATUS_FINISHED}.isEmpty()) {
+            return 0.0
+        }
+        return quizzes.values.filter { it-> it.status == QB_STATUS_FINISHED}.map { it->it.fetchResult().toLong() }.average()
+    }
+
+    fun fetchUnfinishedQuizzes(): ArrayList<StudyMaterial> {
+        return quizzes.values.filter { it-> it.status == QB_STATUS_IN_PROGRESS } as ArrayList
     }
 
     companion object {

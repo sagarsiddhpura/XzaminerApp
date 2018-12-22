@@ -33,8 +33,9 @@ import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.admin.AddStudyMaterialActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
-import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.*
+import com.xzaminer.app.user.User
+import com.xzaminer.app.user.UserProfileActivity
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.view.*
@@ -111,8 +112,11 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //            Intent(this, IntroActivity::class.java).apply {
 //                startActivity(this)
 //            }
-                Intent(this, CourseActivity::class.java).apply {
-                    putExtra(COURSE_ID, 101L)
+//                Intent(this, CourseActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    startActivity(this)
+//                }
+                Intent(this, UserProfileActivity::class.java).apply {
                     startActivity(this)
                 }
 //                Intent(this, VideoActivity::class.java).apply {
@@ -130,10 +134,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                }
 
             }
-            debugDataSource.initMockDataRealtimeDatabase(dataSource)
+//            debugDataSource.initMockDataRealtimeDatabase(dataSource)
+//            debugDataSource.copyQuestionBank(dataSource)
         }
 
-//        debugDataSource.copyQuestionBank(dataSource)
 //        debugDataSource.uploadImages(this, dataSource)
     }
 
@@ -294,8 +298,8 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
     private fun setupDrawer() {
         val home = PrimaryDrawerItem().withIdentifier(1).withName(R.string.home)
             .withIcon(R.drawable.ic_drw_home).withIconTintingEnabled(true)
-        val purchases = PrimaryDrawerItem().withIdentifier(9).withName(R.string.purchases)
-            .withIcon(R.drawable.ic_drw_purchases).withIconTintingEnabled(true)
+        val purchases = PrimaryDrawerItem().withIdentifier(9).withName(R.string.myprofile)
+            .withIcon(R.drawable.ic_drw_my_profile).withIconTintingEnabled(true)
         val settings = PrimaryDrawerItem().withIdentifier(2).withName(R.string.settings)
             .withIcon(R.drawable.ic_settings).withIconTintingEnabled(true)
         val importQuestionBank = PrimaryDrawerItem().withIdentifier(10).withName(R.string.title_activity_import_question_bank)
@@ -314,7 +318,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         idToMap.put(6, "Rate Us")
         idToMap.put(7, "Whats New")
         idToMap.put(8, "Favourites")
-        idToMap.put(9, "Purchases")
+        idToMap.put(9, "My Profile")
         idToMap.put(10, "ImportQuestionBank")
         idToMap.put(11, "Logout")
         idToMap.put(12, "ImportStudyMaterial")
@@ -387,7 +391,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                             resetSelection()
                         }
                         9L -> {
-                            toast("This functionality is being implemented")
+                            startActivity(Intent(applicationContext, UserProfileActivity::class.java))
                             resetSelection()
                         }
                         10L -> {

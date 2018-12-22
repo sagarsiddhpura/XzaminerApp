@@ -11,12 +11,12 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.ShowPurchasesActivity
-import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.Video
 import com.xzaminer.app.studymaterial.VideoActivity
+import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_course_section.*
 

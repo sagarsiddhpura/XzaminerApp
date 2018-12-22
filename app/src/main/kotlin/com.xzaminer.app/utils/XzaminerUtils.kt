@@ -27,7 +27,7 @@ fun getProductType(id: String): String {
 fun getExpiry(id: String): String? {
     if(id == IAP_SUB_YEARLY) {
         val currentDate = Date()
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
         val cal = Calendar.getInstance()
         cal.time = currentDate
         cal.add(Calendar.YEAR, 1)
@@ -35,7 +35,7 @@ fun getExpiry(id: String): String? {
     }
     if(id == IAP_SUB_MONTHLY) {
         val currentDate = Date()
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
         val cal = Calendar.getInstance()
         cal.time = currentDate
         cal.add(Calendar.MONTH, 1)
@@ -46,7 +46,15 @@ fun getExpiry(id: String): String? {
 
 fun getNowDate(): String? {
     val currentDate = Date()
-    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+    val cal = Calendar.getInstance()
+    cal.time = currentDate
+    return sdf.format(cal.time)
+}
+
+fun getNowDateTime(): String {
+    val currentDate = Date()
+    val sdf = SimpleDateFormat("HH:mm dd-MMM-yyyy", Locale.ENGLISH)
     val cal = Calendar.getInstance()
     cal.time = currentDate
     return sdf.format(cal.time)

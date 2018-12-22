@@ -18,7 +18,7 @@ import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
 import com.xzaminer.app.category.MainActivity
-import com.xzaminer.app.data.User
+import com.xzaminer.app.user.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import kotlinx.android.synthetic.main.activity_emailpassword.*
@@ -99,7 +99,7 @@ class EmailPasswordActivity : BaseLoginActivity(), View.OnClickListener {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success")
                         val user = auth.currentUser
-                        dataSource.getUser(User.replace(user?.email ?: "") + User.replace(user?.phoneNumber ?: "")) {userFirebase ->
+                        dataSource.getUser(User.replace(user?.email ?: "") + User.replace(user?.phoneNumber ?: "")) { userFirebase ->
                             if(userFirebase != null) {
                                 user?.getIdToken(true)?.addOnCompleteListener {
                                     if (it.isSuccessful) {
@@ -119,7 +119,14 @@ class EmailPasswordActivity : BaseLoginActivity(), View.OnClickListener {
                                     }
                                 }
                             } else {
-                                val userFirebase = User(user!!.displayName ?: "", email, password, "", null, user.phoneNumber)
+                                val userFirebase = User(
+                                    user!!.displayName ?: "",
+                                    email,
+                                    password,
+                                    "",
+                                    null,
+                                    user.phoneNumber
+                                )
                                 user.getIdToken(true).addOnCompleteListener {
                                     if (it.isSuccessful) {
                                         FirebaseStorage.getInstance().getReference("images/im_concept.png").downloadUrl.addOnSuccessListener { uri ->

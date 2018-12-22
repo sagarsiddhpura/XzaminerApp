@@ -16,13 +16,13 @@ import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.course.CourseSection
 import com.xzaminer.app.course.CourseSectionVideosDomainActivity
-import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.extensions.debugDataSource
 import com.xzaminer.app.studymaterial.QuizActivity
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.StudyMaterialActivity
+import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_show_purchases.*
 
@@ -159,6 +159,7 @@ class ShowPurchasesActivity : SimpleActivity(), BillingProcessor.IBillingHandler
 
         val purchase = purchases.find { it.id == productId } as Purchase
         purchase.details = json
+        purchase.purchased = getNowDate()
 
         val user = config.getLoggedInUser() as User
 

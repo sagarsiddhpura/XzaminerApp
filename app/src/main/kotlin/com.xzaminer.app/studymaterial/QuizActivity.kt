@@ -16,10 +16,10 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.ShowPurchasesActivity
-import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.result.ResultActivity
+import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_quiz.*
 import kotlin.concurrent.thread
@@ -54,7 +54,7 @@ class QuizActivity : SimpleActivity() {
             isNewQuiz = getBooleanExtra(IS_NEW_QUIZ, true)
             courseId = getLongExtra(COURSE_ID, -1)
             sectionId = getLongExtra(SECTION_ID, -1)
-            if(courseId == (-1).toLong() || sectionId == (-1).toLong() || quizId == (-1).toLong()) {
+            if(quizId == (-1).toLong()) {
                 showErrorAndExit()
                 return
             }
@@ -74,6 +74,10 @@ class QuizActivity : SimpleActivity() {
                         if(studyMaterial != null) {
                             val studyMaterialPurchased = user.isStudyMaterialPurchased(course, section, studyMaterial)
                             if(studyMaterialPurchased) {
+                                studyMaterial.id = System.nanoTime()
+                                user.startQuiz(studyMaterial)
+                                config.setLoggedInUser(user)
+                                dataSource.addUser(user)
                                 loadQuestionBank(studyMaterial)
                             } else {
                                 // show purchase popup
@@ -100,14 +104,14 @@ class QuizActivity : SimpleActivity() {
                 }
             }
         } else {
-            dataSource.getQuestionBankFromUser(user.getId(), quizId) { loadedQuiz ->
-                if(loadedQuiz != null && loadedQuiz.status == QB_STATUS_IN_PROGRESS) {
-                    loadQuestionBank(loadedQuiz)
-                } else {
-                    toast("Error Resuming Quiz. Please start quiz first to resume it.")
-                    finish()
-                    return@getQuestionBankFromUser
-                }
+            val loadedQuiz = user.quizzes[quizId.toString()]
+            if(loadedQuiz != null && loadedQuiz.status == QB_STATUS_IN_PROGRESS) {
+                loadedQuiz.updateLastAccessed()
+                loadQuestionBank(loadedQuiz)
+            } else {
+                toast("Error Resuming Quiz.")
+                finish()
+                return
             }
         }
     }
@@ -126,13 +130,7 @@ class QuizActivity : SimpleActivity() {
             }
 
             supportActionBar?.title = loadedQuiz.name
-            loadedQuiz.id = System.nanoTime()
             quizId = loadedQuiz.id
-
-            user.startQuiz(loadedQuiz)
-            config.setLoggedInUser(user)
-            dataSource.addUser(user)
-
             setupAdapter(loadedQuiz.questions)
             setupTimer(loadedQuiz.fetchTotalOrResumeTimer())
         } else {
@@ -236,6 +234,8 @@ class QuizActivity : SimpleActivity() {
 
     private fun finishQuiz() {
         getCurrentQuizFromUser()!!.status = QB_STATUS_FINISHED
+        getCurrentQuizFromUser()!!.updateCompleted()
+        config.setLoggedInUser(user)
         dataSource.addUser(user)
         Intent(this, ResultActivity::class.java).apply {
             putExtra(QUIZ_ID, quizId)
@@ -245,7 +245,7 @@ class QuizActivity : SimpleActivity() {
     }
 
     private fun getCurrentQuizFromUser(): StudyMaterial? {
-        return user.quizzes.find { it.id == quizId }
+        return user.quizzes.values.find { it.id == quizId }
     }
 
     private fun showMarkedLaterQuestions() {
@@ -280,7 +280,13 @@ class QuizActivity : SimpleActivity() {
 
     override fun onBackPressed() {
         ConfirmationDialog(this, "Are you sure you want to exit Quiz?", R.string.yes, R.string.ok, 0) {
+            config.setLoggedInUser(user)
             super.onBackPressed()
         }
+    }
+
+    override fun onDestroy() {
+        config.setLoggedInUser(user)
+        super.onDestroy()
     }
 }

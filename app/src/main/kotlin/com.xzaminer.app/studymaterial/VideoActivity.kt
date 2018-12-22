@@ -17,7 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
-import com.xzaminer.app.data.User
+import com.xzaminer.app.user.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.utils.COURSE_ID

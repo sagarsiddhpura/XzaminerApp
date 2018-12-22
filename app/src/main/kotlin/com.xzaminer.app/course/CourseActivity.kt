@@ -26,13 +26,13 @@ import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.billing.PurchaseLog
-import com.xzaminer.app.data.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.extensions.debugDataSource
 import com.xzaminer.app.studymaterial.QuizActivity
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.StudyMaterialActivity
+import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_course.*
 import ss.com.bannerslider.Slider
@@ -253,6 +253,7 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         val json = Gson().toJson(details, listType)
         val purchase = course!!.fetchPurchaseById(productId) as Purchase
         purchase.details = json
+        purchase.purchased = getNowDate()
 
         val user = config.getLoggedInUser() as User
 
@@ -275,12 +276,13 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
     override fun onBillingInitialized() {
         isBillingInitialized = true
-        billing!!.consumePurchase(PURCHASE_COURSE_IAP+"101")
-        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1017")
-        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1015")
-        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1012")
-        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1015")
-        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"101401")
+//        billing!!.consumePurchase(PURCHASE_COURSE_IAP+"101")
+//        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1017")
+//        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1015")
+//        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1012")
+//        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1015")
+//        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1014")
+//        billing!!.consumePurchase(PURCHASE_SECTION_STUDY_MATERIAL+"101401")
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
