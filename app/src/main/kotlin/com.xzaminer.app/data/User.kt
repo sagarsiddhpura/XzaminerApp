@@ -4,6 +4,7 @@ import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.course.CourseSection
 import com.xzaminer.app.studymaterial.StudyMaterial
+import com.xzaminer.app.utils.PURCHASE_TYPE_TRIAL
 import com.xzaminer.app.utils.QB_STATUS_IN_PROGRESS
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,6 +74,9 @@ data class User(
             return true
         }
         if(!course.fetchVisiblePurchases().isEmpty() && hasPurchase(course.fetchVisiblePurchases().first().id)) {
+            return true
+        }
+        if(!studyMaterial.fetchVisiblePurchases().isEmpty() && studyMaterial.fetchVisiblePurchases().any { it -> it.type == PURCHASE_TYPE_TRIAL }) {
             return true
         }
 

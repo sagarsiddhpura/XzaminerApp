@@ -278,6 +278,9 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         billing!!.consumePurchase(PURCHASE_COURSE_IAP+"101")
         billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1017")
         billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1015")
+        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1012")
+        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"1015")
+        billing!!.consumePurchase(PURCHASE_SECTION_IAP+"101401")
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {

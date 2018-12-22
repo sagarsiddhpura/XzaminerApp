@@ -106,3 +106,6 @@ Updated layout of Course Screen
 
 2.16
 Implement IAP at study material. quiz and video level
+
+2.18
+Added trial functionality

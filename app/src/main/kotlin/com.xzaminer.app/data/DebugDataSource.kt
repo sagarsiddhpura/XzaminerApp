@@ -117,10 +117,13 @@ class DebugDataSource {
                 PURCHASE_TYPE_IAP, "1000", "", true))
         } else if (id == 101401) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101401", "CISA Review Manual - Domain 01","Purchase review manual for Domain 01",
-                PURCHASE_TYPE_IAP, "100", "", true))
+                PURCHASE_TYPE_TRIAL, "100", "", true))
         } else if (id == 101402) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101402", "CISA Review Manual - Domain 02","Purchase review manual for Domain 02",
                 PURCHASE_TYPE_IAP, "100", "", true))
+        } else if (id == 101204) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101204", "CISA Question Banks - Question Bank 01","Purchase CISA Question Banks - Question Bank 01",
+                PURCHASE_TYPE_TRIAL, "100", "", true))
         }
         return arrayListOf()
     }
@@ -319,7 +322,7 @@ class DebugDataSource {
                     "Day " + (i - 101203),
                     "Day " + (i - 101203),
                     "courses/101/title_03_h_0" + (i - 101203) + ".jpg", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
+                    getQuestions(i), arrayListOf(), getPurchaseInfo(i), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
                 )
                 questionBanks[c.id.toString()] = c
             }
