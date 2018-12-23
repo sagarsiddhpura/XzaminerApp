@@ -116,9 +116,9 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    putExtra(COURSE_ID, 101L)
 //                    startActivity(this)
 //                }
-                Intent(this, UserProfileActivity::class.java).apply {
-                    startActivity(this)
-                }
+//                Intent(this, UserProfileActivity::class.java).apply {
+//                    startActivity(this)
+//                }
 //                Intent(this, VideoActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)
 //                    putExtra(SECTION_ID, 1016L)

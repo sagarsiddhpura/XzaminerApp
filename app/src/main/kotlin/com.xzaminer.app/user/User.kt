@@ -96,11 +96,18 @@ data class User(
         if(quizzes.values.filter { it-> it.status == QB_STATUS_FINISHED}.isEmpty()) {
             return 0.0
         }
-        return quizzes.values.filter { it-> it.status == QB_STATUS_FINISHED}.map { it->it.fetchResult().toLong() }.average()
+        val average =
+            quizzes.values.filter { it -> it.status == QB_STATUS_FINISHED }.map { it -> it.fetchResult().toLong() }
+                .average()
+        return String.format("%.2f", average).toDouble()
     }
 
     fun fetchUnfinishedQuizzes(): ArrayList<StudyMaterial> {
         return quizzes.values.filter { it-> it.status == QB_STATUS_IN_PROGRESS } as ArrayList
+    }
+
+    fun fetchFinishedQuizzes(): ArrayList<StudyMaterial> {
+        return quizzes.values.filter { it-> it.status == QB_STATUS_FINISHED } as ArrayList
     }
 
     companion object {

@@ -109,10 +109,78 @@
             />
 
         <android.support.constraint.ConstraintLayout
+                android:id="@+id/finished_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/divider_top_unfinished"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingTop="4dp"
+                android:paddingBottom="12dp"
+                >
+
+            <TextView
+                    android:id="@+id/finished_quizzes_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp"
+                    android:text="Finished Quizzes"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                    android:id="@+id/finished_quizzes_desc"
+                    android:ellipsize="end"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:scrollHorizontally="false"
+                    android:textSize="@dimen/normal_text_size"
+                    tools:text="2 Finished Quizzes"
+                    app:layout_constraintTop_toBottomOf="@+id/finished_quizzes_name"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageView
+                    android:id="@+id/finished_image"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_arrow_right_simple"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginRight="16dp"
+                    android:tint="@color/text_black"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <View
+            android:id="@+id/divider_finished_unfinished"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/divider_grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/finished_root"
+            />
+
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/unfinished_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/divider_top_unfinished"
+            app:layout_constraintTop_toBottomOf="@+id/divider_finished_unfinished"
             app:layout_constraintStart_toStartOf="parent"
             android:paddingTop="4dp"
             android:paddingBottom="12dp"

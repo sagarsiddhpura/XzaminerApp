@@ -50,7 +50,9 @@
         </activity>
         <activity android:name=".user.UserProfileActivity">
         </activity>
-        <activity android:name=".studymaterial.ListUnfinishedQuizzesActivity">
+        <activity android:name=".user.ListUnfinishedQuizzesActivity">
+        </activity>
+        <activity android:name=".user.ListFinishedQuizzesActivity">
         </activity>
         <activity android:name=".billing.ListUserPurchasesActivity">
         </activity>

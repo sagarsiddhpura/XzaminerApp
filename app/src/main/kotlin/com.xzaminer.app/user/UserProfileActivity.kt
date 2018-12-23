@@ -8,7 +8,6 @@ import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.ListUserPurchasesActivity
 import com.xzaminer.app.extensions.config
-import com.xzaminer.app.studymaterial.ListUnfinishedQuizzesActivity
 import kotlinx.android.synthetic.main.activity_user_profile.*
 
 class UserProfileActivity : SimpleActivity() {
@@ -37,8 +36,15 @@ class UserProfileActivity : SimpleActivity() {
 
         attempted_text.text = user.fetchAttemptedNumberOfQuizzes() + "\nQuizzes Finished"
         average_text.text = user.fetchAttemptedQuizzesAverage().toString() + "%\nAverage Score"
+        finished_quizzes_desc.text = user.fetchFinishedQuizzes().size.toString() + " Finished Quizzes"
         unfinished_quizzes_desc.text = user.fetchUnfinishedQuizzes().size.toString() + " Unfinished Quizzes"
         purchases_desc.text = user.purchases.size.toString() + " Purchases"
+
+        finished_root.setOnClickListener {
+            Intent(this, ListFinishedQuizzesActivity::class.java).apply {
+                startActivity(this)
+            }
+        }
 
         unfinished_root.setOnClickListener {
             Intent(this, ListUnfinishedQuizzesActivity::class.java).apply {

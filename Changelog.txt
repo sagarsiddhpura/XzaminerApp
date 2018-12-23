@@ -112,3 +112,5 @@ Added trial functionality
 Added User Profile screen
 Added Unfinished quizzes screen
 Added User Purchases screen
+Added Finished quizzes screen
+Added fastscroller

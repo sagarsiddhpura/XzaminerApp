@@ -1,4 +1,4 @@
-package com.xzaminer.app.studymaterial
+package com.xzaminer.app.user
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,8 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.config
-import com.xzaminer.app.user.User
+import com.xzaminer.app.studymaterial.QuizActivity
+import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.IS_NEW_QUIZ
 import com.xzaminer.app.utils.QUIZ_ID
 import kotlinx.android.synthetic.main.activity_unfinished_quizzes.*
@@ -51,9 +52,9 @@ class ListUnfinishedQuizzesActivity : SimpleActivity() {
             ResumeQuizzesAdapter(
                 this,
                 quizzes.clone() as ArrayList<StudyMaterial>,
-                quizzes_grid
+                quizzes_grid, media_vertical_fastscroller
             ) {
-                if(it is StudyMaterial) {
+                if (it is StudyMaterial) {
                     Intent(this, QuizActivity::class.java).apply {
                         putExtra(QUIZ_ID, (it).id)
                         putExtra(IS_NEW_QUIZ, false)
@@ -72,6 +73,11 @@ class ListUnfinishedQuizzesActivity : SimpleActivity() {
         if(quizzes.isEmpty()) {
             quizzes_empty_text_label.text = "No Unfinished Quizzes"
             quizzes_empty_text_label.beVisible()
+        }
+
+        media_vertical_fastscroller.isHorizontal = false
+        media_vertical_fastscroller.updatePrimaryColor()
+        media_vertical_fastscroller.setViews(quizzes_grid, null) {
         }
     }
 }

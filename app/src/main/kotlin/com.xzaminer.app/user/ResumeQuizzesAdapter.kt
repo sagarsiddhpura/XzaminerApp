@@ -1,4 +1,4 @@
-package com.xzaminer.app.studymaterial
+package com.xzaminer.app.user
 
 import android.view.Menu
 import android.view.View
@@ -7,8 +7,11 @@ import com.bumptech.glide.Glide
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.isActivityDestroyed
+import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
+import com.xzaminer.app.R.string.purchases
+import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.QB_LAST_ACCESSED
 import com.xzaminer.app.utils.QB_STARTED_ON
 import kotlinx.android.synthetic.main.category_item_grid.view.*
@@ -16,9 +19,9 @@ import kotlinx.android.synthetic.main.course_domain_video_item.view.*
 
 
 class ResumeQuizzesAdapter(
-    activity: ListUnfinishedQuizzesActivity, var purchases: ArrayList<StudyMaterial>, recyclerView: MyRecyclerView,
+    activity: ListUnfinishedQuizzesActivity, var quizzes: ArrayList<StudyMaterial>, recyclerView: MyRecyclerView, fastScroller: FastScroller? = null,
     itemClick: (Any) -> Unit) :
-        MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
+        MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private var currentPurchasesHash = purchases.hashCode()
     private var showPurchaseActivity : ListUnfinishedQuizzesActivity? = null
@@ -41,14 +44,14 @@ class ResumeQuizzesAdapter(
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
-        val purchase = purchases.getOrNull(position) ?: return
-        val view = holder.bindView(purchase, true, false) { itemView, adapterPosition ->
-            setupView(itemView, purchase)
+        val quiz = quizzes.getOrNull(position) ?: return
+        val view = holder.bindView(quiz, true, false) { itemView, adapterPosition ->
+            setupView(itemView, quiz)
         }
         bindViewHolder(holder, position, view)
     }
 
-    override fun getItemCount() = purchases.size
+    override fun getItemCount() = quizzes.size
 
     override fun prepareActionMode(menu: Menu) {
         return
@@ -58,7 +61,7 @@ class ResumeQuizzesAdapter(
         return
     }
 
-    override fun getSelectableItemCount() = purchases.size
+    override fun getSelectableItemCount() = quizzes.size
 
     override fun getIsItemSelectable(position: Int) = true
 
@@ -71,11 +74,11 @@ class ResumeQuizzesAdapter(
         }
     }
 
-    fun updateQuizzes(newPurs: ArrayList<StudyMaterial>) {
-        val quizzes = newPurs.clone() as ArrayList<StudyMaterial>
-        if (quizzes.hashCode() != currentPurchasesHash) {
-            currentPurchasesHash = quizzes.hashCode()
-            purchases = quizzes
+    fun updateQuizzes(newQuizzes: ArrayList<StudyMaterial>) {
+        val newQuizzesClone = newQuizzes.clone() as ArrayList<StudyMaterial>
+        if (newQuizzesClone.hashCode() != currentPurchasesHash) {
+            currentPurchasesHash = newQuizzesClone.hashCode()
+            quizzes = newQuizzesClone
             notifyDataSetChanged()
             finishActMode()
         }
