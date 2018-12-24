@@ -5,15 +5,15 @@ import com.xzaminer.app.billing.Purchase
 data class Course (
     var id: Long = 0,
     var name: String? = null,
-    var description: String? = null,
-    var imageIcon: String? = null,
+    var desc: String? = null,
+    var image: String? = null,
     var sections: HashMap<String, CourseSection> = hashMapOf(),
     val purchaseInfo: ArrayList<Purchase> = arrayListOf(),
     val descImages: ArrayList<String> = arrayListOf(),
     val shortName: String? = null
     ) {
         override fun toString(): String {
-            return "$name:::$description"
+            return "$name:::$desc"
         }
 
     fun fetchVisibleSections(): ArrayList<CourseSection> {

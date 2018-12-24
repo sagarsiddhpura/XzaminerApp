@@ -118,7 +118,7 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
     private fun setupView(view: View, category: Category) {
         view.apply {
             course_name.text = category.name
-            course_desc.text = category.description
+            course_desc.text = category.desc
             course_subtitle.beGone()
             if(category.image != null && category.image != "") {
                 activity.loadImageImageView(category.image!!, course_image, false, null, false, R.drawable.im_placeholder_video)

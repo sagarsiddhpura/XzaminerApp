@@ -32,7 +32,7 @@ class AddStudyMaterialActivity : SimpleActivity() {
         image_edit_file.setColorFilter(getAdjustedPrimaryColor())
         category_root.setOnClickListener {
             CategoryPickerDialog(this) { section ->
-                selectedPath = section.description!!
+                selectedPath = section.desc!!
                 category_value.text = section.name
             }
         }

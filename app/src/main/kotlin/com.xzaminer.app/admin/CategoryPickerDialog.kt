@@ -131,7 +131,7 @@ class CategoryPickerDialog(val activity: BaseSimpleActivity,
 
     private fun sendSuccess() {
         val courseSection = objMap[currCatId.toString()] as CourseSection
-        courseSection.description = catPathHistory.joinToString ( separator = "" ) + "/studyMaterials"
+        courseSection.desc = catPathHistory.joinToString ( separator = "" ) + "/studyMaterials"
         callback(courseSection)
         mDialog.dismiss()
     }

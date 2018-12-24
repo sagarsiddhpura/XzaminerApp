@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
@@ -13,6 +14,10 @@ import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.loadIconImageView
 import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.StudyMaterial
+import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_QUESTION_BANK
+import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_STUDY_MATERIAL
+import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_VIDEO
+import kotlinx.android.synthetic.main.course_domain_video_item.view.*
 import kotlinx.android.synthetic.main.course_study_material_item_grid.view.*
 
 
@@ -29,7 +34,7 @@ class CourseStudyMaterialsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         if(orientation == GridLayoutManager.VERTICAL) {
-            return createViewHolder(R.layout.course_study_material_item_grid_vertical, parent)
+            return createViewHolder(R.layout.course_domain_video_item, parent)
         } else {
             return createViewHolder(R.layout.course_study_material_item_grid, parent)
         }
@@ -59,17 +64,17 @@ class CourseStudyMaterialsAdapter(
 
     private fun setupView(view: View, studyMaterial: StudyMaterial, position: Int) {
         view.apply {
-            cat_name.text = studyMaterial.name
-            cat_name.setTextColor(resources.getColor(R.color.white))
-            cat_name.beVisible()
-            if(studyMaterial.imageIcon != null) {
-                activity.loadImageImageView(studyMaterial.imageIcon!!, cat_image, false, cat_name, true, R.drawable.im_placeholder_h)
-            } else {
-                val img : Int = R.drawable.im_placeholder_h
-                activity.loadIconImageView(img, cat_image, false)
-            }
-
             if(orientation == GridLayoutManager.HORIZONTAL) {
+                cat_name.text = studyMaterial.name
+                cat_name.setTextColor(resources.getColor(R.color.white))
+                cat_name.beVisible()
+                if(studyMaterial.image != null) {
+                    activity.loadImageImageView(studyMaterial.image!!, cat_image, false, cat_name, true, R.drawable.im_placeholder_h)
+                } else {
+                    val img : Int = R.drawable.im_placeholder_h
+                    activity.loadIconImageView(img, cat_image, false)
+                }
+
                 val layoutParams = view.layoutParams as (GridLayoutManager.LayoutParams)
                 if(position == 0) {
                     val marginInDp = TypedValue.applyDimension(
@@ -85,6 +90,22 @@ class CourseStudyMaterialsAdapter(
                     layoutParams.setMargins(0, 0, marginInDp, 0)
                 } else {
                     layoutParams.setMargins(0, 0, 0, 0)
+                }
+            } else {
+                vid_name.text = studyMaterial.name
+                if(studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL || studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
+                    vid_desc.text = studyMaterial.questions.size.toString() + " items"
+                } else if(studyMaterial.type == STUDY_MATERIAL_TYPE_VIDEO) {
+                    vid_desc.text = studyMaterial.videos.size.toString() + " items"
+                }
+                vid_time.beGone()
+                vid_download_status.beGone()
+                vid_download_status_text.beGone()
+                if(studyMaterial.image != null && studyMaterial.image != "") {
+                    activity.loadImageImageView(studyMaterial.image!!, vid_image, false, null, false, R.drawable.im_placeholder_h)
+                } else {
+                    val img : Int = R.drawable.im_placeholder_h
+                    activity.loadIconImageView(img, vid_image, false)
                 }
             }
 

@@ -7,8 +7,8 @@ import com.xzaminer.app.utils.STUDY_MATERIAL_TYPE_STUDY_MATERIAL
 data class CourseSection (
     var id: Long = 0,
     var name: String = "",
-    var description: String? = null,
-    var imageIcon: String? = null,
+    var desc: String? = null,
+    var image: String? = null,
     var studyMaterials: HashMap<String, StudyMaterial> = hashMapOf(),
     var type: String = STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
     val purchaseInfo: ArrayList<Purchase> = arrayListOf(),
@@ -16,7 +16,7 @@ data class CourseSection (
     var isVisible: Boolean = true
     ) {
         override fun toString(): String {
-            return "$name:::$description"
+            return "$name:::$desc"
         }
 
     fun fetchStudyMaterialById(studyMaterialId: Long): @ParameterName(name = "course") StudyMaterial? {

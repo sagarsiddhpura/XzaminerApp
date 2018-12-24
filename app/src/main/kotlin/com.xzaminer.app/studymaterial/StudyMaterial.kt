@@ -6,8 +6,8 @@ import com.xzaminer.app.utils.*
 data class StudyMaterial (
     var id: Long = 0,
     var name: String? = null,
-    var description: String? = null,
-    var imageIcon: String? = null,
+    var desc: String? = null,
+    var image: String? = null,
     var openCount: Int = 0,
     var properties : HashMap<String, ArrayList<String>> = hashMapOf(),
     var questions: ArrayList<Question> = arrayListOf(),

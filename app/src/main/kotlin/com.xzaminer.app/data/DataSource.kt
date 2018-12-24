@@ -63,7 +63,7 @@ class DataSource {
                     if (it.courses != null) {
                         it.courses!!.values.forEach {
                             if (it != null) {
-                                audToCat.add(Category(it.id, it.name, it.description, it.imageIcon, null, null, true))
+                                audToCat.add(Category(it.id, it.name, it.desc, it.image, null, null, true))
                             }
                         }
                         cats.addAll(audToCat)

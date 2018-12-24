@@ -58,8 +58,8 @@ class CourseQuestionBanksAdapter(
     private fun setupView(view: View, questionBank: StudyMaterial) {
         view.apply {
             cat_name.text = questionBank.name
-            if(questionBank.imageIcon != null) {
-                activity.loadImageImageView(questionBank.imageIcon!!, cat_image, false, cat_name)
+            if(questionBank.image != null) {
+                activity.loadImageImageView(questionBank.image!!, cat_image, false, cat_name)
             } else {
                 val img : Int = R.drawable.im_placeholder
                 activity.loadIconImageView(img, cat_image, false)

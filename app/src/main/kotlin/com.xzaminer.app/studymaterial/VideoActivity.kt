@@ -14,12 +14,14 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.firebase.storage.FirebaseStorage
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
-import com.xzaminer.app.user.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
+import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.COURSE_ID
 import com.xzaminer.app.utils.DOMAIN_ID
 import com.xzaminer.app.utils.SECTION_ID
@@ -61,6 +63,10 @@ class VideoActivity : SimpleActivity() {
             }
         }
         user = config.getLoggedInUser() as User
+
+        video_view.beVisible()
+        intro_holder.beGone()
+
         dataSource.getCourseStudyMaterialById(courseId, sectionId, domainId) { studyMaterial ->
             val video = studyMaterial?.fetchVideo(videoId)
             if (video != null) {

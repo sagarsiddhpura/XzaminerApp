@@ -123,3 +123,5 @@ Updated title color to black
 Updated prices according to feedback
 Added trial entities
 Update placeholder image to leave more space below and set text color to white
+updated see all section activity
+code refactoring to have all fields as images and desc

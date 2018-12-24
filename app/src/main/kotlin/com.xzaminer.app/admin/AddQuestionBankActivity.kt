@@ -32,7 +32,7 @@ class AddQuestionBankActivity : SimpleActivity() {
         image_edit_file.setColorFilter(getAdjustedPrimaryColor())
         category_root.setOnClickListener {
             CategoryPickerDialog(this) { section ->
-                selectedPath = section.description!!
+                selectedPath = section.desc!!
                 category_value.text = section.name
             }
         }
@@ -132,7 +132,7 @@ class AddQuestionBankActivity : SimpleActivity() {
             return
         } else {
             dataSource.addQuestionBank(selectedPath, questionBank)
-            questionBank.description = selectedPath
+            questionBank.desc = selectedPath
             debugDataSource.addDebugObject(dataSource, "studyMaterials/" + Date().time, questionBank)
             ConfirmationDialog(this, "Question Bank is Imported successfully", R.string.yes, R.string.ok, 0) { }
         }

@@ -3,7 +3,7 @@ package com.xzaminer.app.studymaterial
 data class Question (
     var id: Long = 0,
     var text: String? = null,
-    var description: String? = null,
+    var desc: String? = null,
     var options: ArrayList<QuestionOption> = arrayListOf(),
     var correctAnswer: Long? = null,
     var selectedAnswer: Long? = 0,
