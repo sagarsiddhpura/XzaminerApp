@@ -14,7 +14,8 @@ data class StudyMaterial (
     var videos: ArrayList<Video> = arrayListOf(),
     val purchaseInfo: ArrayList<Purchase> = arrayListOf(),
     var status: String = "",
-    var type: String = STUDY_MATERIAL_TYPE_STUDY_MATERIAL
+    var type: String = STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
+    var order: Long = 0
     ) {
     fun fetchIapPurchase(): Purchase? {
         purchaseInfo.forEach {

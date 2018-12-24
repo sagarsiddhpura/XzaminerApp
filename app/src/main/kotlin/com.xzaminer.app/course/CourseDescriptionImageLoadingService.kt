@@ -10,7 +10,7 @@ import ss.com.bannerslider.ImageLoadingService
 class PicassoImageLoadingService(var context: Context) : ImageLoadingService {
 
     override fun loadImage(url: String, imageView: ImageView) {
-        context.loadImageImageView(url, imageView, false, null, R.drawable.im_desc_placeholder)
+        context.loadImageImageView(url, imageView, false, null, false, R.drawable.im_desc_placeholder)
     }
 
     override fun loadImage(resource: Int, imageView: ImageView) {

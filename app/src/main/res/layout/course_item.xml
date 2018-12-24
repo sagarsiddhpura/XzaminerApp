@@ -14,7 +14,7 @@
         app:cardCornerRadius="2dp"
         app:cardElevation="2dp"
         android:paddingTop="8dp"
-        app:cardBackgroundColor="@color/md_indigo_700">
+        app:cardBackgroundColor="@color/course_bg">
 
     <android.support.constraint.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +23,10 @@
             android:id="@+id/vid_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp">
+            android:paddingTop="4dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="12dp">
 
         <ImageView
                 android:id="@+id/course_image"
@@ -81,7 +84,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/course_desc"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>

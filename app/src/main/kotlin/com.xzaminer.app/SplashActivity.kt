@@ -23,9 +23,10 @@ class SplashActivity : BaseSplashActivity() {
         if (baseConfig.appRunCount == 0) {
             baseConfig.backgroundColor = ContextCompat.getColor(this, R.color.background_grey)
             baseConfig.textColor = ContextCompat.getColor(this, R.color.text_black)
-            baseConfig.primaryColor = ContextCompat.getColor(this, R.color.colorPrimary)
+            baseConfig.primaryColor = ContextCompat.getColor(this, R.color.text_black)
             config.enablePullToRefresh = false
         }
+        baseConfig.primaryColor = ContextCompat.getColor(this, R.color.md_grey_black_dark)
         appLaunched(BuildConfig.APPLICATION_ID)
         navigate()
     }

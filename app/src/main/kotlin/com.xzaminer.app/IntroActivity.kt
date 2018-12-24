@@ -1,6 +1,7 @@
 package com.xzaminer.app
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.view.Window
 import com.google.android.exoplayer2.DefaultLoadControl
@@ -32,7 +33,11 @@ class IntroActivity : BaseSplashActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
-        initializePlayer()
+//        initializePlayer()
+        Handler().postDelayed({
+            finish()
+            return@postDelayed
+        }, 2000)
     }
 
     private fun initializePlayer() {

@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.adjustAlpha
+import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.isActivityDestroyed
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -118,9 +119,9 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
         view.apply {
             course_name.text = category.name
             course_desc.text = category.description
-            course_subtitle.text = "Systematic 31 Day wise planning included"
+            course_subtitle.beGone()
             if(category.image != null && category.image != "") {
-                activity.loadImageImageView(category.image!!, course_image, false, null, R.drawable.im_placeholder_video)
+                activity.loadImageImageView(category.image!!, course_image, false, null, false, R.drawable.im_placeholder_video)
             } else {
                 val img : Int = R.drawable.im_placeholder
                 activity.loadIconImageView(img, course_image, false)

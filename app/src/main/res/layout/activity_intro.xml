@@ -12,6 +12,25 @@
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
 
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/course_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ImageView
+                android:id="@+id/intro_thumbnail"
+                android:layout_width="196dp"
+                android:layout_height="196dp"
+                android:scaleType="center"
+                android:background="@drawable/xzaminer_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.CoordinatorLayout>

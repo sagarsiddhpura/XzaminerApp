@@ -77,40 +77,13 @@ fun Context.loadImageImageView(path: String, target: ImageView, cropThumbnails: 
         .into(target)
 }
 
-fun Context.loadImageImageView(path: String, target: ImageView, cropThumbnails: Boolean, text: TextView?, hasRoundEdges : Boolean) {
+fun Context.loadImageImageView(path: String, target: ImageView, cropThumbnails: Boolean, text: TextView?, hasRoundEdges : Boolean, placeholder: Int) {
     val options = RequestOptions()
         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         .format(DecodeFormat.PREFER_ARGB_8888)
 
     if (cropThumbnails) options.centerCrop() else options.fitCenter()
     if (hasRoundEdges) options.transform(RoundedCorners(8))
-
-    text?.beVisible()
-    GlideApp.with(applicationContext)
-        .load(dataSource.getStorage().getReference(path))
-        .apply(options)
-        .placeholder(R.drawable.im_placeholder)
-        .listener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean
-            ): Boolean {
-                text?.beVisible()
-                return false
-            }
-
-            override fun onResourceReady( resource: Drawable?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>?, dataSource: com.bumptech.glide.load.DataSource?, isFirstResource: Boolean): Boolean {
-                text?.beGone()
-                return false
-            }
-        })
-        .into(target)
-}
-
-fun Context.loadImageImageView(path: String, target: ImageView, cropThumbnails: Boolean, text: TextView?, placeholder: Int) {
-    val options = RequestOptions()
-        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-        .format(DecodeFormat.PREFER_ARGB_8888)
-
-    if (cropThumbnails) options.centerCrop() else options.fitCenter()
 
     text?.beVisible()
     GlideApp.with(applicationContext)

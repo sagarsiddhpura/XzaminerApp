@@ -60,11 +60,12 @@ class CourseStudyMaterialsAdapter(
     private fun setupView(view: View, studyMaterial: StudyMaterial, position: Int) {
         view.apply {
             cat_name.text = studyMaterial.name
+            cat_name.setTextColor(resources.getColor(R.color.white))
             cat_name.beVisible()
             if(studyMaterial.imageIcon != null) {
-                activity.loadImageImageView(studyMaterial.imageIcon!!, cat_image, false, cat_name, true)
+                activity.loadImageImageView(studyMaterial.imageIcon!!, cat_image, false, cat_name, true, R.drawable.im_placeholder_h)
             } else {
-                val img : Int = R.drawable.im_placeholder
+                val img : Int = R.drawable.im_placeholder_h
                 activity.loadIconImageView(img, cat_image, false)
             }
 

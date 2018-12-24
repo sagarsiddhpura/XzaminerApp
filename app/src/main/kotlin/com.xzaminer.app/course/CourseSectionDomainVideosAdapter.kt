@@ -57,7 +57,7 @@ class CourseSectionDomainVideosAdapter(
             vid_desc.text = video.description
             vid_time.text = video.duration
             if(video.thumbnail != null && video.thumbnail != "") {
-                activity.loadImageImageView(video.thumbnail!!, vid_image, false, null, R.drawable.im_placeholder_video)
+                activity.loadImageImageView(video.thumbnail!!, vid_image, false, null, false, R.drawable.im_placeholder_video)
             } else {
                 val img : Int = R.drawable.im_placeholder_video
                 activity.loadIconImageView(img, vid_image, false)

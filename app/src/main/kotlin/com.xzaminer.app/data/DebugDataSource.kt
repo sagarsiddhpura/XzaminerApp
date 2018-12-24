@@ -32,7 +32,7 @@ class DebugDataSource {
         if (id == 1) {
             val c1 = Course(
                 101,
-                "CISA\n(Certified Information System Auditor)", "65 Videos + 41 Question Banks + 5 Flash Cards",
+                "CISA\n(Certified Information System Auditor)", "Structured Courseware to Pass the CISA Exam having Question Banks that builds confidence, Videos, Question Banks & Flash Cards",
                 "images/cat_2.png",
                 getSections(101), getPurchaseInfo(101), arrayListOf("courses/101/desc_1.jpg", "courses/101/desc_2.jpg", "courses/101/desc_3.jpg", "courses/101/desc_4.jpg", "courses/101/desc_5.jpg"),
                 "CISA"
@@ -102,34 +102,41 @@ class DebugDataSource {
     private fun getPurchaseInfo(id: Int): ArrayList<Purchase> {
         if (id == 101) {
             return arrayListOf(Purchase(PURCHASE_COURSE_IAP+"101", "CISA Course", "Purchase entire course including 65 Videos + 41 Question Banks + 5 Flash Cards for 50% discount",
-                PURCHASE_TYPE_IAP, "2500", "5000", true, null, null, "Entire Course CISA"))
+                PURCHASE_TYPE_IAP, "3500", "7000", true, null, null, "Entire Course CISA"))
         } else if (id == 1012) {
-            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1012", "CISA 30 Day Question Banks","Purchase entire Question Banks section including 31 Question Banks for 50% discount",
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1012", "CISA 31 Day Question Banks","Purchase entire Question Banks section including 31 Question Banks for 50% discount",
                 PURCHASE_TYPE_IAP, "1000", "", true, null, null, "Entire Section of Course: CISA"))
         } else if (id == 1014) {
             return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1014", "CISA Flash Cards","Purchase entire Flash Cards section including 5 Flash Cards for 50% discount",
-                PURCHASE_TYPE_IAP, "500", "", true, null, null, "Entire Section of Course: CISA"))
+                PURCHASE_TYPE_IAP, "1000", "", true, null, null, "Entire Section of Course: CISA"))
         } else if (id == 1015) {
             return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1015", "CISA Question Banks","Purchase entire Question Banks section including 10 Question Banks for 50% discount",
-                PURCHASE_TYPE_IAP, "1500", "", true, null, null, "Entire Section of Course: CISA"))
+                PURCHASE_TYPE_IAP, "2000", "", true, null, null, "Entire Section of Course: CISA"))
+        } else if (id == 1016) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1016", "CISA Videos", "Purchase entire Videos section including 5 domains and each domain having 5 videos each",
+                PURCHASE_TYPE_IAP, "2000", "", true, null, null, "Entire Section of Course: CISA"))
         } else if (id == 1017) {
-            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1017", "CISA 31 Days Course","Purchase entire 31 Days Course section including Video for each day for 50% discount",
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"1017", "CISA 31 Days Course","Purchase entire 31 Days Course section including Video for each day",
                 PURCHASE_TYPE_IAP, "1000", "", true, null, null, "Entire Section of Course: CISA"))
         } else if (id == 101401) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101401", "CISA Review Manual - Domain 01","Purchase review manual for Domain 01",
                 PURCHASE_TYPE_TRIAL, "100", "", true, null, null, "Study Material of Section: CISA Review Manual of Course: CISA"))
-        } else if (id == 101402) {
-            return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101402", "CISA Review Manual - Domain 02","Purchase review manual for Domain 02",
-                PURCHASE_TYPE_IAP, "100", "", true, null, null, "Study Material of Section: CISA Review Manual of Course: CISA"))
         } else if (id == 101204) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101204", "CISA Question Banks - Question Bank 01","Purchase CISA Question Banks - Question Bank 01",
                 PURCHASE_TYPE_TRIAL, "100", "", true, null, null, "Question Bank of Section: CISA Question Banks of Course: CISA"))
+        } else if (id == 101402) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101402", "CISA Review Manual - Domain 02","Purchase review manual for Domain 02",
+                PURCHASE_TYPE_IAP, "100", "", true, null, null, "Study Material of Section: CISA Review Manual of Course: CISA"))
+        } else if (id == 101600) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"101600", "CISA Videos - Training","Purchase videos for Training",
+                PURCHASE_TYPE_TRIAL, "100", "", true, null, null, "Entire Section of Course: CISA"))
         }
         return arrayListOf()
     }
 
     private fun getVideosSection(id: Int): HashMap<String, StudyMaterial> {
         if (id == 1016) {
+            var counter = 2L
             val videos = hashMapOf<String, StudyMaterial>()
             for (i in 101601..101605) {
                 val c = StudyMaterial(
@@ -137,20 +144,37 @@ class DebugDataSource {
                     "Domain 0" + (i - 101600),
                     "",
                     "courses/101/title_01_h_0" + (i - 101600) + ".jpg", 0, getStudyMaterialProperties(),
-                     getQuestions(i), getVideos(i), getPurchaseInfo(i), "", STUDY_MATERIAL_TYPE_VIDEO
+                     getQuestions(i), getVideos(i), getPurchaseInfo(i), "", STUDY_MATERIAL_TYPE_VIDEO, counter++
                 )
                 videos[c.id.toString()] = c
             }
+            val c = StudyMaterial(
+                101600,
+                "Trial",
+                "",
+                "courses/101/title_01_h_00_trial.jpg", 0, getStudyMaterialProperties(),
+                getQuestions(101600), getVideos(101600), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_VIDEO, 1
+            )
+            videos[c.id.toString()] = c
             return videos
         }
         if (id == 1017) {
+            var counter = 1L
             val videos = hashMapOf<String, StudyMaterial>()
+            val c = StudyMaterial(
+                101700,
+                "Trial",
+                "",
+                "courses/101/title_02_h_00_trial.jpg", 0, getStudyMaterialProperties(),
+                getQuestions(101700), getVideos(101700), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_VIDEO, counter++
+            )
+            videos[c.id.toString()] = c
             val c1 = StudyMaterial(
                 101701,
                 "Day 1-7",
                 "",
                 "courses/101/title_02_h_01.jpg", 0, getStudyMaterialProperties(),
-                getQuestions(101701), getVideos(101701), getPurchaseInfo(101701), "", STUDY_MATERIAL_TYPE_VIDEO
+                getQuestions(101701), getVideos(101701), getPurchaseInfo(101701), "", STUDY_MATERIAL_TYPE_VIDEO, counter++
             )
             videos[c1.id.toString()] = c1
             val c2 = StudyMaterial(
@@ -158,7 +182,7 @@ class DebugDataSource {
                 "Day 8-14",
                 "",
                 "courses/101/title_02_h_02.jpg", 0, getStudyMaterialProperties(),
-                getQuestions(101708), getVideos(101708), getPurchaseInfo(101708), "", STUDY_MATERIAL_TYPE_VIDEO
+                getQuestions(101708), getVideos(101708), getPurchaseInfo(101708), "", STUDY_MATERIAL_TYPE_VIDEO, counter++
             )
             videos[c2.id.toString()] = c2
             val c3 = StudyMaterial(
@@ -166,7 +190,7 @@ class DebugDataSource {
                 "Day 15-21",
                 "",
                 "courses/101/title_02_h_03.jpg", 0, getStudyMaterialProperties(),
-                getQuestions(101715), getVideos(101715), getPurchaseInfo(101715), "", STUDY_MATERIAL_TYPE_VIDEO
+                getQuestions(101715), getVideos(101715), getPurchaseInfo(101715), "", STUDY_MATERIAL_TYPE_VIDEO, counter++
             )
             videos[c3.id.toString()] = c3
             val c4 = StudyMaterial(
@@ -174,7 +198,7 @@ class DebugDataSource {
                 "Day 22-28",
                 "",
                 "courses/101/title_02_h_04.jpg", 0, getStudyMaterialProperties(),
-                getQuestions(101722), getVideos(101722), getPurchaseInfo(101722), "", STUDY_MATERIAL_TYPE_VIDEO
+                getQuestions(101722), getVideos(101722), getPurchaseInfo(101722), "", STUDY_MATERIAL_TYPE_VIDEO, counter++
             )
             videos[c4.id.toString()] = c4
             val c5 = StudyMaterial(
@@ -182,7 +206,7 @@ class DebugDataSource {
                 "Day 29-31",
                 "",
                 "courses/101/title_02_h_05.jpg", 0, getStudyMaterialProperties(),
-                getQuestions(101729), getVideos(101729), getPurchaseInfo(101729), "", STUDY_MATERIAL_TYPE_VIDEO
+                getQuestions(101729), getVideos(101729), getPurchaseInfo(101729), "", STUDY_MATERIAL_TYPE_VIDEO, counter++
             )
             videos[c5.id.toString()] = c5
 
@@ -220,6 +244,19 @@ class DebugDataSource {
             }
             return videos
         }
+        if(id == 101600 || id == 101700) {
+            val videos = arrayListOf<Video>()
+            for (i in 1016001..1016005) {
+                val c = Video(
+                    i.toLong(),
+                    "Video 0" + (i - 1016000),
+                    "This video covers the details of Certified Information systems Auditor in detail",
+                    "", "video_101601_" + (i - 1016000) + ".mp4", "courses/101/", "", (i - 1016000), "08:23"
+                )
+                videos.add(c)
+            }
+            return videos
+        }
         return arrayListOf()
     }
 
@@ -229,21 +266,29 @@ class DebugDataSource {
 
     private fun getFlashCards(id: Int): LinkedHashMap<String, StudyMaterial> {
         if (id == 1014) {
+            var counter = 1L
+            val c = StudyMaterial(
+                101400,
+                "Trial",
+                "Trial",
+                "courses/101/title_05_h_00_trial.jpg", 0, linkedMapOf(),
+                getQuestions(101400), arrayListOf(), getPurchaseInfo(101401), "", STUDY_MATERIAL_TYPE_STUDY_MATERIAL, counter++
+            )
             val c1 = StudyMaterial(
                 101401,
                 "Domain 01",
                 "Domain 01",
                 "courses/101/title_05_h_01.jpg", 0, linkedMapOf(),
-                getQuestions(101401), arrayListOf(), getPurchaseInfo(101401), ""
+                getQuestions(101401), arrayListOf(), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_STUDY_MATERIAL, counter++
             )
-            val flashCards = linkedMapOf(c1.id.toString() to c1)
+            val flashCards = linkedMapOf(c1.id.toString() to c1, c.id.toString() to c)
             for (i in 101402..101405) {
                 val c = StudyMaterial(
                     i.toLong(),
                     "Domain 0" + (i - 101400),
                     "Domain 0" + (i - 101400),
                     "courses/101/title_05_h_0" + (i - 101400) + ".jpg", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), getPurchaseInfo(i), ""
+                    getQuestions(i), arrayListOf(), getPurchaseInfo(i), "", STUDY_MATERIAL_TYPE_STUDY_MATERIAL, counter++
                 )
                 flashCards[c.id.toString()] = c
             }
@@ -314,21 +359,42 @@ class DebugDataSource {
 
     private fun getQuestionBanks(id: Int): LinkedHashMap<String, StudyMaterial> {
         if (id == 1012) {
+            var counter = 4L
             val questionBanks = linkedMapOf<String, StudyMaterial>()
-            for (i in 101204..101234) {
+            for (i in 101204..101212) {
 //                Log.d("Xz", "creating "+i+"...")
                 val c = StudyMaterial(
                     i.toLong(),
                     "Day " + (i - 101203),
                     "Day " + (i - 101203),
                     "courses/101/title_03_h_0" + (i - 101203) + ".jpg", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), getPurchaseInfo(i), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
+                    getQuestions(i), arrayListOf(), getPurchaseInfo(i), "", STUDY_MATERIAL_TYPE_QUESTION_BANK, counter++
                 )
                 questionBanks[c.id.toString()] = c
             }
+            for (i in 101213..101234) {
+//                Log.d("Xz", "creating "+i+"...")
+                val c = StudyMaterial(
+                    i.toLong(),
+                    "Day " + (i - 101203),
+                    "Day " + (i - 101203),
+                    "courses/101/title_03_h_" + (i - 101203) + ".jpg", 0, linkedMapOf(),
+                    getQuestions(i), arrayListOf(), getPurchaseInfo(i), "", STUDY_MATERIAL_TYPE_QUESTION_BANK, counter++
+                )
+                questionBanks[c.id.toString()] = c
+            }
+            val c = StudyMaterial(
+                101200,
+                "Trial",
+                "Trial",
+                "courses/101/title_03_h_00_trial.jpg", 0, linkedMapOf(),
+                getQuestions(101200), arrayListOf(), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_QUESTION_BANK, 3
+            )
+            questionBanks[c.id.toString()] = c
             return questionBanks
         }
         if (id == 1015) {
+            var counter = 2L
             val questionBanks = linkedMapOf<String, StudyMaterial>()
             for (i in 101501..101510) {
 //                Log.d("Xz", "creating "+i+"...")
@@ -337,10 +403,18 @@ class DebugDataSource {
                     "Day " + (i - 101500),
                     "Day " + (i - 101500),
                     "courses/101/title_04_h_0" + (i - 101500) + ".jpg", 0, linkedMapOf(),
-                    getQuestions(i), arrayListOf(), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK
+                    getQuestions(i), arrayListOf(), arrayListOf(), "", STUDY_MATERIAL_TYPE_QUESTION_BANK, counter++
                 )
                 questionBanks[c.id.toString()] = c
             }
+            val c = StudyMaterial(
+                101500,
+                "Trial",
+                "Trial",
+                "courses/101/title_04_h_00_trial.jpg", 0, linkedMapOf(),
+                getQuestions(101500), arrayListOf(), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_QUESTION_BANK, 1
+            )
+            questionBanks[c.id.toString()] = c
             return questionBanks
         }
         return linkedMapOf()
