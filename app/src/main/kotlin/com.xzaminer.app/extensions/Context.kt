@@ -23,7 +23,7 @@ import com.xzaminer.app.data.DebugDataSource
 import com.xzaminer.app.data.MySquareImageView
 import com.xzaminer.app.utils.Config
 import com.xzaminer.app.utils.GlideApp
-
+import java.io.File
 
 
 val Context.windowManager: WindowManager get() = getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -163,4 +163,10 @@ fun Context.getCategoriesFromDb(catId: Long?, callback: (ArrayList<Category>, na
     dataSource.getChildCategories(catId) { cats: ArrayList<Category>, name: String ->
         callback(cats, name)
     }
+}
+
+fun Context.getXzaminerDataDir(): File {
+//    return File(getStorageDirectories().first())
+//    return ContextWrapper(this).filesDir
+    return File(applicationInfo.dataDir)
 }

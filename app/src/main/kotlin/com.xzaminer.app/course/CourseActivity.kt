@@ -17,6 +17,7 @@ import com.anjlab.android.iab.v3.TransactionDetails
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyButton
 import com.simplemobiletools.commons.views.MyGridLayoutManager
@@ -172,7 +173,7 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
     }
 
     private fun initPurchases() {
-
+        price_course_root.beVisible()
         if(!isBillingInitialized) {
             billing = BillingProcessor(this, null, this)
             billing!!.initialize()

@@ -115,7 +115,7 @@ Added User Purchases screen
 Added Finished quizzes screen
 Added fastscroller
 
-2.20
+3.0
 change intro video to image
 Update color of card on main page to course color
 Update Description text on main page to "Structured Courseware to Pass the CISA Exam" "Question Banks that builds confidence" "Videos, Question Banks & Flash Cards"
@@ -125,3 +125,8 @@ Added trial entities
 Update placeholder image to leave more space below and set text color to white
 updated see all section activity
 code refactoring to have all fields as images and desc
+
+3.2
+Download videos functionality
+Video will play downloaded video if already downloaded
+hide price section by default in course screen

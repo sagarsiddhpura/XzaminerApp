@@ -9,9 +9,11 @@ import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.firebase.storage.FirebaseStorage
 import com.simplemobiletools.commons.extensions.beGone
@@ -21,12 +23,11 @@ import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
+import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.user.User
-import com.xzaminer.app.utils.COURSE_ID
-import com.xzaminer.app.utils.DOMAIN_ID
-import com.xzaminer.app.utils.SECTION_ID
-import com.xzaminer.app.utils.VIDEO_ID
+import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_intro.*
+import java.io.File
 
 
 class VideoActivity : SimpleActivity() {
@@ -70,11 +71,16 @@ class VideoActivity : SimpleActivity() {
         dataSource.getCourseStudyMaterialById(courseId, sectionId, domainId) { studyMaterial ->
             val video = studyMaterial?.fetchVideo(videoId)
             if (video != null) {
-                FirebaseStorage.getInstance().getReference(video.url + video.fileName).downloadUrl.addOnSuccessListener { uri ->
-                    loadVideo(uri)
-                }.addOnFailureListener {
-                    toast("Error opening video")
-                    finish()
+                val videoFile = File(fetchDataDirFile(getXzaminerDataDir(), "videos/" + video.fileName).absolutePath)
+                if(videoFile.exists()) {
+                    loadVideo(videoFile)
+                } else {
+                    FirebaseStorage.getInstance().getReference(video.url + video.fileName).downloadUrl.addOnSuccessListener { uri ->
+                        loadVideo(uri)
+                    }.addOnFailureListener {
+                        toast("Error opening video")
+                        finish()
+                    }
                 }
             } else {
                 toast("Error opening Video")
@@ -102,9 +108,34 @@ class VideoActivity : SimpleActivity() {
         player!!.prepare(mediaSource, true, false)
     }
 
+    private fun loadVideo(video: File) {
+        if (player == null) {
+            player = ExoPlayerFactory.newSimpleInstance( this,
+                DefaultRenderersFactory(this),
+                DefaultTrackSelector(),
+                DefaultLoadControl()
+            )
+            video_view?.player = player
+            player!!.playWhenReady = true
+            video_view!!.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        }
+        val mediaSource = buildMediaSource(video)
+        player!!.prepare(mediaSource, true, false)
+    }
+
     private fun buildMediaSource(video: Uri): MediaSource {
         return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory("Xzaminer"))
             .createMediaSource(video)
+    }
+
+    private fun buildMediaSource(video: File): MediaSource {
+        return ExtractorMediaSource(Uri.fromFile(video), DefaultDataSourceFactory(this,"ua"),
+         DefaultExtractorsFactory(),null,null);
+//        return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory("Xzaminer"))
+//            .createMediaSource(Uri.fromFile(video))
     }
 
     private fun releasePlayer() {

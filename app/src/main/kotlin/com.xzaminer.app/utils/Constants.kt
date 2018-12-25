@@ -33,3 +33,6 @@ const val PURCHASE_SECTION_STUDY_MATERIAL = "com.xzaminer.iap.studymaterial."
 const val PURCHASE_TYPE_IAP = "com.xzaminer.iap"
 const val PURCHASE_TYPE_TRIAL = "com.xzaminer.iap.trial"
 const val PURCHASE_ID = "purchase_id"
+
+const val VIDEO_DOWNLOAD_PROGRESS = "video_download_progress"
+const val VIDEO_DOWNLOAD_NAME = "video_download_name"

@@ -39,7 +39,6 @@ class CategoriesAdapter(activity: BaseSimpleActivity, var cats: ArrayList<Catego
         colorDrawable = GradientDrawable()
         colorDrawable.setColor(primaryColor.adjustAlpha(0.6f))
         colorDrawable.cornerRadius = Resources.getSystem().displayMetrics.density*4
-
     }
 
     override fun getActionMenuId() = R.menu.cab_empty

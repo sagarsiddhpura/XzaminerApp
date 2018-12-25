@@ -18,6 +18,9 @@ adb connect 192.168.0.102:5555
 
 Links
 https://github.com/anjlab/android-inapp-billing-v3
+https://github.com/tonyofrancis/Fetch
+slider lib
+https://github.com/saeedsh92/Banner-Slider
 
 https://www.uplabs.com/posts/exam-app-exam-categories
 https://www.iconfinder.com/iconsets/finance-152
@@ -25,9 +28,6 @@ https://www.iconfinder.com/iconsets/kameleon-free-pack-rounded
 https://www.iconfinder.com/iconsets/circle-icons-1
 https://www.iconfinder.com/iconsets/media-flat-2
 https://www.iconfinder.com/iconsets/handy-vol-1-2
-
-slider lib
-https://github.com/saeedsh92/Banner-Slider
 
 https://www.iconfinder.com/iconsets/circle-icons-1
 https://www.iconfinder.com/iconsets/flat-line-valentine-1

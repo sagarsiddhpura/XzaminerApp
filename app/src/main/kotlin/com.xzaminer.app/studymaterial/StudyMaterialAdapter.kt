@@ -4,7 +4,6 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
 import kotlinx.android.synthetic.main.study_material_item_grid.view.*
@@ -16,9 +15,6 @@ class StudyMaterialAdapter(
     activity: StudyMaterialActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
-
-    private var quizActivity: QuizActivity? = null
-    var adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
 
     init {
         setupDragListener(true)

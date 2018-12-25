@@ -4,19 +4,31 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
-import com.xzaminer.app.SimpleActivity
+import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.extensions.loadIconImageView
 import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.Video
+import com.xzaminer.app.utils.VIDEO_DOWNLOAD_PROGRESS
+import com.xzaminer.app.utils.checkFileExists
 import kotlinx.android.synthetic.main.course_domain_video_item.view.*
 
 
+
+
 class CourseSectionDomainVideosAdapter(
-    activity: SimpleActivity, var videos: ArrayList<Video>, recyclerView: MyRecyclerView,
+    activity: CourseSectionVideosDomainActivity, var videos: ArrayList<Video>, recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
+
+    private var courseSectionVideosDomainActivity: CourseSectionVideosDomainActivity
+
+    init {
+        courseSectionVideosDomainActivity = activity
+    }
 
     override fun getActionMenuId() = R.menu.cab_empty
 
@@ -52,6 +64,9 @@ class CourseSectionDomainVideosAdapter(
 
 
     private fun setupView(view: View, video: Video) {
+//        val fetchDataDirFile = fetchDataDirFile(activity.getXzaminerDataDir(), "videos/" + video.fileName)
+//        if(fetchDataDirFile.exists()) fetchDataDirFile.delete()
+
         view.apply {
             vid_name.text = video.name
             vid_desc.text = video.desc
@@ -62,6 +77,41 @@ class CourseSectionDomainVideosAdapter(
                 val img : Int = R.drawable.im_placeholder_video
                 activity.loadIconImageView(img, vid_image, false)
             }
+
+            val xzaminerDataDir = activity.getXzaminerDataDir()
+            if(checkFileExists(xzaminerDataDir, "videos/" + video.fileName)) {
+                vid_download_status.beGone()
+                vid_download_status_text.beGone()
+            } else {
+                if(video.details[VIDEO_DOWNLOAD_PROGRESS] == null) {
+                    vid_download_status.beVisible()
+                    vid_download_status_text.beGone()
+
+                    val res = resources.getDrawable(R.drawable.ic_download)
+                    vid_download_status.setImageDrawable(res)
+
+                    vid_download_status.setOnClickListener {
+                        courseSectionVideosDomainActivity.addDownload(video)
+                    }
+                } else {
+                    vid_download_status.beVisible()
+                    vid_download_status_text.beVisible()
+
+                    vid_download_status_text.text = video.details[VIDEO_DOWNLOAD_PROGRESS]?.first()
+                    val res = resources.getDrawable(R.drawable.ic_cancel)
+                    vid_download_status.setImageDrawable(res)
+
+                    vid_download_status.setOnClickListener {
+                        courseSectionVideosDomainActivity.cancelDownload(video)
+                    }
+                }
+            }
+
         }
+    }
+
+    fun updateVideos(values: ArrayList<Video>) {
+        videos = values
+        notifyDataSetChanged()
     }
 }

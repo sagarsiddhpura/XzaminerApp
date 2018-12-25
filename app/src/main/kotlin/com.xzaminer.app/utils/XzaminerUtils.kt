@@ -1,6 +1,7 @@
 package com.xzaminer.app.utils
 
 import com.xzaminer.app.studymaterial.StudyMaterial
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -90,4 +91,15 @@ fun convertToText(totalSecs: Long): String {
         secsString = "$mins:$secs"
     } catch (ex : Exception) { }
     return secsString
+}
+
+fun checkFileExists(dataDir: File, fileName: String?): Boolean {
+    // check if file already exists
+    val audioFile = File(dataDir, fileName)
+    return audioFile.exists()
+}
+
+fun fetchDataDirFile(dataDir: File, fileName: String?): File {
+    // check if file already exists
+   return File(dataDir, fileName)
 }

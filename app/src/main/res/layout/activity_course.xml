@@ -82,7 +82,8 @@
                     android:focusable="true"
                     app:cardCornerRadius="2dp"
                     app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/white">
+                    app:cardBackgroundColor="@color/white"
+                    android:visibility="gone">
 
                 <RelativeLayout
                         android:layout_width="match_parent"
