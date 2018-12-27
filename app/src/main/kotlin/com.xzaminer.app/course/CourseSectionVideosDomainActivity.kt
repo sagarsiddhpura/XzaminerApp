@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.MenuItem
 import android.view.Window
 import com.google.firebase.storage.FirebaseStorage
 import com.simplemobiletools.commons.extensions.toast
@@ -115,6 +117,11 @@ class CourseSectionVideosDomainActivity : SimpleActivity() {
     private fun loadStudyMaterial(loadedSection: StudyMaterial) {
         section_title.text = loadedSection.name
         setupAdapter(section_rv, loadedSection)
+
+//        studyMaterial?.videos?.forEach {
+//            val fetchDataDirFile = fetchDataDirFile(getXzaminerDataDir(), "videos/" + it.fileName)
+//            if(fetchDataDirFile.exists()) fetchDataDirFile.delete()
+//        }
     }
 
     private fun setupAdapter(recyclerView: MyRecyclerView, studyMaterial: StudyMaterial) {
@@ -144,7 +151,7 @@ class CourseSectionVideosDomainActivity : SimpleActivity() {
     }
 
     fun addDownload(video: Video) {
-        toast("Preparing Download....")
+        toast("Preparing Download for video " + video.name)
         FirebaseStorage.getInstance().getReference(video.url + video.fileName).downloadUrl.addOnSuccessListener {
 
             val request = Request(it.toString(), fetchDataDirFile(getXzaminerDataDir(), "videos/" + video.fileName + "_temp").absolutePath)
@@ -257,5 +264,24 @@ class CourseSectionVideosDomainActivity : SimpleActivity() {
                 }
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_video_domain, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.download_videos -> downloadAllVideos()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    private fun downloadAllVideos() {
+        values.forEach {
+            addDownload(it)
+        }
     }
 }

@@ -64,9 +64,6 @@ class CourseSectionDomainVideosAdapter(
 
 
     private fun setupView(view: View, video: Video) {
-//        val fetchDataDirFile = fetchDataDirFile(activity.getXzaminerDataDir(), "videos/" + video.fileName)
-//        if(fetchDataDirFile.exists()) fetchDataDirFile.delete()
-
         view.apply {
             vid_name.text = video.name
             vid_desc.text = video.desc
