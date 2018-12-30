@@ -23,7 +23,8 @@ data class User(
     var purchases: ArrayList<Purchase> = arrayListOf(),
     val lastLoggedIn: String = "",
     val status: String = "enabled",
-    val quizzes: HashMap<String, StudyMaterial> = hashMapOf<String, StudyMaterial>()
+    val quizzes: HashMap<String, StudyMaterial> = hashMapOf(),
+    val loginState: String = "enabled"
 ) {
     fun getId(): String {
         return replace(email) + replace(

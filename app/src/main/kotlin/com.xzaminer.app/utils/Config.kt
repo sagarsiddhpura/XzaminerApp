@@ -46,4 +46,8 @@ class Config(context: Context) : BaseConfig(context) {
     }
 
     private fun getDefaultDirectoryColumnCount() = context.resources.getInteger(R.integer.category_columns_vertical_scroll)
+
+    public var isOtpVerified: Boolean
+        get() = prefs.getBoolean("is_otp_verified", true)
+        set(isOtpVerifiedP) = prefs.edit().putBoolean("is_otp_verified", isOtpVerifiedP).apply()
 }

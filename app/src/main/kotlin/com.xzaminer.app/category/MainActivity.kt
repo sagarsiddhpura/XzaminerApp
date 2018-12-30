@@ -399,6 +399,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                         11L -> {
                             dataSource.logout()
                             config.setLoggedInUser(null)
+                            config.isOtpVerified = false
                             startActivity(Intent(applicationContext, SplashActivity::class.java))
                             resetSelection()
                             finish()

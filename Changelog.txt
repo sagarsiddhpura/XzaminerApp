@@ -130,3 +130,6 @@ code refactoring to have all fields as images and desc
 Download videos functionality
 Video will play downloaded video if already downloaded
 hide price section by default in course screen
+
+3.4
+Added download all on video domain screen

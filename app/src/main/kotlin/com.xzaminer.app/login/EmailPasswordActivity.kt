@@ -17,10 +17,9 @@ import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
-import com.xzaminer.app.category.MainActivity
-import com.xzaminer.app.user.User
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
+import com.xzaminer.app.user.User
 import kotlinx.android.synthetic.main.activity_emailpassword.*
 
 
@@ -110,7 +109,8 @@ class EmailPasswordActivity : BaseLoginActivity(), View.OnClickListener {
                                             if(user.phoneNumber == null) {
                                                 startActivity(Intent(this, PhoneNumberAuthActivity::class.java))
                                             } else {
-                                                startActivity(Intent(this, MainActivity::class.java))
+                                                config.isOtpVerified = false
+                                                startActivity(Intent(this, LoginPhoneNumberAuthActivity::class.java))
                                             }
 
                                             hideProgressDialog()
@@ -136,7 +136,8 @@ class EmailPasswordActivity : BaseLoginActivity(), View.OnClickListener {
                                             if(user.phoneNumber == null) {
                                                 startActivity(Intent(this, PhoneNumberAuthActivity::class.java))
                                             } else {
-                                                startActivity(Intent(this, MainActivity::class.java))
+                                                config.isOtpVerified = false
+                                                startActivity(Intent(this, LoginPhoneNumberAuthActivity::class.java))
                                             }
 
                                             hideProgressDialog()

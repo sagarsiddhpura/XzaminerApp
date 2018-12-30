@@ -78,13 +78,13 @@ class CourseStudyMaterialsAdapter(
                 val layoutParams = view.layoutParams as (GridLayoutManager.LayoutParams)
                 if(position == 0) {
                     val marginInDp = TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP, 0F, resources
+                        TypedValue.COMPLEX_UNIT_DIP, 4F, resources
                             .displayMetrics
                     ).toInt()
                     layoutParams.setMargins(marginInDp, 0, 0, 0)
                 } else if(position == studyMaterials.size-1) {
                     val marginInDp = TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP, 0F, resources
+                        TypedValue.COMPLEX_UNIT_DIP, 4F, resources
                             .displayMetrics
                     ).toInt()
                     layoutParams.setMargins(0, 0, marginInDp, 0)

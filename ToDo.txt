@@ -9,7 +9,7 @@ Next release
 The problem is the person if he has completed his/her certification exams may give the login to others and without cost they will start using the same account. This will not be a advantageous situation for us, hence need to have an alternate or only mobile otp verification. Kindly suggest if you think any other strategy would help.
 video ids are generated same for many videos
 Look into having OTP on login
-
+use signout of auth ui
 
 xzamminer@gmail.com
 Googleplay@345

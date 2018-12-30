@@ -84,6 +84,7 @@ class PhoneNumberAuthActivity : SimpleActivity() {
                                     val idToken = uri.toString().split("token=")[1]
                                     loggedInUser.token = idToken
                                     config.setLoggedInUser(loggedInUser)
+                                    config.isOtpVerified = true
                                     startActivity(Intent(this, MainActivity::class.java))
                                     finish()
                                     return@addOnSuccessListener

@@ -36,3 +36,5 @@ const val PURCHASE_ID = "purchase_id"
 
 const val VIDEO_DOWNLOAD_PROGRESS = "video_download_progress"
 const val VIDEO_DOWNLOAD_NAME = "video_download_name"
+
+const val LOGIN_STATE_OTP_NOT_VERIFIED = "login_otp_not_verified"

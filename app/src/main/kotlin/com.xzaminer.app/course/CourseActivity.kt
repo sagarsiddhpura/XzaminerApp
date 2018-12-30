@@ -104,7 +104,7 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
             sections_root.addView(view)
             val layoutParams = view.layoutParams as (LinearLayout.LayoutParams)
-            val marginInDp = TypedValue.applyDimension(
+            val margin6Dp = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 6F, resources
                     .displayMetrics
             ).toInt()
@@ -112,7 +112,7 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                 TypedValue.COMPLEX_UNIT_DIP, 8F, resources
                     .displayMetrics
             ).toInt()
-            layoutParams.setMargins(marginInDp, margin8Dp, marginInDp, margin8Dp)
+            layoutParams.setMargins(0, margin8Dp, 0, margin8Dp)
 
             val title = view.findViewById<MyTextView>(R.id.section_title)
             val content = SpannableString(section.name)

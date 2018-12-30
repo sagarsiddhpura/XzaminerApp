@@ -35,24 +35,39 @@
             tools:layout_editor_absoluteX="16dp">
 
         <android.support.constraint.ConstraintLayout
-                android:id="@+id/course_holder"
+            android:id="@+id/course_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <Space
+                android:id="@+id/course_holder_space"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent=".009"/>
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/course_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:paddingTop="32dp"
-                android:paddingBottom="16dp"
                 android:paddingRight="12dp"
                 android:paddingLeft="12dp"
                 android:textStyle="bold"
                 android:textSize="@dimen/big_text_size"
                 android:textColor="@color/white"
                 tools:text="CISA (Certified Information System Auditor)"
+                app:layout_constraintTop_toBottomOf="@+id/course_holder_space"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Space
+                android:id="@+id/course_title_space"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent=".009"
+                app:layout_constraintTop_toBottomOf="@+id/course_title"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <ss.com.bannerslider.Slider
@@ -63,10 +78,7 @@
                 app:slider_loopSlides="true"
                 app:slider_animateIndicators="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/course_title"
-                android:layout_below="@+id/course_title"
-                android:layout_marginTop="16dp"
-                android:paddingBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/course_title_space"
                 />
 
             <android.support.v7.widget.CardView
@@ -77,7 +89,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/desc_slider"
                     android:layout_below="@+id/desc_slider"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:clickable="true"
                     android:focusable="true"
                     app:cardCornerRadius="2dp"
@@ -126,15 +138,15 @@
             </android.support.v7.widget.CardView>
 
             <LinearLayout
-                    android:id="@+id/sections_root"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/price_course_root"
-                    android:layout_below="@+id/price_course_root"
-                    android:padding="4dp"
-                    android:layout_marginTop="16dp">
+                android:id="@+id/sections_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/price_course_root"
+                android:layout_below="@+id/price_course_root"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp">
 
             </LinearLayout>
 

@@ -8,6 +8,7 @@ import com.simplemobiletools.commons.extensions.appLaunched
 import com.simplemobiletools.commons.extensions.baseConfig
 import com.xzaminer.app.category.MainActivity
 import com.xzaminer.app.extensions.config
+import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.login.EmailPasswordActivity
 import com.xzaminer.app.utils.logEvent
 
@@ -40,9 +41,15 @@ class SplashActivity : BaseSplashActivity() {
             return
         } else {
             if(currentUser.phone != null) {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-                return
+                if(!config.isOtpVerified) {
+                    dataSource.logout()
+                    config.setLoggedInUser(null)
+                    config.isOtpVerified = false
+                } else {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                    return
+                }
             }
         }
         startActivity(Intent(this, EmailPasswordActivity::class.java))
