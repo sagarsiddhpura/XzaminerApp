@@ -125,7 +125,7 @@ class CategoryPickerDialog(val activity: BaseSimpleActivity,
         if(objMap[currCatId.toString()] != null && objMap[currCatId.toString()] is CourseSection) {
             sendSuccess()
         } else  {
-            activity.toast("You can add study material only to section of course")
+            activity.toast("You can add study material only to section of a course")
         }
     }
 

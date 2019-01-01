@@ -1,150 +1,396 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
         tools:context=".admin.AddQuestionBankActivity">
 
-    <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/category_label"
+    <android.support.constraint.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:text="Category:"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    <android.support.v7.widget.LinearLayoutCompat
-            android:id="@+id/category_root"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/category_label"
-            app:layout_constraintStart_toStartOf="parent"
-            android:weightSum="1">
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            tools:context=".admin.AddQuestionBankActivity">
 
         <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/category_value"
+                android:id="@+id/category_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="Category:"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="gone"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/category_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/category_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:weightSum="1"
+                tools:visibility="gone"
+                >
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/category_value"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="18sp"
+                    android:hint="Select Category"
+                    tools:text="Students/10th Standard"/>
+
+            <ImageView
+                    android:id="@+id/image_edit_category"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_edit"
+                    tools:tint="@color/color_accent"
+                    android:layout_gravity="center_vertical"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/name_label"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="Name:"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/category_root"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="gone"/>
+
+        <com.simplemobiletools.commons.views.MyEditText
+                android:id="@+id/name_value"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_marginLeft="4dp"
+                android:singleLine="true"
+                tools:text="Question Bank 1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name_label"
+                tools:visibility="gone"/>
+
+        <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/desc_label"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="Description:"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/name_value"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="gone"/>
+
+        <com.simplemobiletools.commons.views.MyEditText
+                android:id="@+id/desc_value"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_marginLeft="4dp"
+                android:singleLine="true"
+                tools:text="Question Bank 1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/desc_label"
+                tools:visibility="gone"/>
+
+        <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/timer_label"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="Timer:"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/desc_value"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="gone"/>
+
+        <com.simplemobiletools.commons.views.MyEditText
+                android:id="@+id/timer_value"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:padding="8dp"
+                android:text=""
+                android:singleLine="true"
+                android:hint="MM:SS or Leave blank for no timer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timer_label"
+                />
+
+        <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/file_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:layout_marginTop="12dp"
+                android:text="Question Bank file:"
+                app:layout_constraintTop_toBottomOf="@+id/timer_value"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="gone"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/file_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/file_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:weightSum="1"
+                tools:visibility="gone">
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/file_value"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="18sp"
+                    android:hint="Select File"/>
+
+            <ImageView
+                    android:id="@+id/image_edit_file"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_edit"
+                    tools:tint="@color/color_accent"
+                    android:layout_gravity="center_vertical"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/image_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:layout_marginTop="12dp"
+                android:text="Image:"
+                app:layout_constraintTop_toBottomOf="@+id/file_root"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="gone"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/image_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/image_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:weightSum="1"
+                tools:visibility="gone">
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/image_value"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="18sp"
+                    android:hint="Select Image"/>
+
+            <ImageView
+                    android:id="@+id/image_edit_image"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_edit"
+                    tools:tint="@color/color_accent"
+                    android:layout_gravity="center_vertical"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/monetization_label"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textSize="18sp"
-                android:hint="Select Category"
-                tools:text="Students/10th Standard"/>
+                android:text="Monetization:"
+                app:layout_constraintTop_toBottomOf="@+id/image_root"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="4dp"/>
 
-        <ImageView
-                android:id="@+id/image_edit_category"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:padding="4dp"
-                android:src="@drawable/ic_edit"
-                tools:tint="@color/color_accent"
-                android:layout_gravity="center_vertical"/>
-
-    </android.support.v7.widget.LinearLayoutCompat>
-
-    <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/name_label"
-            android:layout_width="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:text="Name:"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/category_root"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    <com.simplemobiletools.commons.views.MyEditText
-            android:id="@+id/name_value"
-            android:layout_width="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_marginLeft="4dp"
-            android:singleLine="true"
-            tools:text="Question Bank 1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name_label"/>
-
-    <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/timer_label"
-            android:layout_width="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:text="Timer:"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/name_value"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    <com.simplemobiletools.commons.views.MyEditText
-            android:id="@+id/timer_value"
-            android:layout_width="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:padding="8dp"
-            android:text=""
-            android:singleLine="true"
-            android:hint="MM:SS or Leave blank for no timer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timer_label"/>
-
-    <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/file_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:layout_marginTop="12dp"
-            android:text="File to be Imported:"
-            app:layout_constraintTop_toBottomOf="@+id/timer_value"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    <android.support.v7.widget.LinearLayoutCompat
-            android:id="@+id/file_root"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/file_label"
-            app:layout_constraintStart_toStartOf="parent"
-            android:weightSum="1">
-
-        <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/file_value"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
+        <Spinner
+                android:id="@+id/monetization_spinner"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textSize="18sp"
-                android:hint="Select File"/>
+                app:layout_constraintTop_toBottomOf="@+id/image_root"
+                app:layout_constraintStart_toEndOf="@+id/monetization_label"
+                >
+        </Spinner>
 
-        <ImageView
-                android:id="@+id/image_edit_file"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:padding="4dp"
-                android:src="@drawable/ic_edit"
-                tools:tint="@color/color_accent"
-                android:layout_gravity="center_vertical"/>
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/monetization_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/monetization_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:weightSum="1">
 
-    </android.support.v7.widget.LinearLayoutCompat>
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/purchase_id_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Purchase ID:"
+                    app:layout_constraintTop_toBottomOf="@+id/file_root"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-    <com.simplemobiletools.commons.views.MyButton
-            android:text="Import Questions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/import_questions"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/file_root"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            android:theme="@style/ColouredButton"/>
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/purchase_id"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:singleLine="false"
+                    android:text="com.xzaminer.iap.studymaterial.110110101"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/timer_label"/>
 
-</android.support.constraint.ConstraintLayout>
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/purchase_name_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Purchase Name:"
+                    app:layout_constraintTop_toBottomOf="@+id/file_root"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.simplemobiletools.commons.views.MyEditText
+                    android:id="@+id/purchase_name"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:hint="CISA Review Manual - Domain 02"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/timer_label"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/purchase_desc_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Purchase Description:"
+                    app:layout_constraintTop_toBottomOf="@+id/file_root"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.simplemobiletools.commons.views.MyEditText
+                    android:id="@+id/purchase_desc"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:hint="Purchase review manual for Domain 02"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/timer_label"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/purchase_orignal_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Original Price:"
+                    app:layout_constraintTop_toBottomOf="@+id/file_root"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.simplemobiletools.commons.views.MyEditText
+                    android:id="@+id/purchase_orignal"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:hint="1000"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/timer_label"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/purchase_actual_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Actual Price:"
+                    app:layout_constraintTop_toBottomOf="@+id/file_root"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.simplemobiletools.commons.views.MyEditText
+                    android:id="@+id/purchase_actual"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:hint="500"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/timer_label"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/purchase_extra_info_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Extra Purchase Info:"
+                    app:layout_constraintTop_toBottomOf="@+id/file_root"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.simplemobiletools.commons.views.MyEditText
+                    android:id="@+id/purchase_extra_info"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:hint="Study Material of Section: CISA Review Manual of Course: CISA"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/timer_label"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <com.simplemobiletools.commons.views.MyButton
+                android:text="Import"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/import_questions"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/monetization_root"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:theme="@style/ColouredButton"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

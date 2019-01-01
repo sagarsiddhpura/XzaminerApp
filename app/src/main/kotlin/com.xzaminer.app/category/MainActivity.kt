@@ -105,9 +105,9 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //            Intent(this, AddQuestionBankActivity::class.java).apply {
 //                startActivity(this)
 //            }
-//            Intent(this, AddStudyMaterialActivity::class.java).apply {
-//                startActivity(this)
-//            }
+            Intent(this, AddStudyMaterialActivity::class.java).apply {
+                startActivity(this)
+            }
 //            Intent(this, IntroActivity::class.java).apply {
 //                startActivity(this)
 //            }

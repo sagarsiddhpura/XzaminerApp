@@ -133,3 +133,20 @@ hide price section by default in course screen
 
 3.4
 Added download all on video domain screen
+
+3.6 3.8
+Added otp after login
+reduced spaces in course activity
+
+3.10
+Import Question Bank screen
+Added check to aloow adding QB on section of qb type
+Added desc field
+added image field
+added monetization info
+Import Study Material screen
+Added check to aloow adding SM on section of study material type
+Added desc field
+added image field
+added monetization info
+Updated field names on AddSM screen
