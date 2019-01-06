@@ -257,9 +257,9 @@ class DebugDataSource {
             }
             return videos
         }
-        if(id== 101500) {
+        if(id== 101400) {
             return arrayListOf(Video(
-                10150001,
+                10140001,
                 "Audio 01",
                 "This Audio covers the details of this question",
                 "", "audio_101501_01.mp3", "courses/101/", "", 1, "04:23"
@@ -466,7 +466,7 @@ class DebugDataSource {
                 )
             )
         }
-        if(i == 101500) {
+        if(i == 101400) {
             return  arrayListOf(
                 Question(
                     1, "For compliance testing which sampling method is more useful ?", "",
@@ -474,7 +474,7 @@ class DebugDataSource {
                         QuestionOption(2, "Attribute Sampling", ""),
                         QuestionOption(3, "Attribute Sampling", ""),
                         QuestionOption(4, "Attribute Sampling", "")),
-                    2, 0, false, getVideos(101500)
+                    2, 0, false, getVideos(1)
                 ),
                 Question(
                     2, "First step of Risk Assessement is to?", "",
@@ -483,6 +483,30 @@ class DebugDataSource {
                         QuestionOption(3, "Attribute Sampling", ""),
                         QuestionOption(4, "Attribute Sampling", "")),
                     2
+                ),
+                Question(
+                    3, "For compliance testing which sampling method is more useful ?", "",
+                    arrayListOf(QuestionOption(1, "Attribute Sampling", ""),
+                        QuestionOption(2, "Attribute Sampling", ""),
+                        QuestionOption(3, "Attribute Sampling", ""),
+                        QuestionOption(4, "Attribute Sampling", "")),
+                    2, 0, false, getVideos(2)
+                ),
+                Question(
+                    4, "For compliance testing which sampling method is more useful ?", "",
+                    arrayListOf(QuestionOption(1, "Attribute Sampling", ""),
+                        QuestionOption(2, "Attribute Sampling", ""),
+                        QuestionOption(3, "Attribute Sampling", ""),
+                        QuestionOption(4, "Attribute Sampling", "")),
+                    2, 0, false, getVideos(3)
+                ),
+                Question(
+                    5, "For compliance testing which sampling method is more useful ?", "",
+                    arrayListOf(QuestionOption(1, "Attribute Sampling", ""),
+                        QuestionOption(2, "Attribute Sampling", ""),
+                        QuestionOption(3, "Attribute Sampling", ""),
+                        QuestionOption(4, "Attribute Sampling", "")),
+                    2, 0, false, getVideos(101400)
                 )
             )
         }

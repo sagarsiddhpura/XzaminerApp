@@ -57,5 +57,72 @@
             app:layout_constraintTop_toBottomOf="@+id/divider_question_options"
             android:textColor="@color/text_black"/>
 
+        <View
+                android:id="@+id/divider_options_audio"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/dimens_16dp"
+                android:layout_marginLeft="@dimen/dimens_16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="@dimen/dimens_16dp"
+                android:layout_marginRight="@dimen/dimens_16dp"
+                android:background="@color/divider_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/option_text"
+                android:visibility="gone"/>
+
+        <LinearLayout
+                android:id="@+id/audio_parent"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_options_audio"
+                android:weightSum="1"
+                android:visibility="gone">
+
+            <ImageView
+                    android:id="@+id/audio_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_play"
+                    tools:tint="@color/color_accent"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="6dp"
+                    android:layout_gravity="center_vertical"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/audio_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="8dp"
+                    android:paddingRight="4dp"
+                    android:paddingLeft="4dp"
+                    android:textColor="@color/text_black"
+                    tools:text="Audio 01"/>
+
+            <ImageView
+                    android:id="@+id/audio_download"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_download"
+                    tools:tint="@color/color_accent"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="6dp"
+                    android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
