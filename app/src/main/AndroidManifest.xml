@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="com.android.vending.BILLING"/>
 
     <application
@@ -65,6 +66,16 @@
         <activity android:name=".login.PhoneNumberAuthActivity"
                   android:theme="@style/FullScreenTheme">
         </activity>
+        <service
+                android:name="com.xzaminer.app.studymaterial.AudioPlayerService"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="com.xzaminer.player.ACTION_INIT_PLAY" />
+                <action android:name="com.xzaminer.player.ACTION_PLAY" />
+                <action android:name="com.xzaminer.player.ACTION_PAUSE" />
+                <action android:name="com.xzaminer.player.ACTION_STOP" />
+            </intent-filter>
+        </service>
         <meta-data
                 android:name="io.fabric.ApiKey"
                 android:value="b46ac0826df7eb1a4216ad2ffc59cb5f505f5a5a" />

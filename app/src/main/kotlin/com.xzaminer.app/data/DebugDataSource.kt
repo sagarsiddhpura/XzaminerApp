@@ -257,6 +257,14 @@ class DebugDataSource {
             }
             return videos
         }
+        if(id== 101500) {
+            return arrayListOf(Video(
+                10150001,
+                "Audio 01",
+                "This Audio covers the details of this question",
+                "", "audio_101501_01.mp3", "courses/101/", "", 1, "04:23"
+            ))
+        }
         return arrayListOf()
     }
 
@@ -454,6 +462,26 @@ class DebugDataSource {
                 Question(
                     5, "Purpose of CSA (Control Self Assessement)", "",
                     arrayListOf(QuestionOption(1, "enhance audit responsibilities", "")),
+                    2
+                )
+            )
+        }
+        if(i == 101500) {
+            return  arrayListOf(
+                Question(
+                    1, "For compliance testing which sampling method is more useful ?", "",
+                        arrayListOf(QuestionOption(1, "Attribute Sampling", ""),
+                        QuestionOption(2, "Attribute Sampling", ""),
+                        QuestionOption(3, "Attribute Sampling", ""),
+                        QuestionOption(4, "Attribute Sampling", "")),
+                    2, 0, false, getVideos(101500)
+                ),
+                Question(
+                    2, "First step of Risk Assessement is to?", "",
+                    arrayListOf(QuestionOption(1, "Attribute Sampling", ""),
+                        QuestionOption(2, "Attribute Sampling", ""),
+                        QuestionOption(3, "Attribute Sampling", ""),
+                        QuestionOption(4, "Attribute Sampling", "")),
                     2
                 )
             )

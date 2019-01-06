@@ -34,6 +34,7 @@ import com.xzaminer.app.admin.AddStudyMaterialActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.extensions.*
+import com.xzaminer.app.studymaterial.QuizActivity
 import com.xzaminer.app.user.User
 import com.xzaminer.app.user.UserProfileActivity
 import com.xzaminer.app.utils.*
@@ -97,17 +98,19 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    putExtra(QUIZ_ID, 10111L)
 //                    startActivity(this)
 //                }
-//            Intent(this, QuizActivity::class.java).apply {
-//                putExtra(CAT_ID, 10111L)
-//                putExtra(IS_NEW_QUIZ, catId != null)
-//                startActivity(this)
-//            }
+            Intent(this, QuizActivity::class.java).apply {
+                putExtra(QUIZ_ID, 101500L)
+                putExtra(SECTION_ID, 1015L)
+                putExtra(COURSE_ID, 101L)
+                putExtra(IS_NEW_QUIZ, true)
+                startActivity(this)
+            }
 //            Intent(this, AddQuestionBankActivity::class.java).apply {
 //                startActivity(this)
 //            }
-            Intent(this, AddStudyMaterialActivity::class.java).apply {
-                startActivity(this)
-            }
+//            Intent(this, AddStudyMaterialActivity::class.java).apply {
+//                startActivity(this)
+//            }
 //            Intent(this, IntroActivity::class.java).apply {
 //                startActivity(this)
 //            }
@@ -133,7 +136,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                }
 
             }
-//            debugDataSource.initMockDataRealtimeDatabase(dataSource)
+            debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //            debugDataSource.copyQuestionBank(dataSource)
 //            debugDataSource.uploadImages(this, dataSource)
         }

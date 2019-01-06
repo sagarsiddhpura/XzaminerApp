@@ -15,8 +15,8 @@ android {
         applicationId "com.xzaminer.app"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 48
-        versionName "3.8"
+        versionCode 54
+        versionName "4.0"
         multiDexEnabled true
     }
     buildTypes {
@@ -75,6 +75,7 @@ dependencies {
     implementation 'co.zsmb:materialdrawer-kt:1.3.6'
     compile 'com.ss.bannerslider:bannerslider:2.0.0'
     implementation "com.tonyodev.fetch2:fetch2:2.3.4"
+    implementation 'com.squareup:otto:1.3.8'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true

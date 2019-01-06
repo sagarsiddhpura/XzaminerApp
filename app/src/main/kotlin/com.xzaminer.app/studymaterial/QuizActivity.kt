@@ -8,11 +8,17 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
+import com.google.firebase.storage.FirebaseStorage
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.mikkipastel.videoplanet.player.PlaybackStatus
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyGridLayoutManager
+import com.squareup.otto.Bus
+import com.squareup.otto.Subscribe
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.ShowPurchasesActivity
@@ -23,6 +29,8 @@ import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_quiz.*
 import kotlin.concurrent.thread
+
+
 
 
 class QuizActivity : SimpleActivity() {
@@ -36,6 +44,7 @@ class QuizActivity : SimpleActivity() {
     private var timer : CountDownTimer? = null
     private var courseId: Long = -1
     private var sectionId: Long = -1
+    lateinit var bus: Bus
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY)
@@ -59,6 +68,9 @@ class QuizActivity : SimpleActivity() {
                 return
             }
         }
+        bus = BusProvider.instance
+        bus.register(this)
+
         user = config.getLoggedInUser() as User
         setupGridLayoutManager()
 
@@ -287,6 +299,62 @@ class QuizActivity : SimpleActivity() {
 
     override fun onDestroy() {
         config.setLoggedInUser(user)
+        bus.unregister(this)
         super.onDestroy()
     }
+
+    fun handleAudioPlayback(audio: Video) {
+        if(audio.details[AUDIO_PLAYBACK_STATE] != null && !audio.details[AUDIO_PLAYBACK_STATE]!!.isEmpty()
+            && audio.details[AUDIO_PLAYBACK_STATE]!!.first() == PlaybackStatus.PLAYING) {
+            Intent(this, AudioPlayerService::class.java).apply {
+                action = ACTION_PAUSE
+                startService(this)
+            }
+        } else if(audio.details[AUDIO_PLAYBACK_STATE] != null && !audio.details[AUDIO_PLAYBACK_STATE]!!.isEmpty()
+            && audio.details[AUDIO_PLAYBACK_STATE]!!.first() == PlaybackStatus.PAUSED) {
+            Intent(this, AudioPlayerService::class.java).apply {
+                action = ACTION_PLAY
+                startService(this)
+            }
+        } else {
+            toast("Starting audio playback for " + audio.name + "...")
+            val s = audio.url + audio.fileName
+            FirebaseStorage.getInstance().getReference(s).downloadUrl.addOnSuccessListener { uri ->
+                audio.details[DOWNLOAD_URL] = arrayListOf(uri.toString())
+                val listType = object : TypeToken<Video>() {}.type
+                val json = Gson().toJson(audio, listType)
+
+                Intent(this, AudioPlayerService::class.java).apply {
+                    putExtra(PLAYER_AUDIOBOOK, json)
+                    action = ACTION_INIT_PLAY
+                    startService(this)
+                }
+
+            }.addOnFailureListener {
+                toast("Error playing Audio")
+            }
+        }
+    }
+
+    @Subscribe
+    fun songStateChanged(event: Events.playBackStateChanged) {
+        val state = event.state
+        val audio = event.audio
+        if(audio != null) {
+            var questionId = audio.details[QUESTION_ID]?.first()
+            if(questionId != null) {
+                val questions = getCurrentQuizQuestionsFromUser()
+                val currentQuestion = questions.find { it.id.toString() == questionId } as Question
+
+                // Mark change
+                if(!currentQuestion.audios.isEmpty()) {
+                    val audioQuestion = currentQuestion.audios.first()
+                    audioQuestion.details[AUDIO_PLAYBACK_STATE] = arrayListOf(state)
+                    // Refresh Questions
+                    refreshQuestions(questions)
+                }
+            }
+        }
+    }
+
 }

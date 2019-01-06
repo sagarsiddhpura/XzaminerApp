@@ -7,7 +7,8 @@ data class Question (
     var options: ArrayList<QuestionOption> = arrayListOf(),
     var correctAnswer: Long? = null,
     var selectedAnswer: Long? = 0,
-    var isMarkedForLater: Boolean = false
+    var isMarkedForLater: Boolean = false,
+    var audios: ArrayList<Video> = arrayListOf()
     ) {
     fun isCorrect(): Boolean {
         if(selectedAnswer == correctAnswer) {

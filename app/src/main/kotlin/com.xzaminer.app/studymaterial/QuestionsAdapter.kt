@@ -8,12 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.mikkipastel.videoplanet.player.PlaybackStatus
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
+import com.xzaminer.app.extensions.getXzaminerDataDir
+import com.xzaminer.app.utils.AUDIO_PLAYBACK_STATE
+import com.xzaminer.app.utils.QUESTION_ID
+import com.xzaminer.app.utils.checkFileExists
 import kotlinx.android.synthetic.main.question_item_grid.view.*
+import java.io.File
 import java.util.*
 
 
@@ -24,10 +30,12 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
 
     private var quizActivity: QuizActivity? = null
     var adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
+    private var xzaminerDataDir: File
 
     init {
         setupDragListener(true)
         this.quizActivity = activity
+        xzaminerDataDir = activity.getXzaminerDataDir()
     }
 
     override fun getActionMenuId() = R.menu.cab_empty
@@ -104,6 +112,36 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
 
             question_icon.setOnClickListener {
                 quizActivity?.markForLater(question)
+            }
+
+            if(question.audios.isEmpty()) {
+                divider_options_audio.beGone()
+                audio_parent.beGone()
+            } else {
+                val audio = question.audios.first()
+                audio.details[QUESTION_ID] = arrayListOf(question.id.toString())
+                divider_options_audio.beVisible()
+                audio_parent.beVisible()
+                audio_name.text = audio.name
+                audio_icon.setColorFilter(resources.getColor(R.color.md_blue_800_dark))
+                audio_download.setColorFilter(resources.getColor(R.color.md_blue_800_dark))
+
+                if(checkFileExists(xzaminerDataDir, "audios/" + audio.fileName)) {
+                    audio_download.beGone()
+                } else {
+                    audio_download.beVisible()
+                }
+
+                if(audio.details[AUDIO_PLAYBACK_STATE] != null && !audio.details[AUDIO_PLAYBACK_STATE]!!.isEmpty()
+                    && audio.details[AUDIO_PLAYBACK_STATE]!!.first() == PlaybackStatus.PLAYING) {
+                    audio_icon.setImageResource(R.drawable.ic_pause)
+                } else {
+                    audio_icon.setImageResource(R.drawable.ic_play)
+                }
+
+                audio_icon.setOnClickListener {
+                    quizActivity?.handleAudioPlayback(audio)
+                }
             }
         }
     }

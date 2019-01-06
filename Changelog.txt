@@ -150,3 +150,8 @@ Added desc field
 added image field
 added monetization info
 Updated field names on AddSM screen
+
+4.0
+AudioFile attachment in question
+Complete Audio playback functionalities
+
