@@ -19,15 +19,22 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
+import com.tonyodev.fetch2.*
+import com.tonyodev.fetch2core.DownloadBlock
+import com.tonyodev.fetch2core.Extras
+import com.tonyodev.fetch2core.Func
+import com.tonyodev.fetch2core.MutableExtras
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.ShowPurchasesActivity
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
+import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.result.ResultActivity
 import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_quiz.*
+import java.io.File
 import kotlin.concurrent.thread
 
 
@@ -45,6 +52,8 @@ class QuizActivity : SimpleActivity() {
     private var courseId: Long = -1
     private var sectionId: Long = -1
     lateinit var bus: Bus
+
+    private lateinit var fetch: Fetch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY)
@@ -126,6 +135,13 @@ class QuizActivity : SimpleActivity() {
                 return
             }
         }
+
+        val fetchConfiguration = FetchConfiguration.Builder(this)
+            .setDownloadConcurrentLimit(3)
+//            .setNotificationManager(DefaultFetchNotificationManager(this))
+            .build()
+
+        fetch = Fetch.getInstance(fetchConfiguration)
     }
 
     private fun showErrorAndExit() {
@@ -355,5 +371,134 @@ class QuizActivity : SimpleActivity() {
                 }
             }
         }
+    }
+
+    fun addDownload(video: Video) {
+        toast("Preparing Download for video " + video.name)
+        FirebaseStorage.getInstance().getReference(video.url + video.fileName).downloadUrl.addOnSuccessListener {
+
+            val request = Request(it.toString(), fetchDataDirFile(getXzaminerDataDir(), "videos/" + video.fileName + "_temp").absolutePath)
+            request.priority = Priority.HIGH
+            request.extras = getExtrasForRequest(video)
+            request.networkType = NetworkType.ALL
+            if(!fetchDataDirFile(getXzaminerDataDir(), "videos/" + video.fileName + "_temp").exists()) {
+                request.enqueueAction = EnqueueAction.REPLACE_EXISTING
+            }
+
+            fetch.enqueue(request, Func { updatedRequest ->
+
+            }, Func { error ->
+                toast("Error adding download to queue" + error.name)
+            })
+
+            val fetchListener = object : FetchListener {
+                override fun onAdded(download: Download) {
+                }
+
+                override fun onDownloadBlockUpdated(
+                    download: Download,
+                    downloadBlock: DownloadBlock,
+                    totalBlocks: Int
+                ) {
+                }
+
+                override fun onError(download: Download, error: Error, throwable: Throwable?) {
+                    val error = download.error
+                    toast("Error downloading. Error:" + error.name)
+                }
+
+                override fun onStarted(download: Download, downloadBlocks: List<DownloadBlock>, totalBlocks: Int) {
+                    toast("Starting downloading for " + download.extras.getString(VIDEO_DOWNLOAD_NAME, ""))
+                }
+
+                override fun onWaitingNetwork(download: Download) {
+                }
+
+                override fun onQueued(download: Download, waitingOnNetwork: Boolean) {
+                }
+
+                override fun onCompleted(download: Download) {
+                    toast("Download complete for " + download.extras.getString(VIDEO_DOWNLOAD_NAME, ""))
+                    val questionId = download.extras.getLong(QUESTION_ID, -1)
+
+                    val questions = getCurrentQuizQuestionsFromUser()
+                    val currentQuestion = questions.find { it.id == questionId } as Question
+                    val currentAudio = currentQuestion.audios.first()
+                    // Mark change
+                    currentAudio.details.remove(VIDEO_DOWNLOAD_PROGRESS)
+                    // Refresh Questions
+                    refreshQuestions(questions)
+
+                    val tempFile = File(download.file)
+                    val destFile =
+                        File(fetchDataDirFile(getXzaminerDataDir(), "videos/" + currentAudio.fileName).absolutePath)
+                    if(tempFile.exists() && !destFile.exists()) {
+                        tempFile.copyTo(destFile)
+                    }
+                }
+
+                override fun onProgress(
+                    download: Download, etaInMilliSeconds: Long,
+                    downloadedBytesPerSecond: Long
+                ) {
+                    val questionId = download.extras.getLong(QUESTION_ID, -1)
+                    val questions = getCurrentQuizQuestionsFromUser()
+                    val currentQuestion = questions.find { it.id == questionId } as Question
+                    val currentAudio = currentQuestion.audios.first()
+                    currentAudio.details[VIDEO_DOWNLOAD_PROGRESS] = arrayListOf(download.progress.toString() + " %")
+                    // Refresh Questions
+                    refreshQuestions(questions)
+                }
+
+                override fun onPaused(download: Download) {
+                }
+
+                override fun onResumed(download: Download) {
+                }
+
+                override fun onCancelled(download: Download) {
+                    toast("Download cancelled for " + download.extras.getString(VIDEO_DOWNLOAD_NAME, ""))
+                    val questionId = download.extras.getLong(QUESTION_ID, -1)
+                    val questions = getCurrentQuizQuestionsFromUser()
+                    val currentQuestion = questions.find { it.id == questionId } as Question
+                    val currentAudio = currentQuestion.audios.first()
+                    // Mark change
+                    currentAudio.details.remove(VIDEO_DOWNLOAD_PROGRESS)
+                    File(download.file).delete()
+                    // Refresh Questions
+                    refreshQuestions(questions)
+                }
+
+                override fun onRemoved(download: Download) {
+
+                }
+
+                override fun onDeleted(download: Download) {
+
+                }
+            }
+            fetch.addListener(fetchListener)
+        }.addOnFailureListener {
+            toast("Failed to download file. Error:" + it.message)
+        }
+
+    }
+
+    private fun getExtrasForRequest(video: Video): Extras {
+        val extras = MutableExtras()
+        extras.putString(VIDEO_DOWNLOAD_NAME, video.name)
+        extras.putString(VIDEO_DOWNLOAD_NAME, video.name)
+        return extras
+    }
+
+    fun cancelDownload(video: Video) {
+        //Get all downloads with a status
+        fetch.getDownloadsWithStatus(Status.DOWNLOADING, Func {
+            it.forEach {
+                if(it.extras.getString(VIDEO_DOWNLOAD_NAME, "") == video.name) {
+                    fetch.cancel(it.id)
+                }
+            }
+        })
     }
 }

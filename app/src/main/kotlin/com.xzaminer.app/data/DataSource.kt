@@ -14,10 +14,10 @@ import com.xzaminer.app.user.User
 import java.util.*
 
 private var db: FirebaseDatabase? = null
-private var catsDbVersion = 2
-private var userDbVersion = 1
+private var catsDbVersion = "VR1"
+private var userDbVersion = "VR1"
 private var storage: FirebaseStorage? = null
-private var purchaseLogDbVersion = 1
+private var purchaseLogDbVersion = "VR1"
 
 class DataSource {
 
@@ -35,7 +35,7 @@ class DataSource {
     }
 
     private fun getUsersDatabase(): DatabaseReference {
-        return getDatabase().getReference("users/v$userDbVersion")
+        return getDatabase().getReference("users/$userDbVersion")
     }
 
     fun getStorage(): FirebaseStorage {
@@ -47,7 +47,7 @@ class DataSource {
     }
 
     fun getCatsDatabase(): DatabaseReference {
-        return getDatabase().getReference("cats/v$catsDbVersion")
+        return getDatabase().getReference("cats/$catsDbVersion")
     }
 
     fun getChildCategories(catId: Long?, callback: (cats: ArrayList<Category>, name: String) -> Unit) {
@@ -289,6 +289,6 @@ class DataSource {
     }
 
     private fun getPurchaseLogDatabase(): DatabaseReference {
-        return getDatabase().getReference("purchaseLog/v$purchaseLogDbVersion")
+        return getDatabase().getReference("purchaseLog/$purchaseLogDbVersion")
     }
 }

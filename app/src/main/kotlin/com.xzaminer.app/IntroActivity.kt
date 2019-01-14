@@ -8,13 +8,7 @@ import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.extractor.mp4.Mp4Extractor
-import com.google.android.exoplayer2.source.ExtractorMediaSource
-import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.simplemobiletools.commons.activities.BaseSplashActivity
 import kotlinx.android.synthetic.main.activity_intro.*
 
@@ -67,17 +61,17 @@ class IntroActivity : BaseSplashActivity() {
 
             })
         }
-        val mediaSource = buildMediaSource()
-        player!!.prepare(mediaSource, true, false)
+//        val mediaSource = buildMediaSource()
+//        player!!.prepare(mediaSource, true, false)
     }
 
-    private fun buildMediaSource(): MediaSource {
-        val uri = RawResourceDataSource.buildRawResourceUri(R.raw.intro)
-        val dataSource = RawResourceDataSource(this)
-        dataSource.open(DataSpec(uri))
-
-        return ExtractorMediaSource(uri, DataSource.Factory { dataSource }, Mp4Extractor.FACTORY, null, null)
-    }
+//    private fun buildMediaSource(): MediaSource {
+//        val uri = RawResourceDataSource.buildRawResourceUri(R.raw.intro)
+//        val dataSource = RawResourceDataSource(this)
+//        dataSource.open(DataSpec(uri))
+//
+//        return ExtractorMediaSource(uri, DataSource.Factory { dataSource }, Mp4Extractor.FACTORY, null, null)
+//    }
 
     private fun releasePlayer() {
         if (player != null) {

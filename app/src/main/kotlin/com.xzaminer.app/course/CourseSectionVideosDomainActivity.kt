@@ -195,8 +195,8 @@ class CourseSectionVideosDomainActivity : SimpleActivity() {
                 }
 
                 override fun onCompleted(download: Download) {
-                    toast("Download complete for " + download.extras.getString(VIDEO_DOWNLOAD_NAME, ""))
                     val name = download.extras.getString(VIDEO_DOWNLOAD_NAME, "")
+                    toast("Download complete for " + name)
                     val videoFound = values.find { it -> it.name == name }
                     videoFound!!.details.remove(VIDEO_DOWNLOAD_PROGRESS)
                     setupAdapter(section_rv, studyMaterial!!)

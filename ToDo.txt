@@ -21,10 +21,13 @@ https://github.com/anjlab/android-inapp-billing-v3
 https://github.com/tonyofrancis/Fetch
 slider lib
 https://github.com/saeedsh92/Banner-Slider
+Circular Progress bar
+https://github.com/antonKozyriatskyi/CircularProgressIndicator?utm_source=android-arsenal.com&utm_medium=referral&utm_campaign=6892
 
 Exoplayer
 https://medium.com/google-exoplayer/easy-audio-focus-with-exoplayer-a2dcbbe4640e
 https://medium.com/google-exoplayer/playback-notifications-with-exoplayer-a2f1a18cf93b
+https://github.com/google/ExoPlayer/blob/io18/audio-app/src/main/java/com/google/android/exoplayer/audiodemo/AudioPlayerService.java#L110
 
 https://www.uplabs.com/posts/exam-app-exam-categories
 https://www.iconfinder.com/iconsets/finance-152

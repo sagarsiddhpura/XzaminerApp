@@ -114,6 +114,7 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
                 quizActivity?.markForLater(question)
             }
 
+            // Audio Icon
             if(question.audios.isEmpty()) {
                 divider_options_audio.beGone()
                 audio_parent.beGone()
@@ -124,13 +125,6 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
                 audio_parent.beVisible()
                 audio_name.text = audio.name
                 audio_icon.setColorFilter(resources.getColor(R.color.md_blue_800_dark))
-                audio_download.setColorFilter(resources.getColor(R.color.md_blue_800_dark))
-
-                if(checkFileExists(xzaminerDataDir, "audios/" + audio.fileName)) {
-                    audio_download.beGone()
-                } else {
-                    audio_download.beVisible()
-                }
 
                 if(audio.details[AUDIO_PLAYBACK_STATE] != null && !audio.details[AUDIO_PLAYBACK_STATE]!!.isEmpty()
                     && audio.details[AUDIO_PLAYBACK_STATE]!!.first() == PlaybackStatus.PLAYING) {
@@ -141,6 +135,19 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
 
                 audio_icon.setOnClickListener {
                     quizActivity?.handleAudioPlayback(audio)
+                }
+
+                if(checkFileExists(xzaminerDataDir, "audios/" + audio.fileName)) {
+                    audio_download.beGone()
+                } else {
+                    audio_download.progressColor = resources.getColor(R.color.md_blue_800_dark)
+                    audio_download.beVisible()
+
+                    audio_download.setOnClickListener {
+                        quizActivity?.handleAudioPlayback(audio)
+                    }
+
+
                 }
             }
         }

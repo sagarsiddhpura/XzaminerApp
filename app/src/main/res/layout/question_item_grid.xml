@@ -224,7 +224,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider_options_audio"
                 android:weightSum="1"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
             <ImageView
                     android:id="@+id/audio_icon"
@@ -252,8 +253,28 @@
                     android:textColor="@color/text_black"
                     tools:text="Audio 01"/>
 
-            <ImageView
+            <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
                     android:id="@+id/audio_download"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    app:direction="clockwise"
+                    app:dotColor="?colorPrimary"
+                    app:dotWidth="4dp"
+                    app:drawDot="false"
+                    app:enableProgressAnimation="true"
+                    app:progressBackgroundStrokeWidth="4dp"
+                    app:progressCap="round"
+                    app:progressColor="?colorPrimary"
+                    app:progressStrokeWidth="4dp"
+                    app:startAngle="270"
+                    app:textColor="#fffc59"
+                    app:textSize="14sp"
+                    android:paddingBottom="4dp"
+                    app:fillBackground="false" />
+
+            <ImageView
+                    android:id="@+id/audio_download2"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@drawable/ic_download"
