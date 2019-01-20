@@ -3,6 +3,7 @@ package com.xzaminer.app.login
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.support.annotation.MainThread
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
@@ -17,9 +18,11 @@ import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
+import com.xzaminer.app.category.MainActivity
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.user.User
+import com.xzaminer.app.utils.USERTYPE_ADMIN
 import kotlinx.android.synthetic.main.activity_emailpassword.*
 
 
@@ -106,6 +109,12 @@ class EmailPasswordActivity : BaseLoginActivity(), View.OnClickListener {
                                             val idToken = uri.toString().split("token=")[1]
                                             userFirebase!!.token = idToken
                                             config.setLoggedInUser(userFirebase)
+                                            if(userFirebase.userType == USERTYPE_ADMIN) {
+                                                config.isOtpVerified = true
+                                                startActivity(Intent(this, MainActivity::class.java))
+                                                finish()
+                                                return@addOnSuccessListener
+                                            }
                                             if(user.phoneNumber == null) {
                                                 startActivity(Intent(this, PhoneNumberAuthActivity::class.java))
                                             } else {
@@ -133,6 +142,13 @@ class EmailPasswordActivity : BaseLoginActivity(), View.OnClickListener {
                                             val idToken = uri.toString().split("token=")[1]
                                             userFirebase.token = idToken
                                             dataSource.addUser(userFirebase)
+                                            if(userFirebase.userType == USERTYPE_ADMIN) {
+                                                config.isOtpVerified = true
+                                                startActivity(Intent(this, MainActivity::class.java))
+                                                finish()
+                                                return@addOnSuccessListener
+
+                                            }
                                             if(user.phoneNumber == null) {
                                                 startActivity(Intent(this, PhoneNumberAuthActivity::class.java))
                                             } else {

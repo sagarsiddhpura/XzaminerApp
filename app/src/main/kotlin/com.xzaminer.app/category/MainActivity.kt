@@ -414,15 +414,25 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                     return false
                 }
             })
-        drawerBuilder.addDrawerItems(
-            home,
-            purchases,
-            settings,
-            logout,
-            DividerDrawerItem(),
-            importQuestionBank,
-            importStudyMaterial
-        )
+        if(config.getLoggedInUser() != null && (config.getLoggedInUser() as User).userType == USERTYPE_ADMIN) {
+            drawerBuilder.addDrawerItems(
+                home,
+                purchases,
+                settings,
+                logout,
+                DividerDrawerItem(),
+                importQuestionBank,
+                importStudyMaterial
+            )
+        } else {
+            drawerBuilder.addDrawerItems(
+                home,
+                purchases,
+                settings,
+                logout
+            )
+        }
+
         drawer = drawerBuilder.build()
 
         if(baseConfig.appRunCount == 1) {
