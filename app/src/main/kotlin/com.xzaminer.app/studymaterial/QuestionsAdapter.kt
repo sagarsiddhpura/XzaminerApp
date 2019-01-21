@@ -13,10 +13,12 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
+import com.xzaminer.app.BuildConfig
 import com.xzaminer.app.R
 import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.utils.AUDIO_PLAYBACK_STATE
 import com.xzaminer.app.utils.QUESTION_ID
+import com.xzaminer.app.utils.VIDEO_DOWNLOAD_PROGRESS
 import com.xzaminer.app.utils.checkFileExists
 import kotlinx.android.synthetic.main.question_item_grid.view.*
 import java.io.File
@@ -120,6 +122,11 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
                 audio_parent.beGone()
             } else {
                 val audio = question.audios.first()
+//                if(BuildConfig.DEBUG) {
+//                    File(xzaminerDataDir, "audios/" + audio.fileName).delete()
+//                    File(xzaminerDataDir, "audios/" + audio.fileName + "_temp").delete()
+//                }
+
                 audio.details[QUESTION_ID] = arrayListOf(question.id.toString())
                 divider_options_audio.beVisible()
                 audio_parent.beVisible()
@@ -138,16 +145,31 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
                 }
 
                 if(checkFileExists(xzaminerDataDir, "audios/" + audio.fileName)) {
-                    audio_download.beGone()
+                    download_status_text.beGone()
+                    download_status.beGone()
                 } else {
-                    audio_download.progressColor = resources.getColor(R.color.md_blue_800_dark)
-                    audio_download.beVisible()
+                    if(audio.details[VIDEO_DOWNLOAD_PROGRESS] == null) {
+                        download_status.beVisible()
+                        download_status_text.beGone()
 
-                    audio_download.setOnClickListener {
-                        quizActivity?.handleAudioPlayback(audio)
+                        val res = resources.getDrawable(R.drawable.ic_download)
+                        download_status.setImageDrawable(res)
+
+                        download_status.setOnClickListener {
+                            quizActivity?.addDownload(audio)
+                        }
+                    } else {
+                        download_status.beVisible()
+                        download_status_text.beVisible()
+
+                        download_status_text.text = audio.details[VIDEO_DOWNLOAD_PROGRESS]?.first()
+                        val res = resources.getDrawable(R.drawable.ic_cancel)
+                        download_status.setImageDrawable(res)
+
+                        download_status.setOnClickListener {
+                            quizActivity?.cancelDownload(audio)
+                        }
                     }
-
-
                 }
             }
         }

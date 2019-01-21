@@ -155,3 +155,21 @@ Updated field names on AddSM screen
 AudioFile attachment in question
 Complete Audio playback functionalities
 
+4.2
+Import QB/SM is visible in app drawer, whether this will be visible to all the user?
+    added import OQ/SM only visible to users of type admin
+    Added skip OTP verification on admin login
+
+For now we will hide the video and 31 days course & 31 days QB until database is ready. - Hidden in both Test and Release database
+
+If we select Download Videos from the header and if any one video is already downloaded it checks for the video and sends the error message Error:object media not available in the said location – it may be because there are no video files.
+    Because other videos have empty locations
+
+Under Flash Section domain 01 gives access to the data without being bought
+    This is because monetization was set as trial to test trial functionality. Changed to monetized
+
+Please upload the question banks already available with you to test.
+Please load the quiz questions or send me the link to load and test
+
+Audio Download functionality
+Play audio from downloaded file if available

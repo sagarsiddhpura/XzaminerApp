@@ -56,7 +56,7 @@ class DebugDataSource {
                 "31 Days Course (Questions)",
                 "",
                 "", getQuestionBanks(1012), STUDY_MATERIAL_TYPE_QUESTION_BANK,
-                getPurchaseInfo(1012), 3
+                getPurchaseInfo(1012), 3, true
             )
 //            val s3 = CourseSection(
 //                1013,
@@ -84,14 +84,14 @@ class DebugDataSource {
                 "Videos",
                 "",
                 "", getVideosSection(1016), STUDY_MATERIAL_TYPE_VIDEO,
-                getPurchaseInfo(1016), 1
+                getPurchaseInfo(1016), 1, true
             )
             val s7 = CourseSection(
                 1017,
                 "31 Days Course",
                 "",
                 "", getVideosSection(1017), STUDY_MATERIAL_TYPE_VIDEO,
-                getPurchaseInfo(1017), 2
+                getPurchaseInfo(1017), 2, true
             )
             return hashMapOf(s2.id.toString() to s2, s4.id.toString() to s4, s5.id.toString() to s5, s6.id.toString() to s6, s7.id.toString() to s7)
 //            return linkedMapOf(s1.id.toString() to s1, s2.id.toString() to s2, s3.id.toString() to s3, s4.id.toString() to s4, s5.id.toString() to s5, s6.id.toString() to s6)
@@ -120,15 +120,18 @@ class DebugDataSource {
                 PURCHASE_TYPE_IAP, "1000", "", true, null, null, "Entire Section of Course: CISA"))
         } else if (id == 101401) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101401", "CISA Review Manual - Domain 01","Purchase review manual for Domain 01",
-                PURCHASE_TYPE_TRIAL, "100", "", true, null, null, "Study Material of Section: CISA Review Manual of Course: CISA"))
+                PURCHASE_TYPE_IAP, "100", "", true, null, null, "Study Material of Section: CISA Review Manual of Course: CISA"))
         } else if (id == 101204) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101204", "CISA Question Banks - Question Bank 01","Purchase CISA Question Banks - Question Bank 01",
-                PURCHASE_TYPE_TRIAL, "100", "", true, null, null, "Question Bank of Section: CISA Question Banks of Course: CISA"))
+                PURCHASE_TYPE_IAP, "100", "", true, null, null, "Question Bank of Section: CISA Question Banks of Course: CISA"))
         } else if (id == 101402) {
             return arrayListOf(Purchase(PURCHASE_SECTION_STUDY_MATERIAL+"101402", "CISA Review Manual - Domain 02","Purchase review manual for Domain 02",
                 PURCHASE_TYPE_IAP, "100", "", true, null, null, "Study Material of Section: CISA Review Manual of Course: CISA"))
         } else if (id == 101600) {
             return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"101600", "CISA Videos - Training","Purchase videos for Training",
+                PURCHASE_TYPE_IAP, "100", "", true, null, null, "Entire Section of Course: CISA"))
+        } else if (id == -1) {
+            return arrayListOf(Purchase(PURCHASE_SECTION_IAP+"-1", "CISA Videos - Training","Purchase videos for Training",
                 PURCHASE_TYPE_TRIAL, "100", "", true, null, null, "Entire Section of Course: CISA"))
         }
         return arrayListOf()
@@ -153,7 +156,7 @@ class DebugDataSource {
                 "Trial",
                 "",
                 "courses/101/title_01_h_00_trial.jpg", 0, getStudyMaterialProperties(),
-                getQuestions(101600), getVideos(101600), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_VIDEO, 1
+                getQuestions(101600), getVideos(101600), getPurchaseInfo(-1), "", STUDY_MATERIAL_TYPE_VIDEO, 1
             )
             videos[c.id.toString()] = c
             return videos
@@ -166,7 +169,7 @@ class DebugDataSource {
                 "Trial",
                 "",
                 "courses/101/title_02_h_00_trial.jpg", 0, getStudyMaterialProperties(),
-                getQuestions(101700), getVideos(101700), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_VIDEO, counter++
+                getQuestions(101700), getVideos(101700), getPurchaseInfo(-1), "", STUDY_MATERIAL_TYPE_VIDEO, counter++
             )
             videos[c.id.toString()] = c
             val c1 = StudyMaterial(
@@ -280,14 +283,14 @@ class DebugDataSource {
                 "Trial",
                 "Trial",
                 "courses/101/title_05_h_00_trial.jpg", 0, linkedMapOf(),
-                getQuestions(101400), arrayListOf(), getPurchaseInfo(101401), "", STUDY_MATERIAL_TYPE_STUDY_MATERIAL, counter++
+                getQuestions(101400), arrayListOf(), getPurchaseInfo(-1), "", STUDY_MATERIAL_TYPE_STUDY_MATERIAL, counter++
             )
             val c1 = StudyMaterial(
                 101401,
                 "Domain 01",
                 "Domain 01",
                 "courses/101/title_05_h_01.jpg", 0, linkedMapOf(),
-                getQuestions(101401), arrayListOf(), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_STUDY_MATERIAL, counter++
+                getQuestions(101401), arrayListOf(), getPurchaseInfo(101401), "", STUDY_MATERIAL_TYPE_STUDY_MATERIAL, counter++
             )
             val flashCards = linkedMapOf(c1.id.toString() to c1, c.id.toString() to c)
             for (i in 101402..101405) {
@@ -396,7 +399,7 @@ class DebugDataSource {
                 "Trial",
                 "Trial",
                 "courses/101/title_03_h_00_trial.jpg", 0, linkedMapOf(),
-                getQuestions(101200), arrayListOf(), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_QUESTION_BANK, 3
+                getQuestions(101200), arrayListOf(), getPurchaseInfo(-1), "", STUDY_MATERIAL_TYPE_QUESTION_BANK, 3
             )
             questionBanks[c.id.toString()] = c
             return questionBanks
@@ -415,14 +418,14 @@ class DebugDataSource {
                 )
                 questionBanks[c.id.toString()] = c
             }
-            val c = StudyMaterial(
-                101500,
-                "Trial",
-                "Trial",
-                "courses/101/title_04_h_00_trial.jpg", 0, linkedMapOf(),
-                getQuestions(101500), arrayListOf(), getPurchaseInfo(101600), "", STUDY_MATERIAL_TYPE_QUESTION_BANK, 1
-            )
-            questionBanks[c.id.toString()] = c
+//            val c = StudyMaterial(
+//                101500,
+//                "Trial",
+//                "Trial",
+//                "courses/101/title_04_h_00_trial.jpg", 0, linkedMapOf(),
+//                getQuestions(101500), arrayListOf(), getPurchaseInfo(-1), "", STUDY_MATERIAL_TYPE_QUESTION_BANK, 1
+//            )
+//            questionBanks[c.id.toString()] = c
             return questionBanks
         }
         return linkedMapOf()
@@ -500,6 +503,18 @@ class DebugDataSource {
                         QuestionOption(4, "Attribute Sampling", "")),
                     2, 0, false, getVideos(3)
                 ),
+                Question(
+                    5, "For compliance testing which sampling method is more useful ?", "",
+                    arrayListOf(QuestionOption(1, "Attribute Sampling", ""),
+                        QuestionOption(2, "Attribute Sampling", ""),
+                        QuestionOption(3, "Attribute Sampling", ""),
+                        QuestionOption(4, "Attribute Sampling", "")),
+                    2, 0, false, getVideos(101400)
+                )
+            )
+        }
+        if(i == 101200) {
+            return  arrayListOf(
                 Question(
                     5, "For compliance testing which sampling method is more useful ?", "",
                     arrayListOf(QuestionOption(1, "Attribute Sampling", ""),

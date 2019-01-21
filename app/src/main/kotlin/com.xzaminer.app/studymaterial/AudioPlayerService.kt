@@ -14,6 +14,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.text.TextUtils
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.audio.AudioAttributes
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
@@ -25,6 +26,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import com.google.gson.Gson
@@ -32,7 +34,9 @@ import com.google.gson.reflect.TypeToken
 import com.mikkipastel.videoplanet.player.PlaybackStatus
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.squareup.otto.Bus
+import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.utils.*
+import java.io.File
 
 class AudioPlayerService : Service(), Player.EventListener {
 
@@ -136,14 +140,17 @@ class AudioPlayerService : Service(), Player.EventListener {
             return Service.START_STICKY
 
         if (action!!.equals(ACTION_INIT_PLAY, ignoreCase = true)) {
-            val audiBook = intent.getStringExtra(PLAYER_AUDIOBOOK)
+            val audioString = intent.getStringExtra(PLAYER_AUDIOBOOK)
             val type = object : TypeToken<Video>() {}.type
-            audio = Gson().fromJson<Video>(audiBook, type)
-            val url = audio.details[DOWNLOAD_URL]!!.first()
-            init(url)
-            Thread {
-
-            }.start()
+            this.audio = Gson().fromJson<Video>(audioString, type)
+            if(this.audio.details[DOWNLOAD_URL] == null) {
+                init(File(getXzaminerDataDir(), "audios/" + audio.fileName))
+            } else {
+                val url = this.audio.details[DOWNLOAD_URL]!!.first()
+                init(url)
+            }
+//            Thread {
+//            }.start()
         } else if (action.equals(ACTION_PLAY, ignoreCase = true)) {
             transportControls!!.play()
 
@@ -263,9 +270,9 @@ class AudioPlayerService : Service(), Player.EventListener {
     }
 
     @SuppressLint("NewApi")
-    fun init(streamUrl: String) {
-        this.streamUrl = streamUrl
-        val mediaSource = buildMediaSource(Uri.parse(streamUrl))
+    fun init(streamUrl_: String) {
+        this.streamUrl = streamUrl_
+        val mediaSource = buildMediaSource(Uri.parse(streamUrl_))
         exoPlayer.prepare(mediaSource)
         exoPlayer.playWhenReady = true
 
@@ -278,6 +285,29 @@ class AudioPlayerService : Service(), Player.EventListener {
                 notificationManager.createNotificationChannel(this)
             }
         }
+    }
+
+    @SuppressLint("NewApi")
+    fun init(audioFile: File) {
+        this.streamUrl = audioFile.absolutePath
+        val mediaSource = buildMediaSourceFile(audioFile)
+        exoPlayer.prepare(mediaSource)
+        exoPlayer.playWhenReady = true
+
+        if (isOreoPlus()) {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val importance = NotificationManager.IMPORTANCE_LOW
+            NotificationChannel("Xzaminer", "Xzaminer", importance).apply {
+                enableLights(false)
+                enableVibration(false)
+                notificationManager.createNotificationChannel(this)
+            }
+        }
+    }
+
+    private fun buildMediaSourceFile(audioFile: File): MediaSource? {
+        return ExtractorMediaSource(Uri.fromFile(audioFile), DefaultDataSourceFactory(this,"ua"),
+            DefaultExtractorsFactory(),null,null);
     }
 
     fun playOrPause(url: String) {

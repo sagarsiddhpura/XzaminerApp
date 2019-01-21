@@ -7,6 +7,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.views.MyRecyclerView
+import com.xzaminer.app.BuildConfig
 import com.xzaminer.app.R
 import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.extensions.loadIconImageView
@@ -15,8 +16,7 @@ import com.xzaminer.app.studymaterial.Video
 import com.xzaminer.app.utils.VIDEO_DOWNLOAD_PROGRESS
 import com.xzaminer.app.utils.checkFileExists
 import kotlinx.android.synthetic.main.course_domain_video_item.view.*
-
-
+import java.io.File
 
 
 class CourseSectionDomainVideosAdapter(
@@ -77,6 +77,9 @@ class CourseSectionDomainVideosAdapter(
 
             val xzaminerDataDir = activity.getXzaminerDataDir()
             if(checkFileExists(xzaminerDataDir, "videos/" + video.fileName)) {
+//                if(BuildConfig.DEBUG) {
+//                    File(xzaminerDataDir, "videos/" + video.fileName).delete()
+//                }
                 vid_download_status.beGone()
                 vid_download_status_text.beGone()
             } else {

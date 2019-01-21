@@ -24,6 +24,7 @@ import com.tonyodev.fetch2core.DownloadBlock
 import com.tonyodev.fetch2core.Extras
 import com.tonyodev.fetch2core.Func
 import com.tonyodev.fetch2core.MutableExtras
+import com.xzaminer.app.BuildConfig
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.ShowPurchasesActivity
@@ -334,9 +335,8 @@ class QuizActivity : SimpleActivity() {
             }
         } else {
             toast("Starting audio playback for " + audio.name + "...")
-            val s = audio.url + audio.fileName
-            FirebaseStorage.getInstance().getReference(s).downloadUrl.addOnSuccessListener { uri ->
-                audio.details[DOWNLOAD_URL] = arrayListOf(uri.toString())
+
+            if(checkFileExists(getXzaminerDataDir(), "audios/" + audio.fileName)) {
                 val listType = object : TypeToken<Video>() {}.type
                 val json = Gson().toJson(audio, listType)
 
@@ -345,9 +345,21 @@ class QuizActivity : SimpleActivity() {
                     action = ACTION_INIT_PLAY
                     startService(this)
                 }
+            } else {
+                FirebaseStorage.getInstance().getReference(audio.url + audio.fileName).downloadUrl.addOnSuccessListener { uri ->
+                    audio.details[DOWNLOAD_URL] = arrayListOf(uri.toString())
+                    val listType = object : TypeToken<Video>() {}.type
+                    val json = Gson().toJson(audio, listType)
 
-            }.addOnFailureListener {
-                toast("Error playing Audio")
+                    Intent(this, AudioPlayerService::class.java).apply {
+                        putExtra(PLAYER_AUDIOBOOK, json)
+                        action = ACTION_INIT_PLAY
+                        startService(this)
+                    }
+
+                }.addOnFailureListener {
+                    toast("Error playing Audio")
+                }
             }
         }
     }
@@ -374,25 +386,41 @@ class QuizActivity : SimpleActivity() {
     }
 
     fun addDownload(video: Video) {
-        toast("Preparing Download for video " + video.name)
-        FirebaseStorage.getInstance().getReference(video.url + video.fileName).downloadUrl.addOnSuccessListener {
+//        if(BuildConfig.DEBUG) {
+//            File(getXzaminerDataDir(), "audios/" + video.fileName).delete()
+//            File(getXzaminerDataDir(), "audios/" + video.fileName + "_temp").delete()
+//        }
 
-            val request = Request(it.toString(), fetchDataDirFile(getXzaminerDataDir(), "videos/" + video.fileName + "_temp").absolutePath)
+        toast("Preparing Download for audio " + video.name)
+//        video.fileName = "video_101601_3.mp4"
+        FirebaseStorage.getInstance().getReference(video.url + video.fileName).downloadUrl.addOnSuccessListener {
+            val absolutePath = fetchDataDirFile(getXzaminerDataDir(), "audios/" + video.fileName + "_temp").absolutePath
+
+//            val request = Request("https://firebasestorage.googleapis.com/v0/b/xzaminerapp.appspot.com/o/courses%2F101%2Fvideo_101601_2.mp4?token=cf0074b3-b150-4e47-aaa6-1ea25468b8cb", absolutePath)
+
+            val request = Request(it.toString(), absolutePath)
             request.priority = Priority.HIGH
             request.extras = getExtrasForRequest(video)
             request.networkType = NetworkType.ALL
-            if(!fetchDataDirFile(getXzaminerDataDir(), "videos/" + video.fileName + "_temp").exists()) {
+            if(!fetchDataDirFile(getXzaminerDataDir(), "audios/" + video.fileName + "_temp").exists()) {
+                request.enqueueAction = EnqueueAction.REPLACE_EXISTING
+            }
+            if(!fetchDataDirFile(getXzaminerDataDir(), "audios/" + video.fileName).exists()) {
+                request.enqueueAction = EnqueueAction.REPLACE_EXISTING
+            }
+            if(BuildConfig.DEBUG) {
                 request.enqueueAction = EnqueueAction.REPLACE_EXISTING
             }
 
             fetch.enqueue(request, Func { updatedRequest ->
-
+                if(BuildConfig.DEBUG) {}
             }, Func { error ->
                 toast("Error adding download to queue" + error.name)
             })
 
             val fetchListener = object : FetchListener {
                 override fun onAdded(download: Download) {
+                    if(BuildConfig.DEBUG) { }
                 }
 
                 override fun onDownloadBlockUpdated(
@@ -412,9 +440,11 @@ class QuizActivity : SimpleActivity() {
                 }
 
                 override fun onWaitingNetwork(download: Download) {
+                    if(BuildConfig.DEBUG) { }
                 }
 
                 override fun onQueued(download: Download, waitingOnNetwork: Boolean) {
+                    if(BuildConfig.DEBUG) { }
                 }
 
                 override fun onCompleted(download: Download) {
@@ -431,7 +461,7 @@ class QuizActivity : SimpleActivity() {
 
                     val tempFile = File(download.file)
                     val destFile =
-                        File(fetchDataDirFile(getXzaminerDataDir(), "videos/" + currentAudio.fileName).absolutePath)
+                        File(fetchDataDirFile(getXzaminerDataDir(), "audios/" + currentAudio.fileName).absolutePath)
                     if(tempFile.exists() && !destFile.exists()) {
                         tempFile.copyTo(destFile)
                     }
@@ -451,9 +481,11 @@ class QuizActivity : SimpleActivity() {
                 }
 
                 override fun onPaused(download: Download) {
+                    if(BuildConfig.DEBUG) { }
                 }
 
                 override fun onResumed(download: Download) {
+                    if(BuildConfig.DEBUG) { }
                 }
 
                 override fun onCancelled(download: Download) {
@@ -470,24 +502,23 @@ class QuizActivity : SimpleActivity() {
                 }
 
                 override fun onRemoved(download: Download) {
-
+                    if(BuildConfig.DEBUG) { }
                 }
 
                 override fun onDeleted(download: Download) {
-
+                    if(BuildConfig.DEBUG) { }
                 }
             }
             fetch.addListener(fetchListener)
         }.addOnFailureListener {
             toast("Failed to download file. Error:" + it.message)
         }
-
     }
 
     private fun getExtrasForRequest(video: Video): Extras {
         val extras = MutableExtras()
         extras.putString(VIDEO_DOWNLOAD_NAME, video.name)
-        extras.putString(VIDEO_DOWNLOAD_NAME, video.name)
+        video.details[QUESTION_ID]?.first()?.toLong()?.let { extras.putLong(QUESTION_ID, it) }
         return extras
     }
 
