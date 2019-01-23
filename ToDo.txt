@@ -3,7 +3,6 @@ secure db rules in firebase console
 
 
 Next release
-The player should have a toggle for screen rotation on the player so that people don’t have to go a start their screen rotation in there settings
 The video doesn’t have preference to start from the last seen session, it starts from the beginning.
     I will check regarding efforts for this.
 The 2nd video should play automatically once the first one completes either on network or on downloaded file.
@@ -24,15 +23,24 @@ adb connect 192.168.0.102:5555
 Links
 https://github.com/anjlab/android-inapp-billing-v3
 https://github.com/tonyofrancis/Fetch
+
 slider lib
 https://github.com/saeedsh92/Banner-Slider
+
 Circular Progress bar
 https://github.com/antonKozyriatskyi/CircularProgressIndicator?utm_source=android-arsenal.com&utm_medium=referral&utm_campaign=6892
+
+Db rules
+https://medium.com/@skytreasure/easy-way-to-secure-firebase-realtime-database-with-rules-when-you-have-anonymous-sign-in-or-already-e8ff1ddfbfc9
+https://gist.github.com/codediodeio/6dbce1305b9556c2136492522e2100f6
+
 
 Exoplayer
 https://medium.com/google-exoplayer/easy-audio-focus-with-exoplayer-a2dcbbe4640e
 https://medium.com/google-exoplayer/playback-notifications-with-exoplayer-a2f1a18cf93b
 https://github.com/google/ExoPlayer/blob/io18/audio-app/src/main/java/com/google/android/exoplayer/audiodemo/AudioPlayerService.java#L110
+https://medium.com/tall-programmer/fullscreen-functionality-with-android-exoplayer-5fddad45509f
+https://geoffledak.com/blog/2017/09/11/how-to-add-a-fullscreen-toggle-button-to-exoplayer-in-android/
 
 https://www.uplabs.com/posts/exam-app-exam-categories
 https://www.iconfinder.com/iconsets/finance-152

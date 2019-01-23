@@ -33,6 +33,7 @@ import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.admin.AddStudyMaterialActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
+import com.xzaminer.app.course.CourseSectionVideosDomainActivity
 import com.xzaminer.app.extensions.*
 import com.xzaminer.app.studymaterial.QuizActivity
 import com.xzaminer.app.user.User
@@ -98,13 +99,15 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    putExtra(QUIZ_ID, 10111L)
 //                    startActivity(this)
 //                }
-            Intent(this, QuizActivity::class.java).apply {
-                putExtra(QUIZ_ID, 101200L)
-                putExtra(SECTION_ID, 1012L)
-                putExtra(COURSE_ID, 101L)
-                putExtra(IS_NEW_QUIZ, true)
-                startActivity(this)
-            }
+
+//            Intent(this, QuizActivity::class.java).apply {
+//                putExtra(QUIZ_ID, 101200L)
+//                putExtra(SECTION_ID, 1012L)
+//                putExtra(COURSE_ID, 101L)
+//                putExtra(IS_NEW_QUIZ, true)
+//                startActivity(this)
+//            }
+
 //            Intent(this, AddQuestionBankActivity::class.java).apply {
 //                startActivity(this)
 //            }
@@ -128,12 +131,13 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    putExtra(VIDEO_ID, 1016001L)
 //                    startActivity(this)
 //                }
-//                Intent(this, CourseSectionVideosDomainActivity::class.java).apply {
-//                    putExtra(COURSE_ID, 101L)
-//                    putExtra(SECTION_ID, 1016L)
-//                    putExtra(DOMAIN_ID, 101601L)
-//                    startActivity(this)
-//                }
+
+                Intent(this, CourseSectionVideosDomainActivity::class.java).apply {
+                    putExtra(COURSE_ID, 101L)
+                    putExtra(SECTION_ID, 1016L)
+                    putExtra(DOMAIN_ID, 101601L)
+                    startActivity(this)
+                }
 
             }
             debugDataSource.initMockDataRealtimeDatabase(dataSource)

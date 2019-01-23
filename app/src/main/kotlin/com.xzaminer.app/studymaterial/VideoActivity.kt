@@ -27,7 +27,14 @@ import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_intro.*
+import kotlinx.android.synthetic.main.exo_playback_control_view.*
 import java.io.File
+import android.view.WindowManager
+import android.view.Display
+import android.content.pm.ActivityInfo
+import android.R.attr.orientation
+import android.content.Context
+import android.content.res.Configuration
 
 
 class VideoActivity : SimpleActivity() {
@@ -86,6 +93,20 @@ class VideoActivity : SimpleActivity() {
                 toast("Error opening Video")
                 finish()
                 return@getCourseStudyMaterialById
+            }
+        }
+
+        exo_rotate.setOnClickListener {
+            val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+            val orientation = display.orientation
+
+            when (orientation % 2) {
+                0 -> {
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                }
+                1 -> {
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                }
             }
         }
     }

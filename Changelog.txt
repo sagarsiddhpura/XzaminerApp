@@ -155,7 +155,9 @@ Updated field names on AddSM screen
 AudioFile attachment in question
 Complete Audio playback functionalities
 
-4.2
+4.4
+Import QB/SM only available for admin users
+
 Import QB/SM is visible in app drawer, whether this will be visible to all the user?
     added import OQ/SM only visible to users of type admin
     Added skip OTP verification on admin login
@@ -173,3 +175,6 @@ Please load the quiz questions or send me the link to load and test
 
 Audio Download functionality
 Play audio from downloaded file if available
+
+4.6
+The player should have a toggle for screen rotation on the player so that people don’t have to go a start their screen rotation in there settings
