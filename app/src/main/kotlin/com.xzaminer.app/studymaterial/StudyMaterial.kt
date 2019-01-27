@@ -126,4 +126,13 @@ data class StudyMaterial (
     fun updateCompleted() {
         properties[QB_COMPLETED] = arrayListOf(getNowDateTime())
     }
+
+    fun fetchVideoIndex(videoId: Long): Int {
+        videos.forEachIndexed { index, video ->
+            if(video.id == videoId) {
+                return index
+            }
+        }
+        return 0
+    }
 }

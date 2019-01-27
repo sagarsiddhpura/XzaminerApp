@@ -15,6 +15,7 @@ import java.util.*
 
 private var db: FirebaseDatabase? = null
 private var storage: FirebaseStorage? = null
+
 private var catsDbVersion = "VR1"
 private var userDbVersion = "VR1"
 private var purchaseLogDbVersion = "VR1"

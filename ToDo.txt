@@ -41,6 +41,7 @@ https://medium.com/google-exoplayer/playback-notifications-with-exoplayer-a2f1a1
 https://github.com/google/ExoPlayer/blob/io18/audio-app/src/main/java/com/google/android/exoplayer/audiodemo/AudioPlayerService.java#L110
 https://medium.com/tall-programmer/fullscreen-functionality-with-android-exoplayer-5fddad45509f
 https://geoffledak.com/blog/2017/09/11/how-to-add-a-fullscreen-toggle-button-to-exoplayer-in-android/
+https://github.com/google/ExoPlayer/blob/release-v2/demos/main/src/main/java/com/google/android/exoplayer2/demo/PlayerActivity.java
 
 https://www.uplabs.com/posts/exam-app-exam-categories
 https://www.iconfinder.com/iconsets/finance-152

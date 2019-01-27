@@ -5,10 +5,6 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.Window
-import com.google.android.exoplayer2.DefaultLoadControl
-import com.google.android.exoplayer2.DefaultRenderersFactory
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
@@ -30,11 +26,10 @@ import kotlinx.android.synthetic.main.activity_intro.*
 import kotlinx.android.synthetic.main.exo_playback_control_view.*
 import java.io.File
 import android.view.WindowManager
-import android.view.Display
 import android.content.pm.ActivityInfo
-import android.R.attr.orientation
 import android.content.Context
-import android.content.res.Configuration
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 
 
 class VideoActivity : SimpleActivity() {
@@ -46,6 +41,8 @@ class VideoActivity : SimpleActivity() {
     private var sectionId: Long = -1
     private var domainId: Long = -1
     private var player: ExoPlayer? = null
+    private var concatenatingMediaSource: ConcatenatingMediaSource? = null
+    private lateinit var studyMaterial: StudyMaterial
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY)
@@ -75,15 +72,29 @@ class VideoActivity : SimpleActivity() {
         video_view.beVisible()
         intro_holder.beGone()
 
-        dataSource.getCourseStudyMaterialById(courseId, sectionId, domainId) { studyMaterial ->
-            val video = studyMaterial?.fetchVideo(videoId)
-            if (video != null) {
+        dataSource.getCourseStudyMaterialById(courseId, sectionId, domainId) { studyMaterial_ ->
+            if(studyMaterial_ != null && !studyMaterial_.videos.isEmpty() && studyMaterial_.fetchVideo(videoId) != null) {
+                studyMaterial = studyMaterial_
+                val video = studyMaterial_.fetchVideo(videoId) as Video
+                val index = studyMaterial_.fetchVideoIndex(videoId)
+                concatenatingMediaSource = ConcatenatingMediaSource()
+                var videos = ArrayList(studyMaterial_.videos)
+                videos.sortWith(compareBy { it.order })
+
                 val videoFile = File(fetchDataDirFile(getXzaminerDataDir(), "videos/" + video.fileName).absolutePath)
+                for(i in 0..studyMaterial_.videos.size) {
+                    buildMediaSource(videoFile, i)
+                }
+
                 if(videoFile.exists()) {
-                    loadVideo(videoFile)
+                    buildMediaSource(videoFile, index)
+                    startPlayback(index)
+                    buildPlaylist(videos)
                 } else {
                     FirebaseStorage.getInstance().getReference(video.url + video.fileName).downloadUrl.addOnSuccessListener { uri ->
-                        loadVideo(uri)
+                        buildMediaSource(uri, index)
+                        startPlayback(index)
+                        buildPlaylist(videos)
                     }.addOnFailureListener {
                         toast("Error opening video")
                         finish()
@@ -111,7 +122,32 @@ class VideoActivity : SimpleActivity() {
         }
     }
 
-    private fun loadVideo(video: Uri) {
+    private fun buildPlaylist(videos: ArrayList<Video>) {
+        // Load rest of videos to playlist
+        videos.forEachIndexed { index, video ->
+            if (video != null) {
+                if(video.id != videoId) {
+                    val videoFile = fetchDataDirFile(getXzaminerDataDir(), "videos/" + video.fileName)
+                    if(videoFile.exists()) {
+                        buildMediaSource(videoFile, index)
+                    } else {
+                        FirebaseStorage.getInstance().getReference(video.url + video.fileName).downloadUrl.addOnSuccessListener { uri ->
+                            buildMediaSource(uri, index)
+                        }.addOnFailureListener {
+                            toast("Error loading playlist...")
+//                                    finish()
+                        }
+                    }
+                }
+            } else {
+                toast("Error opening Video")
+                finish()
+                return@forEachIndexed
+            }
+        }
+    }
+
+    private fun startPlayback(index: Int) {
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance( this,
                 DefaultRenderersFactory(this),
@@ -125,38 +161,45 @@ class VideoActivity : SimpleActivity() {
                     or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         }
-        val mediaSource = buildMediaSource(video)
-        player!!.prepare(mediaSource, true, false)
+        player!!.prepare(concatenatingMediaSource, true, false)
+        player!!.seekTo(index, C.TIME_UNSET)
+        player!!.addListener(object : Player.DefaultEventListener() {
+            override fun onPlayerStateChanged(
+                playWhenReady: Boolean,playbackState: Int) {
+                when (playbackState) {
+                    Player.STATE_IDLE -> {}
+                    Player.STATE_BUFFERING -> {}
+                    Player.STATE_READY -> {}
+                    Player.STATE_ENDED -> {
+                        checkAndPlayNextFile(index)
+                    }
+                }
+            }
+        })
     }
 
-    private fun loadVideo(video: File) {
-        if (player == null) {
-            player = ExoPlayerFactory.newSimpleInstance( this,
-                DefaultRenderersFactory(this),
-                DefaultTrackSelector(),
-                DefaultLoadControl()
-            )
-            video_view?.player = player
-            player!!.playWhenReady = true
-            video_view!!.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    or View.SYSTEM_UI_FLAG_FULLSCREEN
-                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    private fun checkAndPlayNextFile(index: Int) {
+        if(concatenatingMediaSource != null && concatenatingMediaSource!!.getMediaSource(index + 1) != null) {
+            startPlayback(index+1)
         }
-        val mediaSource = buildMediaSource(video)
-        player!!.prepare(mediaSource, true, false)
     }
 
-    private fun buildMediaSource(video: Uri): MediaSource {
-        return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory("Xzaminer"))
-            .createMediaSource(video)
+    private fun buildMediaSource(video: Uri, index: Int): MediaSource {
+        if(index < concatenatingMediaSource!!.size && concatenatingMediaSource?.getMediaSource(index) != null) {
+            concatenatingMediaSource?.removeMediaSource(index)
+        }
+        concatenatingMediaSource?.addMediaSource(index, ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory("Xzaminer"))
+            .createMediaSource(video))
+        return concatenatingMediaSource as ConcatenatingMediaSource
     }
 
-    private fun buildMediaSource(video: File): MediaSource {
-        return ExtractorMediaSource(Uri.fromFile(video), DefaultDataSourceFactory(this,"ua"),
-         DefaultExtractorsFactory(),null,null);
-//        return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory("Xzaminer"))
-//            .createMediaSource(Uri.fromFile(video))
+    private fun buildMediaSource(video: File, index: Int): MediaSource {
+        if(index < concatenatingMediaSource!!.size && concatenatingMediaSource?.getMediaSource(index) != null) {
+            concatenatingMediaSource?.removeMediaSource(index)
+        }
+        concatenatingMediaSource?.addMediaSource(index, ExtractorMediaSource(Uri.fromFile(video), DefaultDataSourceFactory(this,"ua"),
+            DefaultExtractorsFactory(),null,null))
+        return concatenatingMediaSource as ConcatenatingMediaSource
     }
 
     private fun releasePlayer() {
