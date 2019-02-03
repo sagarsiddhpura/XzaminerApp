@@ -178,3 +178,7 @@ Play audio from downloaded file if available
 
 4.6
 The player should have a toggle for screen rotation on the player so that people don’t have to go a start their screen rotation in there settings
+The 2nd video should play automatically once the first one completes either on network or on downloaded file.
+
+4.8
+Added Manage Course and delete course

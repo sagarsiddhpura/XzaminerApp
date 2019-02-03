@@ -300,4 +300,21 @@ class DataSource {
     private fun getPurchaseLogDatabase(): DatabaseReference {
         return getDatabase().getReference("purchaseLog/$purchaseLogDbVersion")
     }
+
+    fun updateCourseProperties(course: Course) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+course.id).child("name").setValue(course.name)
+        dept.child("/1/courses/"+course.id).child("desc").setValue(course.desc)
+        dept.child("/1/courses/"+course.id).child("shortName").setValue(course.shortName)
+        dept.child("/1/courses/"+course.id).child("purchaseInfo").setValue(course.purchaseInfo)
+    }
+
+    fun deleteCourse(course: Category) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/" + course.id).removeValue(DatabaseReference.CompletionListener { databaseError, databaseReference ->
+            val error = databaseError
+        })
+    }
 }

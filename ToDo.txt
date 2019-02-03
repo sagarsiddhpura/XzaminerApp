@@ -5,7 +5,6 @@ secure db rules in firebase console
 Next release
 The video doesn’t have preference to start from the last seen session, it starts from the beginning.
     I will check regarding efforts for this.
-The 2nd video should play automatically once the first one completes either on network or on downloaded file.
 
 confirm on logout and not directly logout
 

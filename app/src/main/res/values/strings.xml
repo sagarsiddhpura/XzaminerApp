@@ -22,4 +22,6 @@
     <string name="title_activity_import_study_material">Import Study Material</string>
     <string name="myprofile">My Profile</string>
     <string name="download_videos">Download Videos</string>
+    <string name="maange_categories">Manage Categories</string>
+    <string name="finish">Finish</string>
 </resources>

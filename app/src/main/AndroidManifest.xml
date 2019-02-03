@@ -36,6 +36,10 @@
         </activity>
         <activity android:name=".admin.AddStudyMaterialActivity">
         </activity>
+        <activity android:name=".admin.ManageCategoriesActivity">
+        </activity>
+        <activity android:name=".admin.EditCourseActivity">
+        </activity>
         <activity android:name=".result.QuizAnswersActivity">
         </activity>
         <activity android:name=".course.CourseActivity">

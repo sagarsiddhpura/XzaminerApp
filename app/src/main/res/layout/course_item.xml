@@ -52,6 +52,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/course_image"
                 android:layout_margin="8dp"
+                tools:textColor="@color/white"
                 />
 
         <TextView
@@ -69,7 +70,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/course_name"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="4dp"
+                tools:textColor="@color/white"
+                />
 
         <TextView
                 android:id="@+id/course_subtitle"
@@ -80,11 +83,39 @@
                 android:theme="@style/ColouredTextBox"
                 android:textSize="@dimen/normal_text_size"
                 tools:text="08:23"
+                tools:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/course_image"
                 app:layout_constraintTop_toBottomOf="@+id/course_desc"
                 android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:layout_marginLeft="8dp"/>
+
+        <com.simplemobiletools.commons.views.MyButton
+                android:text="Edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/manage_edit"
+                android:layout_centerHorizontal="true"
+                android:theme="@style/ColouredButton"
+                android:drawableLeft="@drawable/ic_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/course_subtitle"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+        <com.simplemobiletools.commons.views.MyButton
+                android:text="Delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/manage_delete"
+                android:layout_centerHorizontal="true"
+                android:theme="@style/ColouredButton"
+                android:drawableLeft="@drawable/ic_delete"
+                app:layout_constraintTop_toBottomOf="@+id/course_subtitle"
+                android:layout_margin="4dp"
+                app:layout_constraintEnd_toStartOf="@+id/manage_edit"
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
     </android.support.constraint.ConstraintLayout>
 
