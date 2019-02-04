@@ -208,7 +208,7 @@ class AddQuestionBankActivity : SimpleActivity() {
             val uploadTask = riversRef.putFile(file)
 
             uploadTask.addOnFailureListener {
-                toast("Failed to Upload Image and Quesion Bank")
+                toast("Failed to Upload Image and Question Bank")
             }.addOnSuccessListener {
                 questionBank.image = "courses/" + courseId + "/" + name
                 saveQuestionBank()

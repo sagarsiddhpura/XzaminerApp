@@ -31,6 +31,7 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.*
 import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.admin.AddStudyMaterialActivity
+import com.xzaminer.app.admin.EditCourseActivity
 import com.xzaminer.app.admin.ManageCategoriesActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
@@ -138,7 +139,12 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-                Intent(this, ManageCategoriesActivity::class.java).apply {
+//                Intent(this, ManageCategoriesActivity::class.java).apply {
+//                    startActivity(this)
+//                }
+
+                Intent(this, EditCourseActivity::class.java).apply {
+                    putExtra(COURSE_ID, 101L)
                     startActivity(this)
                 }
             }

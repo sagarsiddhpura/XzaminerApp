@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.Window
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
@@ -46,7 +48,6 @@ class ManageCategoriesActivity : SimpleActivity() {
                 catId = null
             }
         }
-
     }
 
     private fun tryLoadCategories(catId: Long?) {
@@ -85,7 +86,6 @@ class ManageCategoriesActivity : SimpleActivity() {
         layoutManager.orientation = GridLayoutManager.VERTICAL
         layoutManager.spanCount = 1
 
-        val adapter = getRecyclerAdapter()
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return 1
@@ -161,7 +161,7 @@ class ManageCategoriesActivity : SimpleActivity() {
             } else {
                 // Course
                 Intent(this, EditCourseActivity::class.java).apply {
-                    putExtra(CAT_ID, item.id)
+                    putExtra(COURSE_ID, item.id)
                     startActivity(this)
                 }
             }
@@ -180,6 +180,23 @@ class ManageCategoriesActivity : SimpleActivity() {
                 }
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_add, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.manage_add -> addCourse()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    private fun addCourse() {
+        toast("This functionality is being implemented....")
     }
 
 }

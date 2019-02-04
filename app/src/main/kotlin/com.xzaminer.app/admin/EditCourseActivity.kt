@@ -1,21 +1,27 @@
 package com.xzaminer.app.admin
 
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
+import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.extensions.dataSource
+import com.xzaminer.app.extensions.loadIconImageView
+import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.ConfirmDialog
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_edit_course.*
+import java.io.File
 
 class EditCourseActivity : SimpleActivity() {
 
@@ -31,7 +37,7 @@ class EditCourseActivity : SimpleActivity() {
 
 
         intent.apply {
-            courseId = getLongExtra(CAT_ID, -1)
+            courseId = getLongExtra(COURSE_ID, -1)
             if(courseId == (-1).toLong()) {
                 toast("Error editing this course.")
                 finish()
@@ -49,12 +55,31 @@ class EditCourseActivity : SimpleActivity() {
                 return@getCourseById
             }
         }
-    }
 
-    private fun loadCourse(course: Course) {
-        edit_name.setText(course.name)
-        edit_desc.setText(course.desc)
-        edit_short_name.setText(course.shortName)
+        edit_edit_image.setOnClickListener {
+            FilePickerDialog(this, Environment.getExternalStorageDirectory().toString(), true, false, false) {
+                toast("Uploading image. Please wait till image is uploaded.")
+                val imageFile = File(it)
+                val file = Uri.fromFile(imageFile)
+                val name = course.id.toString() + "_" + imageFile.name
+                val riversRef = dataSource.getStorage().getReference("courses/" + course.id + "/").child(name)
+                val uploadTask = riversRef.putFile(file)
+
+                uploadTask.addOnFailureListener {
+                    toast("Failed to Upload Image")
+                }.addOnSuccessListener {
+                    toast("Image Uploaded successfully. Save to update course")
+                    course.image = "courses/" + courseId + "/" + name
+                    loadImageImageView(course.image!!, edit_course_image, false, null, false, R.drawable.im_placeholder_video)
+                }
+            }
+        }
+
+        edit_delete_image.setOnClickListener {
+            course.image = null
+            edit_course_image.setImageDrawable(null)
+        }
+
         val options = arrayOf("None", "Monetized")
         monetization_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
 
@@ -71,6 +96,21 @@ class EditCourseActivity : SimpleActivity() {
                     monetization_root.beVisible()
                 }
             }
+        }
+
+        edit_edit_image.setColorFilter(getAdjustedPrimaryColor())
+        edit_delete_image.setColorFilter(getAdjustedPrimaryColor())
+    }
+
+    private fun loadCourse(course: Course) {
+        edit_name.setText(course.name)
+        edit_desc.setText(course.desc)
+        edit_short_name.setText(course.shortName)
+        if(course.image != null && course.image != "") {
+            loadImageImageView(course.image!!, edit_course_image, false, null, false, R.drawable.im_placeholder_video)
+        } else {
+            val img : Int = R.drawable.im_placeholder
+            loadIconImageView(img, edit_course_image, false)
         }
 
         if(course.fetchVisiblePurchases().isEmpty()) {
@@ -121,7 +161,7 @@ class EditCourseActivity : SimpleActivity() {
             }
         }
 
-        ConfirmDialog(this, "Are you sure you want to finish Quiz?") {
+        ConfirmDialog(this, "Are you sure you want to update the Course?") {
             course.name = edit_name.text.toString()
             course.desc = edit_desc.text.toString()
             course.shortName = edit_short_name.text.toString()

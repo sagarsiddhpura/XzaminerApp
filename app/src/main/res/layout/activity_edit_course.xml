@@ -66,6 +66,62 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/edit_image_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/edit_short_name_root"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="8dp"
+                android:weightSum="1">
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/edit_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:hint="Image"/>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:id="@+id/edit_course_image"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/round_outline"
+                        tools:src="@drawable/im_placeholder_video"
+                        android:layout_margin="4dp"/>
+
+                <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left"
+                        android:orientation="vertical">
+
+                    <ImageView
+                            android:id="@+id/edit_edit_image"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:src="@drawable/ic_edit"
+                            android:padding="6dp"/>
+
+                    <ImageView
+                            android:id="@+id/edit_delete_image"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:src="@drawable/ic_delete"
+                            android:padding="4dp"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
         <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/monetization_label"
                 android:layout_width="0dp"
@@ -76,15 +132,15 @@
                 android:textSize="18sp"
                 android:layout_marginLeft="2dp"
                 android:text="Monetization:"
-                app:layout_constraintTop_toBottomOf="@+id/edit_short_name_root"
+                app:layout_constraintTop_toBottomOf="@+id/edit_image_root"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="2dp"/>
 
         <Spinner
                 android:id="@+id/monetization_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/edit_short_name_root"
+                app:layout_constraintTop_toBottomOf="@+id/edit_image_root"
                 app:layout_constraintStart_toEndOf="@+id/monetization_label"
                 >
         </Spinner>
