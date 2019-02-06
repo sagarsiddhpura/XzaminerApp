@@ -141,7 +141,10 @@ class ManageCategoriesActivity : SimpleActivity() {
                 }
             } else {
                 // Course
-                toast("This functionality is being implemented")
+                Intent(this, ManageCourseActivity::class.java).apply {
+                    putExtra(COURSE_ID, item.id)
+                    startActivity(this)
+                }
             }
         }
     }
@@ -198,5 +201,4 @@ class ManageCategoriesActivity : SimpleActivity() {
     private fun addCourse() {
         toast("This functionality is being implemented....")
     }
-
 }

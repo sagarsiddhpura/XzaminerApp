@@ -8,6 +8,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.xzaminer.app.billing.PurchaseLog
 import com.xzaminer.app.category.Category
 import com.xzaminer.app.course.Course
+import com.xzaminer.app.course.CourseSection
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.user.User
@@ -253,7 +254,7 @@ class DataSource {
 
     fun getCourseById(courseId: Long?, callback: (course: Course?) -> Unit) {
         if (courseId != null) {
-            getCats { it ->
+            getCats {
                 callback(searchCourseById(courseId, it))
             }
         }
@@ -317,5 +318,22 @@ class DataSource {
         dept.child("/1/courses/" + course.id).removeValue(DatabaseReference.CompletionListener { databaseError, databaseReference ->
             val error = databaseError
         })
+    }
+
+    fun deleteCourseSection(courseId: Long, section: CourseSection) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/" + courseId + "/sections/" + section.id).removeValue(DatabaseReference.CompletionListener { databaseError, databaseReference ->
+            val error = databaseError
+        })
+    }
+
+    fun updateCourseSectionProperties(courseId: Long?, section: CourseSection) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("name").setValue(section.name)
+        dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("desc").setValue(section.desc)
+        dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("purchaseInfo").setValue(section.purchaseInfo)
+        dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("image").setValue(section.image)
     }
 }

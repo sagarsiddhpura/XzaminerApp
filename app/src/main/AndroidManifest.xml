@@ -40,6 +40,10 @@
         </activity>
         <activity android:name=".admin.EditCourseActivity">
         </activity>
+        <activity android:name=".admin.ManageCourseActivity">
+        </activity>
+        <activity android:name=".admin.EditSectionActivity">
+        </activity>
         <activity android:name=".result.QuizAnswersActivity">
         </activity>
         <activity android:name=".course.CourseActivity">

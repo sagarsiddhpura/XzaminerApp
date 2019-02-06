@@ -56,7 +56,7 @@ class CourseSectionActivity : SimpleActivity() {
                 supportActionBar?.title = course.shortName ?: course.name
                 loadSection(course.sections[sectionId.toString()]!!)
             } else {
-                toast("Error opening course.")
+                toast("Error opening course and section")
                 finish()
                 return@getCourseById
             }

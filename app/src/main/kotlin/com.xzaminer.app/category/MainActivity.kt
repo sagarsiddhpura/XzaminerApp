@@ -29,13 +29,11 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.*
-import com.xzaminer.app.admin.AddQuestionBankActivity
-import com.xzaminer.app.admin.AddStudyMaterialActivity
-import com.xzaminer.app.admin.EditCourseActivity
-import com.xzaminer.app.admin.ManageCategoriesActivity
+import com.xzaminer.app.admin.*
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.extensions.*
+import com.xzaminer.app.studymaterial.ConfirmDialog
 import com.xzaminer.app.user.User
 import com.xzaminer.app.user.UserProfileActivity
 import com.xzaminer.app.utils.*
@@ -143,10 +141,27 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-                Intent(this, EditCourseActivity::class.java).apply {
+//                Intent(this, EditCourseActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    startActivity(this)
+//                }
+
+//                Intent(this, ManageCategoriesActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    startActivity(this)
+//                }
+
+//                Intent(this, ManageCourseActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    startActivity(this)
+//                }
+
+                Intent(this, EditSectionActivity::class.java).apply {
                     putExtra(COURSE_ID, 101L)
+                    putExtra(SECTION_ID, 1012L)
                     startActivity(this)
                 }
+
             }
             debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //            debugDataSource.copyQuestionBank(dataSource)
@@ -415,12 +430,14 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                             resetSelection()
                         }
                         11L -> {
-                            dataSource.logout()
-                            config.setLoggedInUser(null)
-                            config.isOtpVerified = false
-                            startActivity(Intent(applicationContext, SplashActivity::class.java))
-                            resetSelection()
-                            finish()
+                            ConfirmDialog(this@MainActivity, "Are you sure you want to Logout?") {
+                                dataSource.logout()
+                                config.setLoggedInUser(null)
+                                config.isOtpVerified = false
+                                startActivity(Intent(applicationContext, SplashActivity::class.java))
+                                resetSelection()
+                                finish()
+                            }
                         }
                         12L -> {
                             startActivity(Intent(applicationContext, AddStudyMaterialActivity::class.java))

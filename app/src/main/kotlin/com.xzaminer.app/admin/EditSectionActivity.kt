@@ -15,6 +15,7 @@ import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.Course
+import com.xzaminer.app.course.CourseSection
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.extensions.loadIconImageView
 import com.xzaminer.app.extensions.loadImageImageView
@@ -23,61 +24,41 @@ import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_edit_course.*
 import java.io.File
 
-class EditCourseActivity : SimpleActivity() {
+class EditSectionActivity : SimpleActivity() {
 
     private var courseId: Long? = null
     var monetization = ""
-    private lateinit var course: Course
+    private lateinit var section: CourseSection
+    private var sectionId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_course)
-        supportActionBar?.title = "Edit Course"
+        supportActionBar?.title = "Edit Section"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         intent.apply {
             courseId = getLongExtra(COURSE_ID, -1)
-            if(courseId == (-1).toLong()) {
-                toast("Error editing this course.")
+            sectionId = getLongExtra(SECTION_ID, -1)
+            if(courseId == (-1).toLong() || sectionId == (-1).toLong()) {
+                toast("Error opening Section")
                 finish()
                 return
             }
         }
 
-        dataSource.getCourseById(courseId) { loadedCourse ->
-            if(loadedCourse != null) {
-                course = loadedCourse
-                loadCourse(loadedCourse)
+        dataSource.getCourseById(courseId) { course ->
+            if(course != null && course.sections[sectionId.toString()] != null) {
+                loadSection(course.sections[sectionId.toString()]!!)
             } else {
-                toast("Error opening course.")
+                toast("Error opening Course and Section")
                 finish()
                 return@getCourseById
             }
         }
 
-        edit_edit_image.setOnClickListener {
-            FilePickerDialog(this, Environment.getExternalStorageDirectory().toString(), true, false, false) {
-                toast("Uploading image. Please wait till image is uploaded.")
-                val imageFile = File(it)
-                val file = Uri.fromFile(imageFile)
-                val name = course.id.toString() + "_" + imageFile.name
-                val riversRef = dataSource.getStorage().getReference("courses/" + course.id + "/").child(name)
-                val uploadTask = riversRef.putFile(file)
-
-                uploadTask.addOnFailureListener {
-                    toast("Failed to Upload Image")
-                }.addOnSuccessListener {
-                    toast("Image Uploaded successfully. Save to update course")
-                    course.image = "courses/" + courseId + "/" + name
-                    loadImageImageView(course.image!!, edit_course_image, false, null, false, R.drawable.im_placeholder_video)
-                }
-            }
-        }
-
-        edit_delete_image.setOnClickListener {
-            course.image = null
-            edit_course_image.setImageDrawable(null)
-        }
+        edit_image_root.beGone()
+        edit_short_name.beGone()
 
         val options = arrayOf("None", "Monetized")
         monetization_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
@@ -96,28 +77,19 @@ class EditCourseActivity : SimpleActivity() {
                 }
             }
         }
-
-        edit_edit_image.setColorFilter(getAdjustedPrimaryColor())
-        edit_delete_image.setColorFilter(getAdjustedPrimaryColor())
     }
 
-    private fun loadCourse(course: Course) {
-        edit_name.setText(course.name)
-        edit_desc.setText(course.desc)
-        edit_short_name.setText(course.shortName)
-        if(course.image != null && course.image != "") {
-            loadImageImageView(course.image!!, edit_course_image, false, null, false, R.drawable.im_placeholder_video)
-        } else {
-            val img : Int = R.drawable.im_placeholder
-            loadIconImageView(img, edit_course_image, false)
-        }
+    private fun loadSection(section: CourseSection) {
+        this.section = section
+        edit_name.setText(section.name)
+        edit_desc.setText(section.desc)
 
-        if(course.fetchVisiblePurchases().isEmpty()) {
+        if(section.fetchVisiblePurchases().isEmpty()) {
             monetization_root.beGone()
-        } else if(!course.fetchVisiblePurchases().isEmpty()) {
+        } else if(!section.fetchVisiblePurchases().isEmpty()) {
             monetization_spinner.setSelection(1)
             monetization_root.beVisible()
-            val purchase = course.fetchVisiblePurchases().first()
+            val purchase = section.fetchVisiblePurchases().first()
             purchase_id.setText(purchase.id)
             purchase_name.setText(purchase.name)
             purchase_desc.setText(purchase.desc)
@@ -161,13 +133,12 @@ class EditCourseActivity : SimpleActivity() {
         }
 
         ConfirmDialog(this, "Are you sure you want to update the Course?") {
-            course.name = edit_name.text.toString()
-            course.desc = edit_desc.text.toString()
-            course.shortName = edit_short_name.text.toString()
+            section.name = edit_name.text.toString()
+            section.desc = edit_desc.text.toString()
 
-            course.purchaseInfo.clear()
+            section.purchaseInfo.clear()
             if (monetization == "Monetized") {
-                course.purchaseInfo.addAll(
+                section.purchaseInfo.addAll(
                     arrayListOf(
                         Purchase(
                             purchase_id.text.toString() , purchase_name.text.toString(), purchase_desc.text.toString(),
@@ -175,8 +146,8 @@ class EditCourseActivity : SimpleActivity() {
                     ))
             }
 
-            dataSource.updateCourseProperties(course)
-            ConfirmationDialog(this, "Course has been updated successfully", R.string.yes, R.string.ok, 0) { }
+            dataSource.updateCourseSectionProperties(courseId, section)
+            ConfirmationDialog(this, "Section has been updated successfully", R.string.yes, R.string.ok, 0) { }
         }
     }
 }

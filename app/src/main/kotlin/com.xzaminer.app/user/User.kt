@@ -82,7 +82,10 @@ data class User(
         if(!course.fetchVisiblePurchases().isEmpty() && hasPurchase(course.fetchVisiblePurchases().first().id)) {
             return true
         }
-        if(!studyMaterial.fetchVisiblePurchases().isEmpty() && studyMaterial.fetchVisiblePurchases().any { it -> it.type == PURCHASE_TYPE_TRIAL }) {
+        if(!studyMaterial.fetchVisiblePurchases().isEmpty() && studyMaterial.fetchVisiblePurchases().any { it.type == PURCHASE_TYPE_TRIAL }) {
+            return true
+        }
+        if(studyMaterial.fetchVisiblePurchases().isEmpty() && section.fetchVisiblePurchases().isEmpty() && course.fetchVisiblePurchases().isEmpty()) {
             return true
         }
 

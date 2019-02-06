@@ -182,3 +182,9 @@ The 2nd video should play automatically once the first one completes either on n
 
 4.8
 Added Manage Course and delete course
+
+4.10
+Confirm before logout
+Edit Course Screen
+Edit sections
+fix bug where having no purchase anywhere led to empty purchase screen
