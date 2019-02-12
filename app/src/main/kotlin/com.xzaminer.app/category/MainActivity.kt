@@ -156,12 +156,25 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-                Intent(this, EditSectionActivity::class.java).apply {
+//                Intent(this, EditSectionActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    putExtra(SECTION_ID, 1012L)
+//                    startActivity(this)
+//                }
+
+//                Intent(this, EditQuizActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    putExtra(SECTION_ID, 1012L)
+//                    putExtra(QUIZ_ID, 101200L)
+//                    startActivity(this)
+//                }
+
+                Intent(this, EditQuizQuestionsActivity::class.java).apply {
                     putExtra(COURSE_ID, 101L)
                     putExtra(SECTION_ID, 1012L)
+                    putExtra(QUIZ_ID, 101200L)
                     startActivity(this)
                 }
-
             }
             debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //            debugDataSource.copyQuestionBank(dataSource)

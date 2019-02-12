@@ -58,7 +58,6 @@ class EditSectionActivity : SimpleActivity() {
         }
 
         edit_image_root.beGone()
-        edit_short_name.beGone()
 
         val options = arrayOf("None", "Monetized")
         monetization_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)

@@ -3,6 +3,8 @@ secure db rules in firebase console
 
 
 Next release
+order field in all entities
+
 The video doesn’t have preference to start from the last seen session, it starts from the beginning.
     I will check regarding efforts for this.
 Edit categories has extra padding for buttons at bottom and right

@@ -1,5 +1,6 @@
 package com.xzaminer.app.admin
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -14,43 +15,56 @@ import com.simplemobiletools.commons.extensions.*
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.Purchase
-import com.xzaminer.app.course.Course
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.extensions.loadIconImageView
 import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.ConfirmDialog
+import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_edit_course.*
 import java.io.File
 
-class EditCourseActivity : SimpleActivity() {
+class EditQuizActivity : SimpleActivity() {
 
     private var courseId: Long? = null
     var monetization = ""
-    private lateinit var course: Course
+    private lateinit var studyMaterial: StudyMaterial
+    private var sectionId: Long = -1
+    private var quizId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_course)
-        supportActionBar?.title = "Edit Course"
+        supportActionBar?.title = "Edit Quiz/Study Material"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         intent.apply {
+            quizId = getLongExtra(QUIZ_ID, -1)
             courseId = getLongExtra(COURSE_ID, -1)
-            if(courseId == (-1).toLong()) {
-                toast("Error editing this course.")
-                finish()
+            sectionId = getLongExtra(SECTION_ID, -1)
+            if(quizId == (-1).toLong()) {
+                showErrorAndExit()
                 return
             }
         }
 
-        dataSource.getCourseById(courseId) { loadedCourse ->
-            if(loadedCourse != null) {
-                course = loadedCourse
-                loadCourse(loadedCourse)
+        dataSource.getCourseById(courseId) { course ->
+            if(course != null) {
+                val section = course.fetchSection(sectionId)
+                if(section != null) {
+                    val studyMaterial = section.fetchStudyMaterialById(quizId)
+                    if(studyMaterial != null) {
+                        loadQuestionBank(studyMaterial)
+                    } else {
+                        showErrorAndExit()
+                        return@getCourseById
+                    }
+                }  else {
+                    showErrorAndExit()
+                    return@getCourseById
+                }
             } else {
-                toast("Error opening course.")
-                finish()
+                showErrorAndExit()
                 return@getCourseById
             }
         }
@@ -60,27 +74,26 @@ class EditCourseActivity : SimpleActivity() {
                 toast("Uploading image. Please wait till image is uploaded.")
                 val imageFile = File(it)
                 val file = Uri.fromFile(imageFile)
-                val name = course.id.toString() + "_" + imageFile.name
-                val riversRef = dataSource.getStorage().getReference("courses/" + course.id + "/").child(name)
+                val name = studyMaterial.id.toString() + "_" + imageFile.name
+                val riversRef = dataSource.getStorage().getReference("courses/" + courseId + "/").child(name)
                 val uploadTask = riversRef.putFile(file)
 
                 uploadTask.addOnFailureListener {
                     toast("Failed to Upload Image")
                 }.addOnSuccessListener {
                     toast("Image Uploaded successfully. Save to update course")
-                    course.image = "courses/" + courseId + "/" + name
-                    loadImageImageView(course.image!!, edit_course_image, false, null, false, R.drawable.im_placeholder_video)
+                    studyMaterial.image = "courses/" + courseId + "/" + name
+                    loadImageImageView(studyMaterial.image!!, edit_course_image, false, null, false, R.drawable.im_placeholder_video)
                 }
             }
         }
 
         edit_delete_image.setOnClickListener {
-            course.image = null
+            studyMaterial.image = null
             edit_course_image.setImageDrawable(null)
         }
 
-        edit_short_name_root.beVisible()
-        val options = arrayOf("None", "Monetized")
+        val options = arrayOf("None", "Trial", "Monetized")
         monetization_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
 
         //item selected listener for spinner
@@ -92,9 +105,25 @@ class EditCourseActivity : SimpleActivity() {
                 monetization = options[selected]
                 if(monetization == "None") {
                     monetization_root.beGone()
+                } else if(monetization == "Trial") {
+                    monetization_root.beGone()
                 } else {
                     monetization_root.beVisible()
                 }
+            }
+        }
+
+        edit_content.beVisible()
+        edit_content.setOnClickListener {
+            if(studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
+                Intent(this, EditQuizQuestionsActivity::class.java).apply {
+                    putExtra(QUIZ_ID, quizId)
+                    putExtra(SECTION_ID, sectionId)
+                    putExtra(COURSE_ID, courseId)
+                    startActivity(this)
+                }
+            } else {
+                toast("This functionality is being implemented...")
             }
         }
 
@@ -102,29 +131,34 @@ class EditCourseActivity : SimpleActivity() {
         edit_delete_image.setColorFilter(getAdjustedPrimaryColor())
     }
 
-    private fun loadCourse(course: Course) {
-        edit_name.setText(course.name)
-        edit_desc.setText(course.desc)
-        edit_short_name.setText(course.shortName)
-        if(course.image != null && course.image != "") {
-            loadImageImageView(course.image!!, edit_course_image, false, null, false, R.drawable.im_placeholder_video)
+    private fun loadQuestionBank(studyMaterial_: StudyMaterial) {
+        this.studyMaterial = studyMaterial_
+        edit_name.setText(studyMaterial_.name)
+        edit_desc.setText(studyMaterial_.desc)
+        monetization_root.beGone()
+        if(studyMaterial_.image != null && studyMaterial_.image != "") {
+            loadImageImageView(studyMaterial_.image!!, edit_course_image, false, null, false, R.drawable.im_placeholder_video)
         } else {
             val img : Int = R.drawable.im_placeholder
             loadIconImageView(img, edit_course_image, false)
         }
 
-        if(course.fetchVisiblePurchases().isEmpty()) {
-            monetization_root.beGone()
-        } else if(!course.fetchVisiblePurchases().isEmpty()) {
-            monetization_spinner.setSelection(1)
-            monetization_root.beVisible()
-            val purchase = course.fetchVisiblePurchases().first()
-            purchase_id.setText(purchase.id)
-            purchase_name.setText(purchase.name)
-            purchase_desc.setText(purchase.desc)
-            purchase_orignal.setText(purchase.originalPrice)
-            purchase_actual.setText(purchase.actualPrice)
-            purchase_extra_info.setText(purchase.extraPurchaseInfo)
+        if(studyMaterial_.fetchVisiblePurchases().isEmpty()) {
+            monetization_spinner.setSelection(0)
+        } else if(!studyMaterial_.fetchVisiblePurchases().isEmpty()) {
+            val purchase = studyMaterial_.fetchVisiblePurchases().first()
+            if(purchase.type == PURCHASE_TYPE_TRIAL) {
+                monetization_spinner.setSelection(1)
+            } else {
+                monetization_spinner.setSelection(2)
+                monetization_root.beVisible()
+                purchase_id.setText(purchase.id)
+                purchase_name.setText(purchase.name)
+                purchase_desc.setText(purchase.desc)
+                purchase_orignal.setText(purchase.originalPrice)
+                purchase_actual.setText(purchase.actualPrice)
+                purchase_extra_info.setText(purchase.extraPurchaseInfo)
+            }
         }
     }
 
@@ -161,23 +195,34 @@ class EditCourseActivity : SimpleActivity() {
             }
         }
 
-        ConfirmDialog(this, "Are you sure you want to update the Course?") {
-            course.name = edit_name.text.toString()
-            course.desc = edit_desc.text.toString()
-            course.shortName = edit_short_name.text.toString()
+        ConfirmDialog(this, "Are you sure you want to update the Entity?") {
+            studyMaterial.name = edit_name.text.toString()
+            studyMaterial.desc = edit_desc.text.toString()
 
-            course.purchaseInfo.clear()
+            studyMaterial.purchaseInfo.clear()
             if (monetization == "Monetized") {
-                course.purchaseInfo.addAll(
+                studyMaterial.purchaseInfo.addAll(
                     arrayListOf(
                         Purchase(
                             purchase_id.text.toString() , purchase_name.text.toString(), purchase_desc.text.toString(),
                             PURCHASE_TYPE_IAP, purchase_actual.text.toString(), purchase_orignal.text.toString(), true, null, null, purchase_extra_info.text.toString())
                     ))
+            } else if(monetization == "Trial") {
+                studyMaterial.purchaseInfo.addAll(
+                    arrayListOf(
+                        Purchase(
+                            PURCHASE_SECTION_STUDY_MATERIAL + studyMaterial.id, purchase_name.text.toString(), purchase_desc.text.toString(),
+                            PURCHASE_TYPE_TRIAL, "100", "", true, null, null, studyMaterial.desc)
+                    ))
             }
 
-            dataSource.updateCourseProperties(course)
-            ConfirmationDialog(this, "Course has been updated successfully", R.string.yes, R.string.ok, 0) { }
+            dataSource.updateQuizProperties(courseId, sectionId, studyMaterial)
+            ConfirmationDialog(this, "Entity has been updated successfully", R.string.yes, R.string.ok, 0) { }
         }
+    }
+
+    private fun showErrorAndExit() {
+        toast("Error Opening Question Bank")
+        finish()
     }
 }

@@ -56,7 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_desc_root">
+                app:layout_constraintTop_toBottomOf="@+id/edit_desc_root"
+                android:visibility="gone"
+                tools:visibility="visible">
 
             <EditText
                     android:id="@+id/edit_short_name"
@@ -122,6 +124,20 @@
 
         </android.support.v7.widget.LinearLayoutCompat>
 
+        <com.simplemobiletools.commons.views.MyButton
+                android:text="Edit Questions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_content"
+                android:layout_centerHorizontal="true"
+                android:theme="@style/ColouredButton"
+                app:layout_constraintTop_toBottomOf="@+id/edit_image_root"
+                app:layout_constraintStart_toStartOf="parent"
+                android:drawableLeft="@drawable/ic_edit"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_margin="6dp"/>
+
         <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/monetization_label"
                 android:layout_width="0dp"
@@ -132,7 +148,7 @@
                 android:textSize="18sp"
                 android:layout_marginLeft="2dp"
                 android:text="Monetization:"
-                app:layout_constraintTop_toBottomOf="@+id/edit_image_root"
+                app:layout_constraintTop_toBottomOf="@+id/edit_content"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="2dp"/>
 
@@ -140,7 +156,7 @@
                 android:id="@+id/monetization_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/edit_image_root"
+                app:layout_constraintTop_toBottomOf="@+id/edit_content"
                 app:layout_constraintStart_toEndOf="@+id/monetization_label"
                 >
         </Spinner>

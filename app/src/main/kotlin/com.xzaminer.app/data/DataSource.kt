@@ -336,4 +336,19 @@ class DataSource {
         dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("purchaseInfo").setValue(section.purchaseInfo)
         dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("image").setValue(section.image)
     }
+
+    fun updateQuizProperties(courseId: Long?, sectionId: Long, studyMaterial: StudyMaterial) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("name").setValue(studyMaterial.name)
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("desc").setValue(studyMaterial.desc)
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("image").setValue(studyMaterial.image)
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("purchaseInfo").setValue(studyMaterial.purchaseInfo)
+    }
+
+    fun updateQuizQuestions(courseId: Long, sectionId: Long, studyMaterial: StudyMaterial) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("questions").setValue(studyMaterial.questions)
+    }
 }

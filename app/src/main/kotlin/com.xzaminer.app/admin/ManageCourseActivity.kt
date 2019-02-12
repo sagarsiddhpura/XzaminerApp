@@ -160,7 +160,29 @@ class ManageCourseActivity : SimpleActivity() {
         values.sortWith(compareBy { it.order })
 
         CourseStudyMaterialsAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.HORIZONTAL) {
-            toast("This functionality is being implemented")
+            if(it is StudyMaterial && it.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
+                Intent(this, EditQuizActivity::class.java).apply {
+                    putExtra(QUIZ_ID, (it).id)
+                    putExtra(SECTION_ID, section.id)
+                    putExtra(COURSE_ID, courseId)
+                    startActivity(this)
+                }
+            } else if((it as StudyMaterial).type == STUDY_MATERIAL_TYPE_QUESTION_BANK ) {
+                Intent(this, EditQuizActivity::class.java).apply {
+                    putExtra(QUIZ_ID, (it).id)
+                    putExtra(SECTION_ID, section.id)
+                    putExtra(COURSE_ID, courseId)
+                    startActivity(this)
+                }
+            } else if((it).type == STUDY_MATERIAL_TYPE_VIDEO ) {
+//                Intent(this, CourseSectionVideosDomainActivity::class.java).apply {
+//                    putExtra(DOMAIN_ID, (it).id)
+//                    putExtra(SECTION_ID, section.id)
+//                    putExtra(COURSE_ID, courseId)
+//                    startActivity(this)
+//                }
+                toast("This functionality is being implemented")
+            }
         }.apply {
             recyclerView.adapter = this
         }

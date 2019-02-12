@@ -185,6 +185,11 @@ Added Manage Course and delete course
 
 4.10
 Confirm before logout
-Edit Course Screen
+edit course image
 Edit sections
 fix bug where having no purchase anywhere led to empty purchase screen
+
+4.12
+Edit Quiz (Name, Description, Monetization, Image, Questions, delete question)
+    Question (Text, options text, explanation text, correct answer)
+Edit Study Material  (Name, Description, Monetization, Image)

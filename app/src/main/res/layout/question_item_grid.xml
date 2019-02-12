@@ -281,6 +281,52 @@
 
         </LinearLayout>
 
+        <View
+                android:id="@+id/divider_edit"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/dimens_16dp"
+                android:layout_marginLeft="@dimen/dimens_16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="@dimen/dimens_16dp"
+                android:layout_marginRight="@dimen/dimens_16dp"
+                android:background="@color/divider_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/audio_parent"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/manage_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_edit"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+            <com.simplemobiletools.commons.views.MyButton
+                    android:text="Edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/manage_edit"
+                    android:layout_centerHorizontal="true"
+                    android:theme="@style/ColouredButton"
+                    android:drawableLeft="@drawable/ic_edit"/>
+
+            <com.simplemobiletools.commons.views.MyButton
+                    android:text="Delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/manage_delete"
+                    android:layout_centerHorizontal="true"
+                    android:theme="@style/ColouredButton"
+                    android:drawableLeft="@drawable/ic_delete"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>
