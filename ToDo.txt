@@ -1,6 +1,6 @@
 Issues:
 secure db rules in firebase console
-
+confirm on exit for edit screens?
 
 Next release
 order field in all entities

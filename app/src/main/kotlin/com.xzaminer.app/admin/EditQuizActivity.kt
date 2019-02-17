@@ -122,10 +122,17 @@ class EditQuizActivity : SimpleActivity() {
                     putExtra(COURSE_ID, courseId)
                     startActivity(this)
                 }
+            } else if(studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
+                Intent(this, EditStudyMaterialQuestionsActivity::class.java).apply {
+                    putExtra(QUIZ_ID, quizId)
+                    putExtra(SECTION_ID, sectionId)
+                    putExtra(COURSE_ID, courseId)
+                    startActivity(this)
+                }
             } else {
-                toast("This functionality is being implemented...")
+                    toast("This functionality is being implemented...")
+                }
             }
-        }
 
         edit_edit_image.setColorFilter(getAdjustedPrimaryColor())
         edit_delete_image.setColorFilter(getAdjustedPrimaryColor())

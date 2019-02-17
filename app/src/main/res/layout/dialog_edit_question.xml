@@ -6,14 +6,13 @@
         android:layout_height="match_parent">
 
     <LinearLayout
-
-    android:id="@+id/dialog_holder"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_margin"
-    android:paddingRight="@dimen/activity_margin"
-    android:paddingTop="@dimen/activity_margin">
+        android:id="@+id/dialog_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingRight="@dimen/activity_margin"
+        android:paddingTop="@dimen/activity_margin">
 
     <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -117,18 +116,18 @@
                 android:layout_height="wrap_content"
                 android:hint="Option 4 Text"/>
 
-        <android.support.design.widget.TextInputLayout
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp">
+
+        <EditText
+                android:id="@+id/question_option_4_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp">
-
-            <EditText
-                    android:id="@+id/question_option_4_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Option 4 Explanation"/>
-
-        </android.support.design.widget.TextInputLayout>
+                android:hint="Option 4 Explanation"/>
 
     </android.support.design.widget.TextInputLayout>
 

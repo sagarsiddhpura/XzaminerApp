@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp">
+
+        <EditText
+                android:id="@+id/option_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Option Text"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <ImageView
+            android:id="@+id/edit_delete_image"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:src="@drawable/ic_delete"
+            android:padding="4dp"/>
+
+    </LinearLayout>
+
