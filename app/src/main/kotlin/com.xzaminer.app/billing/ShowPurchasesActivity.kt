@@ -186,7 +186,7 @@ class ShowPurchasesActivity : SimpleActivity(), BillingProcessor.IBillingHandler
                     putExtra(STUDY_MATERIAL_ID, studyMaterial!!.id)
                     putExtra(SECTION_ID, section!!.id)
                     putExtra(COURSE_ID, courseId)
-                    putExtra(STUDY_MATERIAL_TYPE, section!!.type)
+                    putExtra(STUDY_MATERIAL_TYPE, STUDY_MATERIAL_TYPE_STUDY_MATERIAL)
                     startActivity(this)
                 }
 

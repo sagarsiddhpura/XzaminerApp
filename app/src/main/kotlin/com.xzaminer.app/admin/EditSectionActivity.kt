@@ -1,28 +1,26 @@
 package com.xzaminer.app.admin
 
-import android.net.Uri
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.Purchase
-import com.xzaminer.app.course.Course
 import com.xzaminer.app.course.CourseSection
 import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.extensions.loadIconImageView
-import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.ConfirmDialog
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_edit_course.*
-import java.io.File
+
 
 class EditSectionActivity : SimpleActivity() {
 
@@ -58,6 +56,17 @@ class EditSectionActivity : SimpleActivity() {
         }
 
         edit_image_root.beGone()
+        edit_content.beVisible()
+        val img = resources.getDrawable(com.xzaminer.app.R.drawable.ic_add)
+        img.setBounds(0, 0, 0, 0)
+        edit_content.setCompoundDrawables(img, null, null, null)
+        if(!section.studyMaterials.isEmpty()) {
+            val studyMaterial = section.studyMaterials.values.first()
+            when {
+                studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL -> edit_content.text = "Add Study Material"
+                studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK -> edit_content.text = "Add Question Bank"
+            }
+        }
 
         val options = arrayOf("None", "Monetized")
         monetization_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
@@ -95,6 +104,35 @@ class EditSectionActivity : SimpleActivity() {
             purchase_orignal.setText(purchase.originalPrice)
             purchase_actual.setText(purchase.actualPrice)
             purchase_extra_info.setText(purchase.extraPurchaseInfo)
+        }
+
+        edit_content.setOnClickListener {
+            if(section.studyMaterials.isEmpty()) {
+                // choose section type
+                val values = arrayOf("Quiz", "Study Material", "Videos")
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Select the type of Section:")
+                lateinit var dialog:AlertDialog
+
+                builder.setSingleChoiceItems(values,-1) { _, which->
+                    val value = values[which]
+                    if(value == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
+                        startActivity(Intent(applicationContext, AddStudyMaterialActivity::class.java))
+                    } else if(value == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
+                        startActivity(Intent(applicationContext, AddQuestionBankActivity::class.java))
+                    } else {
+                        toast("This functionality is being implemented")
+                    }
+                    dialog.dismiss()
+                }
+            } else {
+                val studyMaterial = section.studyMaterials.values.first()
+                when {
+                    studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL -> startActivity(Intent(applicationContext, AddStudyMaterialActivity::class.java))
+                    studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK -> startActivity(Intent(applicationContext, AddQuestionBankActivity::class.java))
+                    else -> toast("This functionality is being implemented")
+                }
+            }
         }
     }
 

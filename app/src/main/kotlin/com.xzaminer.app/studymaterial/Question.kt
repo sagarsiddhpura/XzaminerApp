@@ -5,7 +5,7 @@ data class Question (
     var text: String? = null,
     var desc: String? = null,
     var options: ArrayList<QuestionOption> = arrayListOf(),
-    var correctAnswer: Long? = null,
+    var correctAnswer: Long? = 0,
     var selectedAnswer: Long? = 0,
     var isMarkedForLater: Boolean = false,
     var audios: ArrayList<Video> = arrayListOf()

@@ -49,6 +49,12 @@ class AddQuestionBankActivity : SimpleActivity() {
         questionBank.type = STUDY_MATERIAL_TYPE_QUESTION_BANK
         purchase_id.text = PURCHASE_SECTION_STUDY_MATERIAL + questionBank.id
 
+//        intent.apply {
+//            courseId = getStringExtra(COURSE_ID)
+//            sectionId = getStringExtra(SECTION_ID)
+//            selectedPath = getStringExtra(SECTION_PATH)
+//        }
+
         if(BuildConfig.DEBUG) {
             name_value.setText("QB")
             selectedPath = "/1/courses/101/sections/1015/studyMaterials"

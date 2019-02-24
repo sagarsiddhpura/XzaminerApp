@@ -62,7 +62,7 @@ data class User(
     }
 
     fun removePurchase(purchaseId: String) {
-        purchases = purchases.filter {  it -> it == null || it.id != purchaseId } as ArrayList<Purchase>
+        purchases = purchases.filter { it == null || it.id != purchaseId } as ArrayList<Purchase>
     }
 
     fun startQuiz(questionBank: StudyMaterial) {

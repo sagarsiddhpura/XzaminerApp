@@ -11,7 +11,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.Purchase
@@ -113,27 +116,6 @@ class EditQuizActivity : SimpleActivity() {
             }
         }
 
-        edit_content.beVisible()
-        edit_content.setOnClickListener {
-            if(studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
-                Intent(this, EditQuizQuestionsActivity::class.java).apply {
-                    putExtra(QUIZ_ID, quizId)
-                    putExtra(SECTION_ID, sectionId)
-                    putExtra(COURSE_ID, courseId)
-                    startActivity(this)
-                }
-            } else if(studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
-                Intent(this, EditStudyMaterialQuestionsActivity::class.java).apply {
-                    putExtra(QUIZ_ID, quizId)
-                    putExtra(SECTION_ID, sectionId)
-                    putExtra(COURSE_ID, courseId)
-                    startActivity(this)
-                }
-            } else {
-                    toast("This functionality is being implemented...")
-                }
-            }
-
         edit_edit_image.setColorFilter(getAdjustedPrimaryColor())
         edit_delete_image.setColorFilter(getAdjustedPrimaryColor())
     }
@@ -166,6 +148,36 @@ class EditQuizActivity : SimpleActivity() {
                 purchase_actual.setText(purchase.actualPrice)
                 purchase_extra_info.setText(purchase.extraPurchaseInfo)
             }
+        }
+
+        edit_content.beVisible()
+        edit_content.setOnClickListener {
+            if(studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
+                Intent(this, EditQuizQuestionsActivity::class.java).apply {
+                    putExtra(QUIZ_ID, quizId)
+                    putExtra(SECTION_ID, sectionId)
+                    putExtra(COURSE_ID, courseId)
+                    startActivity(this)
+                }
+            } else if(studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
+                Intent(this, EditStudyMaterialQuestionsActivity::class.java).apply {
+                    putExtra(QUIZ_ID, quizId)
+                    putExtra(SECTION_ID, sectionId)
+                    putExtra(COURSE_ID, courseId)
+                    startActivity(this)
+                }
+            } else {
+                Intent(this, ManageCourseSectionVideosDomainActivity::class.java).apply {
+                    putExtra(QUIZ_ID, quizId)
+                    putExtra(SECTION_ID, sectionId)
+                    putExtra(COURSE_ID, courseId)
+                    startActivity(this)
+                }
+            }
+        }
+        if(studyMaterial.type == STUDY_MATERIAL_TYPE_VIDEO) {
+            edit_content.text = "Edit Videos"
+            supportActionBar?.title = "Edit Video Domain"
         }
     }
 
@@ -229,7 +241,7 @@ class EditQuizActivity : SimpleActivity() {
     }
 
     private fun showErrorAndExit() {
-        toast("Error Opening Question Bank")
+        toast("Error Opening Entity")
         finish()
     }
 }

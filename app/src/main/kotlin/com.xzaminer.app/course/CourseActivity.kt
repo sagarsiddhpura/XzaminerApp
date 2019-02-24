@@ -142,10 +142,10 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         CourseStudyMaterialsAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.HORIZONTAL) {
             if(it is StudyMaterial && it.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
                 Intent(this, StudyMaterialActivity::class.java).apply {
-                    putExtra(STUDY_MATERIAL_ID, (it as StudyMaterial).id)
+                    putExtra(STUDY_MATERIAL_ID, it.id)
                     putExtra(SECTION_ID, section.id)
                     putExtra(COURSE_ID, courseId)
-                    putExtra(STUDY_MATERIAL_TYPE, section.type)
+                    putExtra(STUDY_MATERIAL_TYPE, STUDY_MATERIAL_TYPE_STUDY_MATERIAL)
                     startActivity(this)
                 }
             } else if((it as StudyMaterial).type == STUDY_MATERIAL_TYPE_QUESTION_BANK ) {

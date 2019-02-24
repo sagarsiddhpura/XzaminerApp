@@ -194,6 +194,13 @@ Edit Quiz (Name, Description, Monetization, Image, Questions, delete question)
     Question (Text, options text, explanation text, correct answer)
 Edit Study Material  (Name, Description, Monetization, Image)
 
-4.13
-Edit Study Material (Name, Description, Monetization, Image, Questions, delete question)
+4.14
+Edit Study Material (Name, Description, Monetization, Image, Add/Edit/Delete Questions)
          Question (Text, add/edit/delete options)
+Add question for quiz
+Update questions adapter to use position instead of id
+
+4.16
+Added add questionbank and study material in edit section
+Edit Video Domain (Name, Desc, Image, Monetization)
+Delete Video from video domain

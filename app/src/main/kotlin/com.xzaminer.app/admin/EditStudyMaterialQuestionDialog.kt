@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.value
 import com.xzaminer.app.R
 import com.xzaminer.app.studymaterial.Question
 import com.xzaminer.app.studymaterial.QuestionOption
@@ -66,17 +69,6 @@ class EditStudyMaterialQuestionDialog(val activity: BaseSimpleActivity, val ques
                 question.options.add(QuestionOption(i.toLong(), optionView.option_text.text.toString(), ""))
             }
         }
-
-//        question.options[0].text = view.question_option_1.value
-//        question.options[1].text = view.question_option_2.value
-//        question.options[2].text = view.question_option_3.value
-//        question.options[3].text = view.question_option_4.value
-//
-//        question.options[0].explanation = view.question_option_1_desc.value
-//        question.options[1].explanation = view.question_option_2_desc.value
-//        question.options[2].explanation = view.question_option_3_desc.value
-//        question.options[3].explanation = view.question_option_4_desc.value
-
         callback(question)
         alertDialog.dismiss()
     }

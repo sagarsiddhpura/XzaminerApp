@@ -13,7 +13,6 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
-import com.xzaminer.app.BuildConfig
 import com.xzaminer.app.R
 import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.utils.AUDIO_PLAYBACK_STATE
@@ -55,7 +54,7 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val cat = questions.getOrNull(position) ?: return
         val view = holder.bindView(cat, true, false) { itemView, adapterPosition ->
-            setupView(itemView, cat)
+            setupView(itemView, cat, position)
         }
         bindViewHolder(holder, position, view)
     }
@@ -79,9 +78,13 @@ class QuestionsAdapter(activity: QuizActivity, var questions: ArrayList<Question
         notifyDataSetChanged()
     }
 
-    private fun setupView(view: View, question: Question) {
+    private fun setupView(
+        view: View,
+        question: Question,
+        position: Int
+    ) {
         view.apply {
-            question_text.text = "${question.id.toString()}. ${question.text}"
+            question_text.text = "${position+1}. ${question.text}"
             question_text.setTextColor(resources.getColor(R.color.md_blue_800_dark))
 
             question_icon.setColorFilter(resources.getColor(R.color.md_blue_800_dark))

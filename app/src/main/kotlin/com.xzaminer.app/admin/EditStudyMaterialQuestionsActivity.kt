@@ -12,8 +12,12 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.studymaterial.*
-import com.xzaminer.app.utils.*
+import com.xzaminer.app.studymaterial.ConfirmDialog
+import com.xzaminer.app.studymaterial.Question
+import com.xzaminer.app.studymaterial.StudyMaterial
+import com.xzaminer.app.utils.COURSE_ID
+import com.xzaminer.app.utils.QUIZ_ID
+import com.xzaminer.app.utils.SECTION_ID
 import kotlinx.android.synthetic.main.activity_quiz.*
 
 
@@ -117,19 +121,6 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_manage, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.manage_finish -> validateAndSaveEntity()
-            else -> return super.onOptionsItemSelected(item)
-        }
-        return true
-    }
-
     private fun refreshQuestions(questions: ArrayList<Question>) {
         getRecyclerAdapter()?.updateQuestions(questions)
     }
@@ -150,5 +141,31 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
     fun deleteQuestion(question: Question) {
         studyMaterial.questions = studyMaterial.questions.filter {  it.id != question.id } as ArrayList<Question>
         refreshQuestions(studyMaterial.questions)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(com.xzaminer.app.R.menu.menu_manage, menu)
+        menu.apply {
+            findItem(R.id.manage_add).isVisible = true
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.manage_finish -> validateAndSaveEntity()
+            R.id.manage_add -> addQuestion()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    private fun addQuestion() {
+        val highestId = studyMaterial.questions.maxBy { it.id }
+        val question = Question(highestId!!.id + 1, "")
+        EditStudyMaterialQuestionDialog(this, question) {
+            studyMaterial.questions.add(it)
+            refreshQuestions(studyMaterial.questions)
+        }
     }
 }

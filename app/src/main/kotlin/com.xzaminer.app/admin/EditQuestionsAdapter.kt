@@ -1,6 +1,5 @@
 package com.xzaminer.app.admin
 
-import android.graphics.Color
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.CardView
 import android.view.Menu
@@ -8,23 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.mikkipastel.videoplanet.player.PlaybackStatus
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.beInvisible
+import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
-import com.xzaminer.app.BuildConfig
 import com.xzaminer.app.R
 import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.studymaterial.Question
-import com.xzaminer.app.utils.AUDIO_PLAYBACK_STATE
-import com.xzaminer.app.utils.QUESTION_ID
-import com.xzaminer.app.utils.VIDEO_DOWNLOAD_PROGRESS
-import com.xzaminer.app.utils.checkFileExists
 import kotlinx.android.synthetic.main.question_item_grid.view.*
 import java.io.File
 import java.util.*
-
 
 
 class EditQuestionsAdapter(activity: EditQuizQuestionsActivity, var questions: ArrayList<Question>, recyclerView: MyRecyclerView,
@@ -56,7 +51,7 @@ class EditQuestionsAdapter(activity: EditQuizQuestionsActivity, var questions: A
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val cat = questions.getOrNull(position) ?: return
         val view = holder.bindView(cat, true, false) { itemView, adapterPosition ->
-            setupView(itemView, cat)
+            setupView(itemView, cat, position)
         }
         bindViewHolder(holder, position, view)
     }
@@ -80,11 +75,15 @@ class EditQuestionsAdapter(activity: EditQuizQuestionsActivity, var questions: A
         notifyDataSetChanged()
     }
 
-    private fun setupView(view: View, question: Question) {
+    private fun setupView(
+        view: View,
+        question: Question,
+        position: Int
+    ) {
         view.apply {
             divider_edit.beVisible()
             manage_root.beVisible()
-            question_text.text = "${question.id.toString()}. ${question.text}"
+            question_text.text = "${position+1}. ${question.text}"
             question_text.setTextColor(resources.getColor(R.color.md_blue_800_dark))
 
             question_icon.setColorFilter(resources.getColor(R.color.md_blue_800_dark))

@@ -12,8 +12,13 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.studymaterial.*
-import com.xzaminer.app.utils.*
+import com.xzaminer.app.studymaterial.ConfirmDialog
+import com.xzaminer.app.studymaterial.Question
+import com.xzaminer.app.studymaterial.QuestionOption
+import com.xzaminer.app.studymaterial.StudyMaterial
+import com.xzaminer.app.utils.COURSE_ID
+import com.xzaminer.app.utils.QUIZ_ID
+import com.xzaminer.app.utils.SECTION_ID
 import kotlinx.android.synthetic.main.activity_quiz.*
 
 
@@ -126,12 +131,16 @@ class EditQuizQuestionsActivity : SimpleActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_manage, menu)
+        menu.apply {
+            findItem(R.id.manage_add).isVisible = true
+        }
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.manage_finish -> validateAndSaveEntity()
+            R.id.manage_add -> addQuestion()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -142,6 +151,13 @@ class EditQuizQuestionsActivity : SimpleActivity() {
     }
 
     private fun validateAndSaveEntity() {
+        studyMaterial.questions.forEachIndexed { index, it ->
+            if(it.correctAnswer == null || it.correctAnswer == 0L) {
+                toast("Question " + (index+1) + " does not have correct answer. Please mark correct answer to save.")
+                return
+            }
+        }
+
         ConfirmDialog(this, "Are you sure you want to update the Entity?") {
             dataSource.updateQuizQuestions(courseId, sectionId, studyMaterial)
             ConfirmationDialog(this, "Entity has been updated successfully", R.string.yes, R.string.ok, 0) { }
@@ -157,5 +173,15 @@ class EditQuizQuestionsActivity : SimpleActivity() {
     fun deleteQuestion(question: Question) {
         studyMaterial.questions = studyMaterial.questions.filter {  it.id != question.id } as ArrayList<Question>
         refreshQuestions(studyMaterial.questions)
+    }
+
+    private fun addQuestion() {
+        val highestId = studyMaterial.questions.maxBy { it.id }
+        val question = Question(highestId!!.id + 1, "", "", arrayListOf(QuestionOption(1, ""), QuestionOption(2, ""), QuestionOption(3, ""),
+            QuestionOption(4, "")))
+        EditQuestionDialog(this, question) {
+            studyMaterial.questions.add(it)
+            refreshQuestions(studyMaterial.questions)
+        }
     }
 }

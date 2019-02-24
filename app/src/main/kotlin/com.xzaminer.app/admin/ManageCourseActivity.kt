@@ -6,15 +6,10 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.Toolbar
 import android.text.SpannableString
-import android.text.style.StrikethroughSpan
 import android.text.style.UnderlineSpan
 import android.util.TypedValue
 import android.view.*
 import android.widget.LinearLayout
-import com.anjlab.android.iab.v3.BillingProcessor
-import com.anjlab.android.iab.v3.TransactionDetails
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.toast
@@ -24,18 +19,10 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
-import com.xzaminer.app.billing.Purchase
-import com.xzaminer.app.billing.PurchaseLog
-import com.xzaminer.app.category.Category
 import com.xzaminer.app.course.*
-import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.extensions.debugDataSource
 import com.xzaminer.app.studymaterial.ConfirmDialog
-import com.xzaminer.app.studymaterial.QuizActivity
 import com.xzaminer.app.studymaterial.StudyMaterial
-import com.xzaminer.app.studymaterial.StudyMaterialActivity
-import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_course.*
 import ss.com.bannerslider.Slider
@@ -175,13 +162,12 @@ class ManageCourseActivity : SimpleActivity() {
                     startActivity(this)
                 }
             } else if((it).type == STUDY_MATERIAL_TYPE_VIDEO ) {
-//                Intent(this, CourseSectionVideosDomainActivity::class.java).apply {
-//                    putExtra(DOMAIN_ID, (it).id)
-//                    putExtra(SECTION_ID, section.id)
-//                    putExtra(COURSE_ID, courseId)
-//                    startActivity(this)
-//                }
-                toast("This functionality is being implemented")
+                Intent(this, EditQuizActivity::class.java).apply {
+                    putExtra(QUIZ_ID, (it).id)
+                    putExtra(SECTION_ID, section.id)
+                    putExtra(COURSE_ID, courseId)
+                    startActivity(this)
+                }
             }
         }.apply {
             recyclerView.adapter = this
