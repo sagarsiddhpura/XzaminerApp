@@ -95,6 +95,37 @@ class EditVideoActivity : SimpleActivity() {
         monetization_spinner.beGone()
         edit_edit_image.setColorFilter(getAdjustedPrimaryColor())
         edit_delete_image.setColorFilter(getAdjustedPrimaryColor())
+        file_edit_image.setColorFilter(getAdjustedPrimaryColor())
+        file_delete_image.setColorFilter(getAdjustedPrimaryColor())
+
+        file_edit_image.setOnClickListener {
+            FilePickerDialog(this, Environment.getExternalStorageDirectory().toString(), true, false, false) {
+                toast("Uploading video. Please wait till video is completely uploaded....")
+                val videoFile = File(it)
+                val file = Uri.fromFile(videoFile)
+                val name = courseId.toString() + "_" + videoFile.name
+                val riversRef = dataSource.getStorage().getReference("courses/" + courseId + "/").child(name)
+                val uploadTask = riversRef.putFile(file)
+
+                uploadTask.addOnFailureListener {
+                    toast("Failed to Upload Video")
+                }.addOnSuccessListener {
+                    toast("Video Uploaded successfully. Save to update course")
+                    video.fileName = name
+                    edit_file_name.setText(video.fileName)
+                }.addOnProgressListener {
+                    val progress = (100 * it.bytesTransferred) / it.totalByteCount
+                    toast("Uploading " + progress + "% ...")
+                }.addOnPausedListener {
+                    toast("Upload is paused....")
+                }
+            }
+        }
+
+        file_delete_image.setOnClickListener {
+            video.fileName = ""
+            edit_file_name.setText("")
+        }
     }
 
     private fun loadVideo(loadedvideo: Video) {
@@ -103,6 +134,7 @@ class EditVideoActivity : SimpleActivity() {
         edit_desc.setText(loadedvideo.desc)
         edit_short_name_root.hint = "Duration"
         edit_short_name.setText(loadedvideo.duration)
+        edit_file_name.setText(video.fileName)
 
         if(loadedvideo.image != null && loadedvideo.image != "") {
             loadImageImageView(loadedvideo.image!!, edit_course_image, false, null, false, R.drawable.im_placeholder_video)
@@ -128,6 +160,10 @@ class EditVideoActivity : SimpleActivity() {
     private fun validateAndSaveEntity() {
         if(edit_name.text == null || edit_name.text.toString() == "") {
             ConfirmationDialog(this, "Please enter Name", R.string.yes, R.string.ok, 0) { }
+            return
+        }
+        if(edit_file_name.text == null || edit_file_name.text.toString() == "") {
+            ConfirmationDialog(this, "Upload video file for this Video", R.string.yes, R.string.ok, 0) { }
             return
         }
 

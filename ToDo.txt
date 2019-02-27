@@ -2,6 +2,7 @@ Issues:
 secure db rules in firebase console
 confirm on exit for edit screens?
 populate course path when import QB/SM option is done from edit section screen
+have image edit text to input raw value
 
 Next release
 order field in all entities
