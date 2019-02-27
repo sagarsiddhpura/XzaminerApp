@@ -1,5 +1,6 @@
 package com.xzaminer.app.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
@@ -16,9 +17,7 @@ import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.Video
 import com.xzaminer.app.user.User
-import com.xzaminer.app.utils.COURSE_ID
-import com.xzaminer.app.utils.QUIZ_ID
-import com.xzaminer.app.utils.SECTION_ID
+import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_course_section.*
 
 
@@ -94,14 +93,13 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
         val currAdapter = recyclerView.adapter
         if (currAdapter == null) {
             ManageCourseSectionDomainVideosAdapter(this, values.clone() as ArrayList<Video>, recyclerView) {
-                toast("This functionality is being implemented....")
-//                Intent(this, VideoActivity::class.java).apply {
-//                    putExtra(COURSE_ID, courseId)
-//                    putExtra(SECTION_ID, sectionId)
-//                    putExtra(DOMAIN_ID, domainId)
-//                    putExtra(VIDEO_ID, (it as Video).id)
-//                    startActivity(this)
-//                }
+                Intent(this, EditVideoActivity::class.java).apply {
+                    putExtra(COURSE_ID, courseId)
+                    putExtra(SECTION_ID, sectionId)
+                    putExtra(DOMAIN_ID, domainId)
+                    putExtra(VIDEO_ID, (it as Video).id)
+                    startActivity(this)
+                }
             }.apply {
                 recyclerView.adapter = this
                 addVerticalDividers(true)
@@ -132,7 +130,13 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
     }
 
     fun editVideo(video: Video) {
-        toast("This functionality is being implemented....")
+        Intent(this, EditVideoActivity::class.java).apply {
+            putExtra(COURSE_ID, courseId)
+            putExtra(SECTION_ID, sectionId)
+            putExtra(DOMAIN_ID, domainId)
+            putExtra(VIDEO_ID, video.id)
+            startActivity(this)
+        }
     }
 
     fun deleteVideo(video: Video) {

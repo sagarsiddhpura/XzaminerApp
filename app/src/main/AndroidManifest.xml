@@ -48,6 +48,8 @@
         </activity>
         <activity android:name=".admin.ManageCourseSectionVideosDomainActivity">
         </activity>
+        <activity android:name=".admin.EditVideoActivity">
+        </activity>
         <activity android:name=".admin.EditStudyMaterialQuestionsActivity">
         </activity>
         <activity android:name=".admin.EditQuizQuestionsActivity">

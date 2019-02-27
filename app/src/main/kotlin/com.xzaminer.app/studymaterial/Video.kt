@@ -11,4 +11,4 @@ data class Video (
     var order: Int = 0,
     var duration: String = "",
     var details: HashMap<String, ArrayList<String>> = hashMapOf()
-    )
+)

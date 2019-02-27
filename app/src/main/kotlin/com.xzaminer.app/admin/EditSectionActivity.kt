@@ -55,19 +55,6 @@ class EditSectionActivity : SimpleActivity() {
             }
         }
 
-        edit_image_root.beGone()
-        edit_content.beVisible()
-        val img = resources.getDrawable(com.xzaminer.app.R.drawable.ic_add)
-        img.setBounds(0, 0, 0, 0)
-        edit_content.setCompoundDrawables(img, null, null, null)
-        if(!section.studyMaterials.isEmpty()) {
-            val studyMaterial = section.studyMaterials.values.first()
-            when {
-                studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL -> edit_content.text = "Add Study Material"
-                studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK -> edit_content.text = "Add Question Bank"
-            }
-        }
-
         val options = arrayOf("None", "Monetized")
         monetization_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
 
@@ -91,6 +78,20 @@ class EditSectionActivity : SimpleActivity() {
         this.section = section
         edit_name.setText(section.name)
         edit_desc.setText(section.desc)
+
+        edit_image_root.beGone()
+        edit_content.beVisible()
+        val img = resources.getDrawable(com.xzaminer.app.R.drawable.ic_add)
+        img.setBounds(0, 0, 0, 0)
+        edit_content.setCompoundDrawables(img, null, null, null)
+        if(!section.studyMaterials.isEmpty()) {
+            val studyMaterial = section.studyMaterials.values.first()
+            when {
+                studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL -> edit_content.text = "Add Study Material"
+                studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK -> edit_content.text = "Add Question Bank"
+                studyMaterial.type == STUDY_MATERIAL_TYPE_VIDEO -> edit_content.beGone()
+            }
+        }
 
         if(section.fetchVisiblePurchases().isEmpty()) {
             monetization_root.beGone()

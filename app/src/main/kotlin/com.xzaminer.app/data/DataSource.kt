@@ -351,4 +351,10 @@ class DataSource {
         val dept = catsDatabase.child("cats")
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("questions").setValue(studyMaterial.questions)
     }
+
+    fun updateVideoProperties(courseId: Long, sectionId: Long, studyMaterial: StudyMaterial) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("videos").setValue(studyMaterial.videos)
+    }
 }
