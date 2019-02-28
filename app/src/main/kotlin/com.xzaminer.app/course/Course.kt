@@ -51,4 +51,8 @@ data class Course (
 
         return null
     }
+
+    fun fetchAllSections(): ArrayList<CourseSection> {
+        return ArrayList(sections.values)
+    }
 }

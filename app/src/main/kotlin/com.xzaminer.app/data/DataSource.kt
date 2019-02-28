@@ -357,4 +357,16 @@ class DataSource {
         val dept = catsDatabase.child("cats")
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("videos").setValue(studyMaterial.videos)
     }
+
+    fun addCourseSection(courseId: Long?, section: CourseSection) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+courseId + "/sections/" + section.id).setValue(section)
+    }
+
+    fun addStudyMaterial(courseId: Long?, sectionId: Long, studyMaterial: StudyMaterial) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).setValue(studyMaterial)
+    }
 }

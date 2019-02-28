@@ -19,10 +19,7 @@ import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.ConfirmDialog
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.Video
-import com.xzaminer.app.utils.COURSE_ID
-import com.xzaminer.app.utils.DOMAIN_ID
-import com.xzaminer.app.utils.SECTION_ID
-import com.xzaminer.app.utils.VIDEO_ID
+import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_edit_course.*
 import java.io.File
 
@@ -40,12 +37,14 @@ class EditVideoActivity : SimpleActivity() {
         setContentView(R.layout.activity_edit_course)
         supportActionBar?.title = "Edit Video"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        var isNewVideo : Boolean = false
 
         intent.apply {
             courseId = getLongExtra(COURSE_ID, -1)
             sectionId = getLongExtra(SECTION_ID, -1)
             domainId = getLongExtra(DOMAIN_ID, -1)
             videoId = getLongExtra(VIDEO_ID, -1)
+            isNewVideo = getBooleanExtra(IS_NEW_QUIZ, false)
             if (domainId == (-1).toLong() || courseId == (-1).toLong() || sectionId == (-1).toLong() || videoId == (-1).toLong()) {
                 toast("Error opening Video")
                 finish()
@@ -54,10 +53,22 @@ class EditVideoActivity : SimpleActivity() {
         }
 
         dataSource.getCourseStudyMaterialById(courseId, sectionId, domainId) { studyMaterial_ ->
-            if(studyMaterial_ != null && !studyMaterial_.videos.isEmpty() && studyMaterial_.fetchVideo(videoId) != null) {
-                val loadedVideo = studyMaterial_.fetchVideo(videoId) as Video
+            if(studyMaterial_ != null) {
                 studyMaterial = studyMaterial_
-                loadVideo(loadedVideo)
+                if(isNewVideo) {
+                    val loadedVideo = Video(System.nanoTime(), "")
+                    studyMaterial.videos.add(loadedVideo)
+                    loadVideo(loadedVideo)
+                } else {
+                    if(!studyMaterial_.videos.isEmpty() && studyMaterial_.fetchVideo(videoId) != null) {
+                        val loadedVideo = studyMaterial_.fetchVideo(videoId) as Video
+                        loadVideo(loadedVideo)
+                    } else {
+                        toast("Error opening Video")
+                        finish()
+                        return@getCourseStudyMaterialById
+                    }
+                }
             } else {
                 toast("Error opening Video")
                 finish()
@@ -93,6 +104,7 @@ class EditVideoActivity : SimpleActivity() {
         monetization_root.beGone()
         monetization_label.beGone()
         monetization_spinner.beGone()
+        edit_file_root.beVisible()
         edit_edit_image.setColorFilter(getAdjustedPrimaryColor())
         edit_delete_image.setColorFilter(getAdjustedPrimaryColor())
         file_edit_image.setColorFilter(getAdjustedPrimaryColor())
@@ -112,6 +124,7 @@ class EditVideoActivity : SimpleActivity() {
                 }.addOnSuccessListener {
                     toast("Video Uploaded successfully. Save to update course")
                     video.fileName = name
+                    video.url = "courses/" + courseId + "/"
                     edit_file_name.setText(video.fileName)
                 }.addOnProgressListener {
                     val progress = (100 * it.bytesTransferred) / it.totalByteCount
@@ -174,6 +187,12 @@ class EditVideoActivity : SimpleActivity() {
 
             dataSource.updateVideoProperties(courseId, sectionId, studyMaterial)
             ConfirmationDialog(this, "Video has been updated successfully", R.string.yes, R.string.ok, 0) { }
+        }
+    }
+
+    override fun onBackPressed() {
+        ConfirmationDialog(this, "Are you sure you want to exit? All unsaved changes will be lost", R.string.yes, R.string.ok, 0) {
+            super.onBackPressed()
         }
     }
 }

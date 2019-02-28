@@ -28,6 +28,7 @@ class EditSectionActivity : SimpleActivity() {
     var monetization = ""
     private lateinit var section: CourseSection
     private var sectionId: Long = -1
+    private var isNew: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class EditSectionActivity : SimpleActivity() {
         intent.apply {
             courseId = getLongExtra(COURSE_ID, -1)
             sectionId = getLongExtra(SECTION_ID, -1)
+            isNew = getBooleanExtra(IS_NEW_QUIZ, false)
             if(courseId == (-1).toLong() || sectionId == (-1).toLong()) {
                 toast("Error opening Section")
                 finish()
@@ -46,8 +48,19 @@ class EditSectionActivity : SimpleActivity() {
         }
 
         dataSource.getCourseById(courseId) { course ->
-            if(course != null && course.sections[sectionId.toString()] != null) {
-                loadSection(course.sections[sectionId.toString()]!!)
+            if(course != null) {
+                if(isNew) {
+                    val section = CourseSection(System.nanoTime())
+                    loadSection(section)
+                } else {
+                    if(course.sections[sectionId.toString()] != null) {
+                        loadSection(course.sections[sectionId.toString()]!!)
+                    } else {
+                        toast("Error opening Course and Section")
+                        finish()
+                        return@getCourseById
+                    }
+                }
             } else {
                 toast("Error opening Course and Section")
                 finish()
@@ -89,8 +102,10 @@ class EditSectionActivity : SimpleActivity() {
             when {
                 studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL -> edit_content.text = "Add Study Material"
                 studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK -> edit_content.text = "Add Question Bank"
-                studyMaterial.type == STUDY_MATERIAL_TYPE_VIDEO -> edit_content.beGone()
+                studyMaterial.type == STUDY_MATERIAL_TYPE_VIDEO -> edit_content.text = "Add Video Domain"
             }
+        } else {
+            edit_content.text = "Add QB / SM / Video Domain"
         }
 
         if(section.fetchVisiblePurchases().isEmpty()) {
@@ -110,28 +125,45 @@ class EditSectionActivity : SimpleActivity() {
         edit_content.setOnClickListener {
             if(section.studyMaterials.isEmpty()) {
                 // choose section type
-                val values = arrayOf("Quiz", "Study Material", "Videos")
+                val values = arrayOf("Quiz", "Study Material", "Video Domain")
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Select the type of Section:")
                 lateinit var dialog:AlertDialog
 
                 builder.setSingleChoiceItems(values,-1) { _, which->
                     val value = values[which]
-                    if(value == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {
-                        startActivity(Intent(applicationContext, AddStudyMaterialActivity::class.java))
-                    } else if(value == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
-                        startActivity(Intent(applicationContext, AddQuestionBankActivity::class.java))
-                    } else {
-                        toast("This functionality is being implemented")
+                    when (value) {
+                        "Quiz" -> startActivity(Intent(applicationContext, AddStudyMaterialActivity::class.java))
+                        "Study Material" -> startActivity(Intent(applicationContext, AddQuestionBankActivity::class.java))
+                        "Video Domain" -> {
+                            Intent(this, EditQuizActivity::class.java).apply {
+                                putExtra(QUIZ_ID, 1L)
+                                putExtra(SECTION_ID, section.id)
+                                putExtra(COURSE_ID, courseId)
+                                putExtra(IS_NEW_QUIZ, true)
+                                startActivity(this)
+                            }
+                        }
                     }
                     dialog.dismiss()
                 }
+
+                dialog = builder.create()
+                dialog.show()
             } else {
                 val studyMaterial = section.studyMaterials.values.first()
                 when {
                     studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL -> startActivity(Intent(applicationContext, AddStudyMaterialActivity::class.java))
                     studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK -> startActivity(Intent(applicationContext, AddQuestionBankActivity::class.java))
-                    else -> toast("This functionality is being implemented")
+                    studyMaterial.type == STUDY_MATERIAL_TYPE_VIDEO -> {
+                        Intent(this, EditQuizActivity::class.java).apply {
+                            putExtra(QUIZ_ID, 1L)
+                            putExtra(SECTION_ID, section.id)
+                            putExtra(COURSE_ID, courseId)
+                            putExtra(IS_NEW_QUIZ, true)
+                            startActivity(this)
+                        }
+                    }
                 }
             }
         }
@@ -184,8 +216,18 @@ class EditSectionActivity : SimpleActivity() {
                     ))
             }
 
-            dataSource.updateCourseSectionProperties(courseId, section)
+            if(isNew) {
+                dataSource.addCourseSection(courseId, section)
+            } else {
+                dataSource.updateCourseSectionProperties(courseId, section)
+            }
             ConfirmationDialog(this, "Section has been updated successfully", R.string.yes, R.string.ok, 0) { }
+        }
+    }
+
+    override fun onBackPressed() {
+        ConfirmationDialog(this, "Are you sure you want to exit? All unsaved changes will be lost", R.string.yes, R.string.ok, 0) {
+            super.onBackPressed()
         }
     }
 }

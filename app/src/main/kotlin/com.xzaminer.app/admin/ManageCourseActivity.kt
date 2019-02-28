@@ -82,7 +82,7 @@ class ManageCourseActivity : SimpleActivity() {
     }
 
     private fun initSections() {
-        val sections = course!!.fetchVisibleSections()
+        val sections = course!!.fetchAllSections()
         sections_root.removeAllViews()
         for(i in 0 until sections.size) {
             val section = sections[i]
@@ -184,13 +184,19 @@ class ManageCourseActivity : SimpleActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.manage_add -> addCourse()
+            R.id.manage_add -> addSection()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
     }
 
-    private fun addCourse() {
-        toast("This functionality is being implemented....")
+    private fun addSection() {
+        // Section
+        Intent(this, EditSectionActivity::class.java).apply {
+            putExtra(COURSE_ID, courseId)
+            putExtra(SECTION_ID, 1L)
+            putExtra(IS_NEW_QUIZ, true)
+            startActivity(this)
+        }
     }
 }

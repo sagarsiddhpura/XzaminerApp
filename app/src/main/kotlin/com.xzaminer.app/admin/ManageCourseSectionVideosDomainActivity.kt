@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -14,11 +15,12 @@ import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
+import com.xzaminer.app.studymaterial.ConfirmDialog
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.Video
 import com.xzaminer.app.user.User
 import com.xzaminer.app.utils.*
-import kotlinx.android.synthetic.main.activity_course_section.*
+import kotlinx.android.synthetic.main.activity_course_section_video_domain.*
 
 
 class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
@@ -42,6 +44,7 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar?.setNavigationOnClickListener { onBackPressed() }
+        supportActionBar?.title = "Edit Video Domain"
 
         intent.apply {
             courseId = getLongExtra(COURSE_ID, -1)
@@ -53,7 +56,10 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
             }
         }
         user = config.getLoggedInUser() as User
+        loadDomain()
+    }
 
+    private fun loadDomain() {
         dataSource.getCourseById(courseId) { course ->
             if(course != null) {
                 val section = course.fetchSection(sectionId)
@@ -113,20 +119,31 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_add, menu)
+        menuInflater.inflate(R.menu.menu_manage, menu)
+        menu.apply {
+            findItem(R.id.manage_add).isVisible = true
+        }
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.manage_add -> addVideo()
+            R.id.manage_finish -> validateAndSaveEntity()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
     }
 
     private fun addVideo() {
-        toast("This functionality is being implemented....")
+        Intent(this, EditVideoActivity::class.java).apply {
+            putExtra(COURSE_ID, courseId)
+            putExtra(SECTION_ID, sectionId)
+            putExtra(DOMAIN_ID, domainId)
+            putExtra(VIDEO_ID, 1L)
+            putExtra(IS_NEW_QUIZ, true)
+            startActivity(this)
+        }
     }
 
     fun editVideo(video: Video) {
@@ -140,7 +157,28 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
     }
 
     fun deleteVideo(video: Video) {
-        values = values.filter {  it.id != video.id } as ArrayList<Video>
-        (section_rv.adapter as ManageCourseSectionDomainVideosAdapter).updateVideos(values)
+        ConfirmDialog(this, "Are you sure you want to Delete this Video?") {
+            values = values.filter {  it.id != video.id } as ArrayList<Video>
+            (section_rv.adapter as ManageCourseSectionDomainVideosAdapter).updateVideos(values)
+        }
+    }
+
+    private fun validateAndSaveEntity() {
+        ConfirmDialog(this, "Are you sure you want to update the Video Domain?") {
+            studyMaterial!!.videos = values
+            dataSource.updateVideoProperties(courseId, sectionId, studyMaterial!!)
+            ConfirmationDialog(this, "Video Domain has been updated successfully", R.string.yes, R.string.ok, 0) { }
+        }
+    }
+
+    override fun onBackPressed() {
+        ConfirmationDialog(this, "Are you sure you want to exit? All unsaved changes will be lost", R.string.yes, R.string.ok, 0) {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadDomain()
     }
 }

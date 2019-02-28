@@ -32,7 +32,7 @@ import com.xzaminer.app.*
 import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.admin.AddStudyMaterialActivity
 import com.xzaminer.app.admin.ManageCategoriesActivity
-import com.xzaminer.app.admin.ManageCourseSectionVideosDomainActivity
+import com.xzaminer.app.admin.ManageCourseActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.extensions.*
@@ -154,10 +154,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-//                Intent(this, ManageCourseActivity::class.java).apply {
-//                    putExtra(COURSE_ID, 101L)
-//                    startActivity(this)
-//                }
+                Intent(this, ManageCourseActivity::class.java).apply {
+                    putExtra(COURSE_ID, 101L)
+                    startActivity(this)
+                }
 
 //                Intent(this, EditSectionActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)
@@ -193,12 +193,12 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-                Intent(this, ManageCourseSectionVideosDomainActivity::class.java).apply {
-                    putExtra(COURSE_ID, 101L)
-                    putExtra(SECTION_ID, 1016L)
-                    putExtra(QUIZ_ID, 101600L)
-                    startActivity(this)
-                }
+//                Intent(this, ManageCourseSectionVideosDomainActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    putExtra(SECTION_ID, 1016L)
+//                    putExtra(QUIZ_ID, 101600L)
+//                    startActivity(this)
+//                }
             }
             debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //            debugDataSource.copyQuestionBank(dataSource)

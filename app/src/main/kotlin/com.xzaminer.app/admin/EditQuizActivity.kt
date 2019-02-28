@@ -34,6 +34,7 @@ class EditQuizActivity : SimpleActivity() {
     private lateinit var studyMaterial: StudyMaterial
     private var sectionId: Long = -1
     private var quizId: Long = -1
+    var isNew : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,7 @@ class EditQuizActivity : SimpleActivity() {
             quizId = getLongExtra(QUIZ_ID, -1)
             courseId = getLongExtra(COURSE_ID, -1)
             sectionId = getLongExtra(SECTION_ID, -1)
+            isNew = getBooleanExtra(IS_NEW_QUIZ, false)
             if(quizId == (-1).toLong()) {
                 showErrorAndExit()
                 return
@@ -55,12 +57,19 @@ class EditQuizActivity : SimpleActivity() {
             if(course != null) {
                 val section = course.fetchSection(sectionId)
                 if(section != null) {
-                    val studyMaterial = section.fetchStudyMaterialById(quizId)
-                    if(studyMaterial != null) {
+                    if(isNew) {
+                        val studyMaterial = StudyMaterial(System.nanoTime())
+                        studyMaterial.type = STUDY_MATERIAL_TYPE_VIDEO
+                        quizId = studyMaterial.id
                         loadQuestionBank(studyMaterial)
                     } else {
-                        showErrorAndExit()
-                        return@getCourseById
+                        val studyMaterial = section.fetchStudyMaterialById(quizId)
+                        if(studyMaterial != null) {
+                            loadQuestionBank(studyMaterial)
+                        } else {
+                            showErrorAndExit()
+                            return@getCourseById
+                        }
                     }
                 }  else {
                     showErrorAndExit()
@@ -235,7 +244,11 @@ class EditQuizActivity : SimpleActivity() {
                     ))
             }
 
-            dataSource.updateQuizProperties(courseId, sectionId, studyMaterial)
+            if(isNew) {
+                dataSource.addStudyMaterial(courseId, sectionId, studyMaterial)
+            } else {
+                dataSource.updateQuizProperties(courseId, sectionId, studyMaterial)
+            }
             ConfirmationDialog(this, "Entity has been updated successfully", R.string.yes, R.string.ok, 0) { }
         }
     }
@@ -243,5 +256,11 @@ class EditQuizActivity : SimpleActivity() {
     private fun showErrorAndExit() {
         toast("Error Opening Entity")
         finish()
+    }
+
+    override fun onBackPressed() {
+        ConfirmationDialog(this, "Are you sure you want to exit? All unsaved changes will be lost", R.string.yes, R.string.ok, 0) {
+            super.onBackPressed()
+        }
     }
 }
