@@ -188,6 +188,17 @@ class EditQuizActivity : SimpleActivity() {
             edit_content.text = "Edit Videos"
             supportActionBar?.title = "Edit Video Domain"
         }
+
+        val options = arrayOf("Yes", "No")
+        visibility_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
+
+        if(studyMaterial.isVisible) {
+            visibility_spinner.setSelection(0)
+        } else {
+            visibility_spinner.setSelection(1)
+        }
+
+        order_value.setText(studyMaterial.order.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -222,6 +233,12 @@ class EditQuizActivity : SimpleActivity() {
                 return
             }
         }
+        try {
+            Integer.parseInt(order_value.text.toString())
+        } catch (e : Exception) {
+            ConfirmationDialog(this, "Please fill correct numeric value for Order", R.string.yes, R.string.ok, 0) { }
+            return
+        }
 
         ConfirmDialog(this, "Are you sure you want to update the Entity?") {
             studyMaterial.name = edit_name.text.toString()
@@ -242,6 +259,22 @@ class EditQuizActivity : SimpleActivity() {
                             PURCHASE_SECTION_STUDY_MATERIAL + studyMaterial.id, purchase_name.text.toString(), purchase_desc.text.toString(),
                             PURCHASE_TYPE_TRIAL, "100", "", true, null, null, studyMaterial.desc)
                     ))
+            }
+            try {
+                studyMaterial.order = Integer.parseInt(order_value.text.toString())
+            } catch (e : Exception) { }
+
+            when {
+                visibility_spinner.selectedItemPosition == 0 -> studyMaterial.isVisible = true
+                visibility_spinner.selectedItemPosition == 1 -> studyMaterial.isVisible = false
+            }
+            try {
+                studyMaterial.order = Integer.parseInt(order_value.text.toString())
+            } catch (e : Exception) { }
+
+            when {
+                visibility_spinner.selectedItemPosition == 0 -> studyMaterial.isVisible = true
+                visibility_spinner.selectedItemPosition == 1 -> studyMaterial.isVisible = false
             }
 
             if(isNew) {

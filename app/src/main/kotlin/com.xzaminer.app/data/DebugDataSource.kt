@@ -139,7 +139,7 @@ class DebugDataSource {
 
     private fun getVideosSection(id: Int): HashMap<String, StudyMaterial> {
         if (id == 1016) {
-            var counter = 2L
+            var counter = 2
             val videos = hashMapOf<String, StudyMaterial>()
             for (i in 101601..101605) {
                 val c = StudyMaterial(
@@ -162,7 +162,7 @@ class DebugDataSource {
             return videos
         }
         if (id == 1017) {
-            var counter = 1L
+            var counter = 1
             val videos = hashMapOf<String, StudyMaterial>()
             val c = StudyMaterial(
                 101700,
@@ -277,7 +277,7 @@ class DebugDataSource {
 
     private fun getFlashCards(id: Int): LinkedHashMap<String, StudyMaterial> {
         if (id == 1014) {
-            var counter = 1L
+            var counter = 1
             val c = StudyMaterial(
                 101400,
                 "Trial",
@@ -370,7 +370,7 @@ class DebugDataSource {
 
     private fun getQuestionBanks(id: Int): LinkedHashMap<String, StudyMaterial> {
         if (id == 1012) {
-            var counter = 4L
+            var counter = 4
             val questionBanks = linkedMapOf<String, StudyMaterial>()
             for (i in 101204..101212) {
 //                Log.d("Xz", "creating "+i+"...")
@@ -405,7 +405,7 @@ class DebugDataSource {
             return questionBanks
         }
         if (id == 1015) {
-            var counter = 2L
+            var counter = 2
             val questionBanks = linkedMapOf<String, StudyMaterial>()
             for (i in 101501..101510) {
 //                Log.d("Xz", "creating "+i+"...")

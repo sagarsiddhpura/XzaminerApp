@@ -200,7 +200,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
             }
-            debugDataSource.initMockDataRealtimeDatabase(dataSource)
+//            debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //            debugDataSource.copyQuestionBank(dataSource)
 //            debugDataSource.uploadImages(this, dataSource)
         }
@@ -306,6 +306,8 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         mIsGettingCategories = false
         mShouldStopFetching = false
 
+        val cats = ArrayList(newDirs.filter { it != null && it.isVisible })
+        if(!cats.isEmpty()) {cats.sortWith (compareBy { it.order })}
 //        val cats = getSortedCategories(newDirs)
 //        val cats = arrayListOf<Category>()
 //        val subCats = newDirs.filter { !it.isCourse }
@@ -321,14 +323,14 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //        }
 
         runOnUiThread {
-            checkPlaceholderVisibility(newDirs)
-            setupAdapter(newDirs)
+            checkPlaceholderVisibility(cats)
+            setupAdapter(cats)
         }
 
         mLoadedInitialCategories = true
 
         runOnUiThread {
-            checkPlaceholderVisibility(newDirs)
+            checkPlaceholderVisibility(cats)
         }
     }
 

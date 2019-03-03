@@ -9,9 +9,12 @@ data class Category (
     var image: String? = null,
     var subCategories: HashMap<String, Category>? = null,
     var courses: HashMap<String, Course>? = null,
-    var isCourse: Boolean = false)
+    var isCourse: Boolean = false,
+    var order: Int = 0,
+    var isVisible: Boolean = true
+    )
     {
         override fun toString(): String {
             return "$name:::$desc"
-        }
+    }
 }

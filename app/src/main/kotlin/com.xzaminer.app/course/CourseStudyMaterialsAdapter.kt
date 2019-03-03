@@ -96,7 +96,7 @@ class CourseStudyMaterialsAdapter(
                 if(studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL || studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
                     vid_desc.text = studyMaterial.questions.size.toString() + " items"
                 } else if(studyMaterial.type == STUDY_MATERIAL_TYPE_VIDEO) {
-                    vid_desc.text = studyMaterial.videos.size.toString() + " items"
+                    vid_desc.text = studyMaterial.fetchVisibleVideos().size.toString() + " items"
                 }
                 vid_time.beGone()
                 vid_download_status.beGone()

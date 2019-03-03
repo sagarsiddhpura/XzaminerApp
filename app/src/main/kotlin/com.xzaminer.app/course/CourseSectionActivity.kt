@@ -75,8 +75,7 @@ class CourseSectionActivity : SimpleActivity() {
     }
 
     private fun setupAdapter(recyclerView: MyRecyclerView, section: CourseSection) {
-        val values = ArrayList(section.studyMaterials.values)
-        values.sortWith(compareBy { it.id })
+        val values = section.fetchVisibleStudyMaterials()
 
         CourseStudyMaterialsAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.VERTICAL) {
             if(it is StudyMaterial && it.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {

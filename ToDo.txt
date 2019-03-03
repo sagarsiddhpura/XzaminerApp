@@ -1,9 +1,11 @@
 Issues:
 secure db rules in firebase console
-confirm on exit for edit screens?
 populate course path when import QB/SM option is done from edit section screen
 have image edit text to input raw value
 add auth check in all admin activities
+show hide for entities
+refresh managecourse activity on resume
+error loading playlist with new filter mechanism?
 
 Next release
 order field in all entities

@@ -167,6 +167,17 @@ class EditSectionActivity : SimpleActivity() {
                 }
             }
         }
+
+        val options = arrayOf("Yes", "No")
+        visibility_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
+
+        if(section.isVisible) {
+            visibility_spinner.setSelection(0)
+        } else {
+            visibility_spinner.setSelection(1)
+        }
+
+        order_value.setText(section.order.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -202,6 +213,13 @@ class EditSectionActivity : SimpleActivity() {
             }
         }
 
+        try {
+            Integer.parseInt(order_value.text.toString())
+        } catch (e : Exception) {
+            ConfirmationDialog(this, "Please fill correct numeric value for Order", R.string.yes, R.string.ok, 0) { }
+            return
+        }
+
         ConfirmDialog(this, "Are you sure you want to update the Course?") {
             section.name = edit_name.text.toString()
             section.desc = edit_desc.text.toString()
@@ -216,18 +234,29 @@ class EditSectionActivity : SimpleActivity() {
                     ))
             }
 
+            try {
+                section.order = Integer.parseInt(order_value.text.toString())
+            } catch (e : Exception) { }
+
+            when {
+                visibility_spinner.selectedItemPosition == 0 -> section.isVisible = true
+                visibility_spinner.selectedItemPosition == 1 -> section.isVisible = false
+            }
+            try {
+                section.order = Integer.parseInt(order_value.text.toString())
+            } catch (e : Exception) { }
+
+            when {
+                visibility_spinner.selectedItemPosition == 0 -> section.isVisible = true
+                visibility_spinner.selectedItemPosition == 1 -> section.isVisible = false
+            }
+
             if(isNew) {
                 dataSource.addCourseSection(courseId, section)
             } else {
                 dataSource.updateCourseSectionProperties(courseId, section)
             }
             ConfirmationDialog(this, "Section has been updated successfully", R.string.yes, R.string.ok, 0) { }
-        }
-    }
-
-    override fun onBackPressed() {
-        ConfirmationDialog(this, "Are you sure you want to exit? All unsaved changes will be lost", R.string.yes, R.string.ok, 0) {
-            super.onBackPressed()
         }
     }
 }

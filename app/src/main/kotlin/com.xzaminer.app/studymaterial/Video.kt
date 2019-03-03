@@ -10,5 +10,6 @@ data class Video (
     var localFile: String? = null,
     var order: Int = 0,
     var duration: String = "",
-    var details: HashMap<String, ArrayList<String>> = hashMapOf()
+    var details: HashMap<String, ArrayList<String>> = hashMapOf(),
+    var isVisible: Boolean = true
 )

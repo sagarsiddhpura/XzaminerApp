@@ -190,6 +190,57 @@
                 android:layout_margin="6dp"/>
 
         <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/visibility_label"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="2dp"
+                android:text="Visible:"
+                app:layout_constraintTop_toBottomOf="@+id/edit_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="2dp"/>
+
+        <Spinner
+                android:id="@+id/visibility_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/edit_content"
+                app:layout_constraintStart_toEndOf="@+id/visibility_label"
+                >
+        </Spinner>
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/order_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/visibility_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="8dp"
+                android:weightSum="1">
+
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/order_hint_root"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_desc_root">
+
+                <EditText
+                        android:id="@+id/order_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Order"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/monetization_label"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -199,7 +250,7 @@
                 android:textSize="18sp"
                 android:layout_marginLeft="2dp"
                 android:text="Monetization:"
-                app:layout_constraintTop_toBottomOf="@+id/edit_content"
+                app:layout_constraintTop_toBottomOf="@+id/order_root"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="2dp"/>
 
@@ -207,7 +258,7 @@
                 android:id="@+id/monetization_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/edit_content"
+                app:layout_constraintTop_toBottomOf="@+id/order_root"
                 app:layout_constraintStart_toEndOf="@+id/monetization_label"
                 >
         </Spinner>

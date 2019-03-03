@@ -208,6 +208,8 @@ Delete Video from video domain
 4.18
 Edit Video (Name / Desc / Image / Duration / Video File)
 Confirm before exiting edit screens
-Add Video in Video Domain
-Add Section
-Add Video Domain, Question Bank and Study Material in section
+Functionality to Add Video in Video Domain
+Functionality Add Section
+Functionality Add Video Domain, Question Bank and Study Material in section
+
+4.20

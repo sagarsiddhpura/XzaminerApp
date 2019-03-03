@@ -136,8 +136,7 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
     }
 
     private fun setupAdapter(recyclerView: MyRecyclerView, section: CourseSection) {
-        val values = ArrayList(section.studyMaterials.values)
-        values.sortWith(compareBy { it.order })
+        val values = section.fetchVisibleStudyMaterials()
 
         CourseStudyMaterialsAdapter(this, values.clone() as ArrayList<StudyMaterial>, recyclerView, GridLayoutManager.HORIZONTAL) {
             if(it is StudyMaterial && it.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL) {

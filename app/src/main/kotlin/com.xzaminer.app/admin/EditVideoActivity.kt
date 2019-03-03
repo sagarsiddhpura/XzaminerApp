@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.beGone
@@ -155,6 +156,17 @@ class EditVideoActivity : SimpleActivity() {
             val img : Int = R.drawable.im_placeholder
             loadIconImageView(img, edit_course_image, false)
         }
+
+        val options = arrayOf("Yes", "No")
+        visibility_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
+
+        if(loadedvideo.isVisible) {
+            visibility_spinner.setSelection(0)
+        } else {
+            visibility_spinner.setSelection(1)
+        }
+
+        order_value.setText(loadedvideo.order.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -179,11 +191,34 @@ class EditVideoActivity : SimpleActivity() {
             ConfirmationDialog(this, "Upload video file for this Video", R.string.yes, R.string.ok, 0) { }
             return
         }
+        try {
+            Integer.parseInt(order_value.text.toString())
+        } catch (e : Exception) {
+            ConfirmationDialog(this, "Please fill correct numeric value for Order", R.string.yes, R.string.ok, 0) { }
+            return
+        }
 
         ConfirmDialog(this, "Are you sure you want to update the Video?") {
             video.name = edit_name.text.toString()
             video.desc = edit_desc.text.toString()
             video.duration = edit_short_name.text.toString()
+
+            try {
+                video.order = Integer.parseInt(order_value.text.toString())
+            } catch (e : Exception) { }
+
+            when {
+                visibility_spinner.selectedItemPosition == 0 -> video.isVisible = true
+                visibility_spinner.selectedItemPosition == 1 -> video.isVisible = false
+            }
+            try {
+                video.order = Integer.parseInt(order_value.text.toString())
+            } catch (e : Exception) { }
+
+            when {
+                visibility_spinner.selectedItemPosition == 0 -> video.isVisible = true
+                visibility_spinner.selectedItemPosition == 1 -> video.isVisible = false
+            }
 
             dataSource.updateVideoProperties(courseId, sectionId, studyMaterial)
             ConfirmationDialog(this, "Video has been updated successfully", R.string.yes, R.string.ok, 0) { }

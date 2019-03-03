@@ -10,7 +10,9 @@ data class Course (
     var sections: HashMap<String, CourseSection> = hashMapOf(),
     val purchaseInfo: ArrayList<Purchase> = arrayListOf(),
     val descImages: ArrayList<String> = arrayListOf(),
-    var shortName: String? = null
+    var shortName: String? = null,
+    var order: Int = 0,
+    var isVisible: Boolean = true
     ) {
         override fun toString(): String {
             return "$name:::$desc"

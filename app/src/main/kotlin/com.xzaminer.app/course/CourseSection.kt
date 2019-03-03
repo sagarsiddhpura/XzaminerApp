@@ -32,4 +32,11 @@ data class CourseSection (
         }
         return arrayListOf()
     }
+
+    fun fetchVisibleStudyMaterials(): ArrayList<StudyMaterial> {
+        val arrayList =
+            ArrayList(studyMaterials.values.filter { it != null && it.isVisible })
+        if(!arrayList.isEmpty()) {arrayList.sortWith (compareBy { it.order })}
+        return arrayList
+    }
 }

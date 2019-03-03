@@ -16,7 +16,6 @@ import com.tonyodev.fetch2core.DownloadBlock
 import com.tonyodev.fetch2core.Extras
 import com.tonyodev.fetch2core.Func
 import com.tonyodev.fetch2core.MutableExtras
-import com.xzaminer.app.BuildConfig
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.ShowPurchasesActivity
@@ -126,7 +125,7 @@ class CourseSectionVideosDomainActivity : SimpleActivity() {
     }
 
     private fun setupAdapter(recyclerView: MyRecyclerView, studyMaterial: StudyMaterial) {
-        values = ArrayList(studyMaterial.videos)
+        values = ArrayList(studyMaterial.fetchVisibleVideos())
         values.sortWith(compareBy { it.order })
 
         val currAdapter = recyclerView.adapter

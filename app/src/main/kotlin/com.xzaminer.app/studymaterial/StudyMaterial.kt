@@ -15,7 +15,8 @@ data class StudyMaterial (
     val purchaseInfo: ArrayList<Purchase> = arrayListOf(),
     var status: String = "",
     var type: String = STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
-    var order: Long = 0
+    var order: Int = 0,
+    var isVisible: Boolean = true
     ) {
     fun fetchIapPurchase(): Purchase? {
         purchaseInfo.forEach {
@@ -134,5 +135,12 @@ data class StudyMaterial (
             }
         }
         return 0
+    }
+
+    fun fetchVisibleVideos(): ArrayList<Video> {
+        val arrayList =
+            ArrayList(videos.filter { it != null && it.isVisible })
+        if(!arrayList.isEmpty()) {arrayList.sortWith (compareBy { it.order })}
+        return arrayList
     }
 }

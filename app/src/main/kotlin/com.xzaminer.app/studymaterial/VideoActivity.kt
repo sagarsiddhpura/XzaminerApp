@@ -1,11 +1,16 @@
 package com.xzaminer.app.studymaterial
 
+import android.content.Context
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -25,11 +30,6 @@ import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_intro.*
 import kotlinx.android.synthetic.main.exo_playback_control_view.*
 import java.io.File
-import android.view.WindowManager
-import android.content.pm.ActivityInfo
-import android.content.Context
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 
 
 class VideoActivity : SimpleActivity() {
@@ -73,16 +73,15 @@ class VideoActivity : SimpleActivity() {
         intro_holder.beGone()
 
         dataSource.getCourseStudyMaterialById(courseId, sectionId, domainId) { studyMaterial_ ->
-            if(studyMaterial_ != null && !studyMaterial_.videos.isEmpty() && studyMaterial_.fetchVideo(videoId) != null) {
+            if(studyMaterial_ != null && !studyMaterial_.fetchVisibleVideos().isEmpty() && studyMaterial_.fetchVideo(videoId) != null) {
                 studyMaterial = studyMaterial_
                 val video = studyMaterial_.fetchVideo(videoId) as Video
                 val index = studyMaterial_.fetchVideoIndex(videoId)
                 concatenatingMediaSource = ConcatenatingMediaSource()
-                var videos = ArrayList(studyMaterial_.videos)
-                videos.sortWith(compareBy { it.order })
+                val videos = ArrayList(studyMaterial_.fetchVisibleVideos())
 
                 val videoFile = File(fetchDataDirFile(getXzaminerDataDir(), "videos/" + video.fileName).absolutePath)
-                for(i in 0..studyMaterial_.videos.size) {
+                for(i in 0..studyMaterial_.fetchVisibleVideos().size) {
                     buildMediaSource(videoFile, i)
                 }
 

@@ -73,7 +73,7 @@ class DataSource {
                     if (it.courses != null) {
                         it.courses!!.values.forEach {
                             if (it != null) {
-                                audToCat.add(Category(it.id, it.name, it.desc, it.image, null, null, true))
+                                audToCat.add(Category(it.id, it.name, it.desc, it.image, null, null, true, it.order, it.isVisible))
                             }
                         }
                         cats.addAll(audToCat)
@@ -310,6 +310,8 @@ class DataSource {
         dept.child("/1/courses/"+course.id).child("shortName").setValue(course.shortName)
         dept.child("/1/courses/"+course.id).child("purchaseInfo").setValue(course.purchaseInfo)
         dept.child("/1/courses/"+course.id).child("image").setValue(course.image)
+        dept.child("/1/courses/"+course.id).child("order").setValue(course.order)
+        dept.child("/1/courses/"+course.id).child("visible").setValue(course.isVisible)
     }
 
     fun deleteCourse(course: Category) {
@@ -335,6 +337,8 @@ class DataSource {
         dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("desc").setValue(section.desc)
         dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("purchaseInfo").setValue(section.purchaseInfo)
         dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("image").setValue(section.image)
+        dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("order").setValue(section.order)
+        dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("visible").setValue(section.isVisible)
     }
 
     fun updateQuizProperties(courseId: Long?, sectionId: Long, studyMaterial: StudyMaterial) {
@@ -344,6 +348,8 @@ class DataSource {
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("desc").setValue(studyMaterial.desc)
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("image").setValue(studyMaterial.image)
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("purchaseInfo").setValue(studyMaterial.purchaseInfo)
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("order").setValue(studyMaterial.order)
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("visible").setValue(studyMaterial.isVisible)
     }
 
     fun updateQuizQuestions(courseId: Long, sectionId: Long, studyMaterial: StudyMaterial) {

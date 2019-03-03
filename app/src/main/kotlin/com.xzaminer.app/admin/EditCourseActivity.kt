@@ -10,7 +10,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.billing.Purchase
@@ -19,7 +22,8 @@ import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.extensions.loadIconImageView
 import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.ConfirmDialog
-import com.xzaminer.app.utils.*
+import com.xzaminer.app.utils.COURSE_ID
+import com.xzaminer.app.utils.PURCHASE_TYPE_IAP
 import kotlinx.android.synthetic.main.activity_edit_course.*
 import java.io.File
 
@@ -126,6 +130,17 @@ class EditCourseActivity : SimpleActivity() {
             purchase_actual.setText(purchase.actualPrice)
             purchase_extra_info.setText(purchase.extraPurchaseInfo)
         }
+
+        val options = arrayOf("Yes", "No")
+        visibility_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
+
+        if(course.isVisible) {
+            visibility_spinner.setSelection(0)
+        } else {
+            visibility_spinner.setSelection(1)
+        }
+
+        order_value.setText(course.order.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -160,6 +175,12 @@ class EditCourseActivity : SimpleActivity() {
                 return
             }
         }
+        try {
+            Integer.parseInt(order_value.text.toString())
+        } catch (e : Exception) {
+            ConfirmationDialog(this, "Please fill correct numeric value for Order", R.string.yes, R.string.ok, 0) { }
+            return
+        }
 
         ConfirmDialog(this, "Are you sure you want to update the Course?") {
             course.name = edit_name.text.toString()
@@ -174,6 +195,22 @@ class EditCourseActivity : SimpleActivity() {
                             purchase_id.text.toString() , purchase_name.text.toString(), purchase_desc.text.toString(),
                             PURCHASE_TYPE_IAP, purchase_actual.text.toString(), purchase_orignal.text.toString(), true, null, null, purchase_extra_info.text.toString())
                     ))
+            }
+            try {
+                course.order = Integer.parseInt(order_value.text.toString())
+            } catch (e : Exception) { }
+
+            when {
+                visibility_spinner.selectedItemPosition == 0 -> course.isVisible = true
+                visibility_spinner.selectedItemPosition == 1 -> course.isVisible = false
+            }
+            try {
+                course.order = Integer.parseInt(order_value.text.toString())
+            } catch (e : Exception) { }
+
+            when {
+                visibility_spinner.selectedItemPosition == 0 -> course.isVisible = true
+                visibility_spinner.selectedItemPosition == 1 -> course.isVisible = false
             }
 
             dataSource.updateCourseProperties(course)
