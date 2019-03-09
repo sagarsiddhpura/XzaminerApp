@@ -32,7 +32,7 @@ import com.xzaminer.app.*
 import com.xzaminer.app.admin.AddQuestionBankActivity
 import com.xzaminer.app.admin.AddStudyMaterialActivity
 import com.xzaminer.app.admin.ManageCategoriesActivity
-import com.xzaminer.app.admin.ManageCourseActivity
+import com.xzaminer.app.admin.ManageUsersActivity
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.extensions.*
@@ -154,10 +154,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-                Intent(this, ManageCourseActivity::class.java).apply {
-                    putExtra(COURSE_ID, 101L)
-                    startActivity(this)
-                }
+//                Intent(this, ManageCourseActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    startActivity(this)
+//                }
 
 //                Intent(this, EditSectionActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)
@@ -199,6 +199,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    putExtra(QUIZ_ID, 101600L)
 //                    startActivity(this)
 //                }
+
+                Intent(this, ManageUsersActivity::class.java).apply {
+                    startActivity(this)
+                }
             }
 //            debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //            debugDataSource.copyQuestionBank(dataSource)
@@ -377,6 +381,8 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             .withIcon(R.drawable.ic_drw_question_bank).withIconTintingEnabled(true)
         val manageCategories = PrimaryDrawerItem().withIdentifier(13).withName(R.string.maange_categories)
             .withIcon(R.drawable.drw_manage_categories).withIconTintingEnabled(true)
+        val manageUsers = PrimaryDrawerItem().withIdentifier(14).withName(R.string.manage_users)
+            .withIcon(R.drawable.ic_manage_users).withIconTintingEnabled(true)
 
         val idToMap = HashMap<Int, String>()
         idToMap.put(1, "Home")
@@ -392,6 +398,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         idToMap.put(11, "Logout")
         idToMap.put(12, "ImportStudyMaterial")
         idToMap.put(13, "ManageCategories")
+        idToMap.put(14, "ManageUsers")
 
         val customPrimaryColor = baseConfig.primaryColor
         val view = LayoutInflater.from(this).inflate(R.layout.drawer_header, null)
@@ -486,6 +493,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                             startActivity(Intent(applicationContext, ManageCategoriesActivity::class.java))
                             resetSelection()
                         }
+                        14L -> {
+                            startActivity(Intent(applicationContext, ManageUsersActivity::class.java))
+                            resetSelection()
+                        }
                     }
                     return false
                 }
@@ -499,7 +510,8 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                 DividerDrawerItem(),
                 importQuestionBank,
                 importStudyMaterial,
-                manageCategories
+                manageCategories,
+                manageUsers
             )
         } else {
             drawerBuilder.addDrawerItems(

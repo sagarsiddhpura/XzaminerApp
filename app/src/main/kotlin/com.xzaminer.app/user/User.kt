@@ -18,7 +18,7 @@ data class User(
     val email: String = "",
     val password: String = "",
     var token: String = "",
-    val userType: String? = null,
+    var userType: String? = null,
     var phone: String? = null,
     var purchases: ArrayList<Purchase> = arrayListOf(),
     val lastLoggedIn: String = "",

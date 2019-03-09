@@ -9,21 +9,17 @@ import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.isActivityDestroyed
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
+import com.xzaminer.app.SimpleActivity
 import kotlinx.android.synthetic.main.category_item_grid.view.*
 import kotlinx.android.synthetic.main.course_domain_video_item.view.*
 
 
 class ListUserPurchasesAdapter(
-    activity: ListUserPurchasesActivity, var purchases: ArrayList<Purchase>, recyclerView: MyRecyclerView,
+    activity: SimpleActivity, var purchases: ArrayList<Purchase>, recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
     private var currentPurchasesHash = purchases.hashCode()
-    private var showPurchaseActivity : ListUserPurchasesActivity? = null
-
-    init {
-        this.showPurchaseActivity = activity
-    }
 
     override fun getActionMenuId() = R.menu.cab_empty
 

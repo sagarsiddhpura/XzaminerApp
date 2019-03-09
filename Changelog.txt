@@ -213,3 +213,7 @@ Functionality Add Section
 Functionality Add Video Domain, Question Bank and Study Material in section
 
 4.20
+Added ordering and isVisible in Course, Section, QB, SM, Video, Video Domain
+
+4.22
+Added User management (Delete / Edit user-type : normal, admin / View Name, email, phone number, purchases)

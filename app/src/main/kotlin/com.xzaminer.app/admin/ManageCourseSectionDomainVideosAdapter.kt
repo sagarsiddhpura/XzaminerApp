@@ -79,7 +79,6 @@ class ManageCourseSectionDomainVideosAdapter(
             manage_delete.setOnClickListener {
                 courseSectionVideosDomainActivity?.deleteVideo(video)
             }
-
         }
     }
 

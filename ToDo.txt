@@ -6,6 +6,7 @@ add auth check in all admin activities
 show hide for entities
 refresh managecourse activity on resume
 error loading playlist with new filter mechanism?
+show user name instead of app name in drawer
 
 Next release
 order field in all entities

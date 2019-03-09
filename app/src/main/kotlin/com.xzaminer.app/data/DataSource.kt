@@ -13,6 +13,7 @@ import com.xzaminer.app.extensions.config
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.user.User
 import java.util.*
+import kotlin.collections.ArrayList
 
 private var db: FirebaseDatabase? = null
 private var storage: FirebaseStorage? = null
@@ -317,7 +318,7 @@ class DataSource {
     fun deleteCourse(course: Category) {
         val catsDatabase = getCatsDatabase()
         val dept = catsDatabase.child("cats")
-        dept.child("/1/courses/" + course.id).removeValue(DatabaseReference.CompletionListener { databaseError, databaseReference ->
+        dept.child("/1/courses/" + course.id).removeValue({ databaseError, _ ->
             val error = databaseError
         })
     }
@@ -374,5 +375,40 @@ class DataSource {
         val catsDatabase = getCatsDatabase()
         val dept = catsDatabase.child("cats")
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).setValue(studyMaterial)
+    }
+
+    fun getUsers(callback: (cats: ArrayList<User>) -> Unit) {
+        val database = getUsersDatabase()
+        val dept = database.child("users")
+        dept.keepSynced(true)
+
+        dept.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+//                    Log.d("Xz_", "getCats listener:"+System.nanoTime())
+                val genericTypeIndicator = object : GenericTypeIndicator<HashMap<String, User>>() {}
+                val users = snapshot.getValue(genericTypeIndicator)
+                if (users != null) {
+                    var users = ArrayList(users.values)
+                    users = users.filter { it != null } as ArrayList<User>
+                    callback(users)
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                println("The read failed: " + databaseError.code)
+            }
+        })
+    }
+
+    fun deleteUser(user: User) {
+        val database = getUsersDatabase()
+        database.child("users").child(user.getId()).removeValue().addOnFailureListener {
+            val error = it
+        }
+    }
+
+    fun updateUser(user: User) {
+        val database = getUsersDatabase()
+        database.child("users").child(user.getId() + "/userType").setValue(user.userType)
     }
 }

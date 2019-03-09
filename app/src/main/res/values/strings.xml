@@ -25,4 +25,5 @@
     <string name="maange_categories">Manage Categories</string>
     <string name="finish">Finish</string>
     <string name="add">Add</string>
+    <string name="manage_users">Manage Users</string>
 </resources>

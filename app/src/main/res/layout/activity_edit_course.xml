@@ -199,6 +199,7 @@
                 android:textSize="18sp"
                 android:layout_marginLeft="2dp"
                 android:text="Visible:"
+                android:textColor="@color/text_black"
                 app:layout_constraintTop_toBottomOf="@+id/edit_content"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="2dp"/>
@@ -401,6 +402,66 @@
             </android.support.design.widget.TextInputLayout>
 
         </android.support.v7.widget.LinearLayoutCompat>
+
+        <RelativeLayout
+                android:id="@+id/purchases_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/monetization_root"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/purchases_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Purchases"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/bigger_text_size"/>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/quizzes_empty_text_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/purchases_label"
+                    android:paddingTop="@dimen/activity_margin"
+                    android:text="No Purchases"
+                    android:textSize="@dimen/bigger_text_size"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+
+            <com.simplemobiletools.commons.views.MyRecyclerView
+                    android:id="@+id/quizzes_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none"
+                    android:layout_alignTop="@+id/purchases_label"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                    app:spanCount="@integer/category_columns_vertical_scroll"
+                    android:padding="0dp"
+                    android:layout_marginTop="18dp"/>
+
+            <com.simplemobiletools.commons.views.FastScroller
+                    android:id="@+id/media_vertical_fastscroller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="@dimen/normal_margin"
+                    android:paddingStart="@dimen/normal_margin"
+                    android:visibility="visible">
+                <include layout="@layout/fastscroller_handle_vertical"/>
+
+            </com.simplemobiletools.commons.views.FastScroller>
+        </RelativeLayout>
 
     </android.support.constraint.ConstraintLayout>
 
