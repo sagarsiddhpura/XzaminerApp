@@ -110,29 +110,37 @@ class EditVideoActivity : SimpleActivity() {
         edit_delete_image.setColorFilter(getAdjustedPrimaryColor())
         file_edit_image.setColorFilter(getAdjustedPrimaryColor())
         file_delete_image.setColorFilter(getAdjustedPrimaryColor())
+        file_edit_image.setImageDrawable(resources.getDrawable(R.drawable.ic_file_upload))
 
         file_edit_image.setOnClickListener {
             FilePickerDialog(this, Environment.getExternalStorageDirectory().toString(), true, false, false) {
                 toast("Uploading video. Please wait till video is completely uploaded....")
                 val videoFile = File(it)
                 val file = Uri.fromFile(videoFile)
-                val name = courseId.toString() + "_" + videoFile.name
+                if(!videoFile.absolutePath.contains(".")) {
+                    toast("File does not have proper naming convention of filename.ext. Please select file with proper naming convention.")
+                    return@FilePickerDialog
+                }
+
+                val name = courseId.toString() + "_" + video.id.toString() + "_video." + videoFile.absolutePath.split(".").last()
                 val riversRef = dataSource.getStorage().getReference("courses/" + courseId + "/").child(name)
                 val uploadTask = riversRef.putFile(file)
 
                 uploadTask.addOnFailureListener {
                     toast("Failed to Upload Video")
+                    edit_file_name.setText("")
                 }.addOnSuccessListener {
-                    toast("Video Uploaded successfully. Save to update course")
+                    toast("Video Uploaded successfully. Save to update Video")
                     video.fileName = name
                     video.url = "courses/" + courseId + "/"
-                    edit_file_name.setText(video.fileName)
+                    edit_file_name.setText(name)
                 }.addOnProgressListener {
                     val progress = (100 * it.bytesTransferred) / it.totalByteCount
-                    toast("Uploading " + progress + "% ...")
+                    edit_file_name.setText("Uploading " + progress + "%...")
                 }.addOnPausedListener {
                     toast("Upload is paused....")
                 }
+
             }
         }
 

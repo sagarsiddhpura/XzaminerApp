@@ -18,8 +18,6 @@ import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
-import com.google.android.exoplayer2.source.dash.DashMediaSource
-import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -237,18 +235,20 @@ class AudioPlayerService : Service(), Player.EventListener {
 
         val userAgent = Util.getUserAgent(applicationContext, "Xzaminer")
 
-        if (uri.lastPathSegment!!.contains("mp3") || uri.lastPathSegment!!.contains("mp4")) {
+        if (uri.lastPathSegment!!.contains("mp3") || uri.lastPathSegment!!.contains("mp4") || uri.lastPathSegment!!.contains("m4a")) {
             return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory(userAgent))
                 .createMediaSource(uri)
         } else if (uri.lastPathSegment!!.contains("m3u8")) {
             return HlsMediaSource.Factory(DefaultHttpDataSourceFactory(userAgent))
                 .createMediaSource(uri)
         } else {
-            val dashChunkSourceFactory = DefaultDashChunkSource.Factory(
-                DefaultHttpDataSourceFactory("ua", DefaultBandwidthMeter())
-            )
-            val manifestDataSourceFactory = DefaultHttpDataSourceFactory(userAgent)
-            return DashMediaSource.Factory(dashChunkSourceFactory, manifestDataSourceFactory).createMediaSource(uri)
+            return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory(userAgent))
+                .createMediaSource(uri)
+//            val dashChunkSourceFactory = DefaultDashChunkSource.Factory(
+//                DefaultHttpDataSourceFactory("ua", DefaultBandwidthMeter())
+//            )
+//            val manifestDataSourceFactory = DefaultHttpDataSourceFactory(userAgent)
+//            return DashMediaSource.Factory(dashChunkSourceFactory, manifestDataSourceFactory).createMediaSource(uri)
         }
     }
 

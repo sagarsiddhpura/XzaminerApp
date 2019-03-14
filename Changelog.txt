@@ -217,3 +217,8 @@ Added ordering and isVisible in Course, Section, QB, SM, Video, Video Domain
 
 4.22
 Added User management (Delete / Edit user-type : normal, admin / View Name, email, phone number, purchases)
+
+4.24
+Manage audios in Quiz Question and Study Material Question
+Better upload reporting while uploading video
+Make HTTPS streaming default for all formats instead of DASH

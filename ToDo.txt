@@ -3,10 +3,9 @@ secure db rules in firebase console
 populate course path when import QB/SM option is done from edit section screen
 have image edit text to input raw value
 add auth check in all admin activities
-show hide for entities
 refresh managecourse activity on resume
-error loading playlist with new filter mechanism?
 show user name instead of app name in drawer
+sections are not sorted according to order in manage course
 
 Next release
 order field in all entities

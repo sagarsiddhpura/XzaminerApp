@@ -129,7 +129,7 @@ data class StudyMaterial (
     }
 
     fun fetchVideoIndex(videoId: Long): Int {
-        videos.forEachIndexed { index, video ->
+        fetchVisibleVideos().forEachIndexed { index, video ->
             if(video.id == videoId) {
                 return index
             }

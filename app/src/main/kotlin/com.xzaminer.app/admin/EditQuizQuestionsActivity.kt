@@ -165,7 +165,7 @@ class EditQuizQuestionsActivity : SimpleActivity() {
     }
 
     fun editQuestion(question: Question) {
-        EditQuestionDialog(this, question) {
+        EditQuestionDialog(this, question, courseId) {
             refreshQuestions(studyMaterial.questions)
         }
     }
@@ -179,7 +179,7 @@ class EditQuizQuestionsActivity : SimpleActivity() {
         val highestId = studyMaterial.questions.maxBy { it.id }
         val question = Question(highestId!!.id + 1, "", "", arrayListOf(QuestionOption(1, ""), QuestionOption(2, ""), QuestionOption(3, ""),
             QuestionOption(4, "")))
-        EditQuestionDialog(this, question) {
+        EditQuestionDialog(this, question, courseId) {
             studyMaterial.questions.add(it)
             refreshQuestions(studyMaterial.questions)
         }

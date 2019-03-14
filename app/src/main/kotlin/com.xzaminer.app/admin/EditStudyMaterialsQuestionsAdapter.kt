@@ -4,11 +4,13 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.xzaminer.app.R
 import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.studymaterial.Question
+import com.xzaminer.app.utils.QUESTION_ID
 import kotlinx.android.synthetic.main.study_material_item_grid.view.*
 import java.io.File
 import java.util.*
@@ -73,6 +75,20 @@ class EditStudyMaterialsQuestionsAdapter(
             manage_root.beVisible()
             question_text.text = "${adapterPosition + 1}. ${question.text}"
             option_text.text = question.options.joinToString (separator = "\n\n")  { it -> "\u25CF  ${it.text}" }
+
+            if(question.audios.isEmpty()) {
+                divider_options_audio.beGone()
+                audio_parent.beGone()
+            } else {
+                val audio = question.audios.first()
+                audio.details[QUESTION_ID] = arrayListOf(question.id.toString())
+                divider_options_audio.beVisible()
+                audio_parent.beVisible() 
+                audio_name.text = audio.name
+                audio_icon.setColorFilter(resources.getColor(R.color.md_blue_800_dark))
+                audio_download.beGone()
+                audio_icon.setImageResource(R.drawable.ic_audio)
+            }
 
             manage_edit.setOnClickListener {
                 quizActivity?.editQuestion(question)

@@ -8,15 +8,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.beInvisible
-import com.simplemobiletools.commons.extensions.beVisible
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
-import com.simplemobiletools.commons.extensions.highlightTextPart
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.MyTextView
 import com.xzaminer.app.R
 import com.xzaminer.app.extensions.getXzaminerDataDir
 import com.xzaminer.app.studymaterial.Question
+import com.xzaminer.app.utils.QUESTION_ID
 import kotlinx.android.synthetic.main.question_item_grid.view.*
 import java.io.File
 import java.util.*
@@ -104,6 +102,20 @@ class EditQuestionsAdapter(activity: EditQuizQuestionsActivity, var questions: A
                     image.beInvisible()
                 }
                 root.setOnClickListener { quizActivity?.optionClicked(question, option.id) }
+            }
+
+            if(question.audios.isEmpty()) {
+                divider_options_audio.beGone()
+                audio_parent.beGone()
+            } else {
+                val audio = question.audios.first()
+                audio.details[QUESTION_ID] = arrayListOf(question.id.toString())
+                divider_options_audio.beVisible()
+                audio_parent.beVisible()
+                audio_name.text = audio.name
+                audio_icon.setColorFilter(resources.getColor(R.color.md_blue_800_dark))
+                download_status.beGone()
+                audio_icon.setImageResource(R.drawable.ic_audio)
             }
 
             manage_edit.setOnClickListener {

@@ -29,10 +29,7 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.*
-import com.xzaminer.app.admin.AddQuestionBankActivity
-import com.xzaminer.app.admin.AddStudyMaterialActivity
-import com.xzaminer.app.admin.ManageCategoriesActivity
-import com.xzaminer.app.admin.ManageUsersActivity
+import com.xzaminer.app.admin.*
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.extensions.*
@@ -186,12 +183,12 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-//                Intent(this, EditStudyMaterialQuestionsActivity::class.java).apply {
-//                    putExtra(COURSE_ID, 101L)
-//                    putExtra(SECTION_ID, 1014L)
-//                    putExtra(QUIZ_ID, 101400L)
-//                    startActivity(this)
-//                }
+                Intent(this, EditStudyMaterialQuestionsActivity::class.java).apply {
+                    putExtra(COURSE_ID, 101L)
+                    putExtra(SECTION_ID, 1014L)
+                    putExtra(QUIZ_ID, 101400L)
+                    startActivity(this)
+                }
 
 //                Intent(this, ManageCourseSectionVideosDomainActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)
@@ -200,9 +197,9 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-                Intent(this, ManageUsersActivity::class.java).apply {
-                    startActivity(this)
-                }
+//                Intent(this, ManageUsersActivity::class.java).apply {
+//                    startActivity(this)
+//                }
             }
 //            debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //            debugDataSource.copyQuestionBank(dataSource)

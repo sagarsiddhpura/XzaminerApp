@@ -3,7 +3,8 @@
 <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:id="@+id/dialog_holder"
@@ -14,122 +15,171 @@
         android:paddingRight="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin">
 
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
-
-        <EditText
-                android:id="@+id/question_title"
+        <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Question Text"/>
+                android:layout_margin="6dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                    android:id="@+id/question_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Question Text"/>
 
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-                android:id="@+id/question_option_1"
+        <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Option 1 Text"/>
+                android:layout_margin="6dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                    android:id="@+id/question_option_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option 1 Text"/>
 
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-                android:id="@+id/question_option_1_desc"
+        <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Option 1 Explanation"/>
+                android:layout_margin="6dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                    android:id="@+id/question_option_1_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option 1 Explanation"/>
 
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-                android:id="@+id/question_option_2"
+        <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Option 2 Text"/>
+                android:layout_margin="6dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                    android:id="@+id/question_option_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option 2 Text"/>
 
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-                android:id="@+id/question_option_2_desc"
+        <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Option 2 Explanation"/>
+                android:layout_margin="6dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                    android:id="@+id/question_option_2_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option 2 Explanation"/>
 
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-                android:id="@+id/question_option_3"
+        <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Option 3 Text"/>
+                android:layout_margin="6dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                    android:id="@+id/question_option_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option 3 Text"/>
 
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-                android:id="@+id/question_option_3_desc"
+        <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Option 3 Explanation"/>
+                android:layout_margin="6dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                    android:id="@+id/question_option_3_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option 3 Explanation"/>
 
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-                android:id="@+id/question_option_4"
+        <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Option 4 Text"/>
+                android:layout_margin="6dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                    android:id="@+id/question_option_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option 4 Text"/>
 
-    <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-                android:id="@+id/question_option_4_desc"
+        <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Option 4 Explanation"/>
+                android:layout_margin="6dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                    android:id="@+id/question_option_4_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option 4 Explanation"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/edit_file_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:weightSum="1">
+
+            <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/edit_file"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:hint="Audio File"/>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                <EditText
+                        android:id="@+id/edit_file_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="No Audio File Attached"
+                        tools:text="video_0001"/>
+
+                <ImageView
+                        android:id="@+id/file_edit_image"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:src="@drawable/ic_file_upload"
+                        android:layout_gravity="center_vertical"
+                        android:padding="6dp"/>
+
+                <ImageView
+                        android:id="@+id/file_delete_image"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_delete"
+                        android:padding="4dp"/>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.LinearLayoutCompat>
 
     </LinearLayout>
 
