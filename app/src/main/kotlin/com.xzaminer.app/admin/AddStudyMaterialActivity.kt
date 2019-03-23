@@ -143,7 +143,6 @@ class AddStudyMaterialActivity : SimpleActivity() {
             line = fileReader.readLine()
             while(line != null && line != "") {
                 ques.options.add(QuestionOption(counter++, line, ""))
-
                 line = fileReader.readLine()
             }
             questionBank.questions.add(ques)

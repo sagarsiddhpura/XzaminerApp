@@ -225,3 +225,5 @@ Make HTTPS streaming default for all formats instead of DASH
 4.26
 sections are not sorted according to order in manage course
 automatically populate Section name and path when Add Question Bank / Add Study Material is selected from section
+re-write import qb parsing logic to accept file having trailing newlines and added lots of errors
+
