@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
-                android:text="Category:"
+                android:text="Section:"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:visibility="gone"/>
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:textSize="18sp"
-                    android:hint="Select Category"
+                    android:hint="Select Section"
                     tools:text="Students/10th Standard"/>
 
             <ImageView

@@ -432,6 +432,11 @@ class DebugDataSource {
     }
 
     private fun getSubCategories(i: Int): HashMap<String, Category> {
+        if (i == 1000) {
+            val c1 = Category(1, "Professional Courses", "Professional Courses",
+                "images/cat_1.png", getSubCategories(2), getCourses(1))
+            return hashMapOf(c1.id.toString() to c1)
+        }
         return linkedMapOf()
     }
 

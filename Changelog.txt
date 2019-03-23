@@ -148,7 +148,6 @@ Import Study Material screen
 Added check to aloow adding SM on section of study material type
 Added desc field
 added image field
-added monetization info
 Updated field names on AddSM screen
 
 4.0
@@ -222,3 +221,7 @@ Added User management (Delete / Edit user-type : normal, admin / View Name, emai
 Manage audios in Quiz Question and Study Material Question
 Better upload reporting while uploading video
 Make HTTPS streaming default for all formats instead of DASH
+
+4.26
+sections are not sorted according to order in manage course
+automatically populate Section name and path when Add Question Bank / Add Study Material is selected from section

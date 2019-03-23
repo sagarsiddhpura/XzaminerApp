@@ -15,20 +15,22 @@ import com.xzaminer.app.user.User
 import java.util.*
 import kotlin.collections.ArrayList
 
+
+
 private var db: FirebaseDatabase? = null
 private var storage: FirebaseStorage? = null
 
-private var catsDbVersion = "VR1"
-private var userDbVersion = "VR1"
-private var purchaseLogDbVersion = "VR1"
+//private var catsDbVersion = "VR1"
+//private var userDbVersion = "VR1"
+//private var purchaseLogDbVersion = "VR1"
 
 //private var catsDbVersion = "VT1"
 //private var userDbVersion = "VT1"
 //private var purchaseLogDbVersion = "VT1"
 
-//private var catsDbVersion = "VD1"
-//private var userDbVersion = "VD1"
-//private var purchaseLogDbVersion = "VD1"
+private var catsDbVersion = "VD1"
+private var userDbVersion = "VD1"
+private var purchaseLogDbVersion = "VD1"
 
 class DataSource {
 
@@ -100,7 +102,7 @@ class DataSource {
 
             dept.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-//                    Log.d("Xz_", "getCats listener:"+System.nanoTime())
+                    Log.d("Xz_", "getCats listener:"+System.nanoTime())
                     val genericTypeIndicator = object : GenericTypeIndicator<ArrayList<Category>>() {}
                     var categories = snapshot.getValue(genericTypeIndicator)
                     if (categories != null) {
@@ -108,10 +110,25 @@ class DataSource {
                         cats = categories
                         callback(categories)
                     }
+
+//                    Log.d("Xz_", "getCats listener:"+System.nanoTime())
+//                    val listCats = arrayListOf<Category>()
+//                    for (child in snapshot.getChildren()) {
+//                        listCats.add(child.getValue(Category::class.java)!!)
+//                        for(innerchild in child.children) {
+//                            val e1 = innerchild
+//                        }
+//                    }
+////                    val genericTypeIndicator = object : GenericTypeIndicator<HashMap<Long, Category>>() {}
+////                    var categories = snapshot.getValue(CategoryParent::class.java))
+//                    if (listCats != null) {
+//                        cats = listCats
+//                        callback(listCats)
+//                    }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    println("The read failed: " + (databaseError.code ?: ""))
+                    println("The read failed: " + databaseError.code)
                 }
             })
 
@@ -410,5 +427,37 @@ class DataSource {
     fun updateUser(user: User) {
         val database = getUsersDatabase()
         database.child("users").child(user.getId() + "/userType").setValue(user.userType)
+    }
+
+    fun getSectionPathById(sectionId: Long, callback: (path: String?) -> Unit) {
+        getCats {
+            var path = "/"
+            callback(searchSectionPathById(sectionId, it, path))
+        }
+    }
+
+    private fun searchSectionPathById(sectionId: Long, localCategories: ArrayList<Category>, path: String): String? {
+        // search across categories first
+        localCategories.forEach { cat ->
+            if (cat.courses != null) {
+                cat.courses!!.values.forEach { course ->
+                    course?.sections.values.forEach {
+                        if(it != null && it.id == sectionId) {
+                            return path + cat.id + "/courses/" + course.id + "/sections/" + it.id
+                        }
+                    }
+                }
+            }
+        }
+        // not found. Search one level deeper
+        localCategories.forEach {
+            if (it.subCategories != null) {
+                val retVal = searchSectionPathById(sectionId, ArrayList(it.subCategories!!.values), path + it.id + "/subCategories/")
+                if(retVal != null) {
+                    return retVal
+                }
+            }
+        }
+        return null
     }
 }

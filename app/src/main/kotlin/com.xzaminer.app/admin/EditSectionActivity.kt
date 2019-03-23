@@ -133,8 +133,24 @@ class EditSectionActivity : SimpleActivity() {
                 builder.setSingleChoiceItems(values,-1) { _, which->
                     val value = values[which]
                     when (value) {
-                        "Quiz" -> startActivity(Intent(applicationContext, AddStudyMaterialActivity::class.java))
-                        "Study Material" -> startActivity(Intent(applicationContext, AddQuestionBankActivity::class.java))
+                        "Quiz" -> {
+                            Intent(this, AddQuestionBankActivity::class.java).apply {
+                                putExtra(QUIZ_ID, 1L)
+                                putExtra(SECTION_ID, section.id)
+                                putExtra(COURSE_ID, courseId)
+                                putExtra(QUESTION_BANK_NAME, section.name)
+                                startActivity(this)
+                            }
+                        }
+                        "Study Material" -> {
+                            Intent(this, AddStudyMaterialActivity::class.java).apply {
+                                putExtra(QUIZ_ID, 1L)
+                                putExtra(SECTION_ID, section.id)
+                                putExtra(COURSE_ID, courseId)
+                                putExtra(QUESTION_BANK_NAME, section.name)
+                                startActivity(this)
+                            }
+                        }
                         "Video Domain" -> {
                             Intent(this, EditQuizActivity::class.java).apply {
                                 putExtra(QUIZ_ID, 1L)
@@ -153,8 +169,24 @@ class EditSectionActivity : SimpleActivity() {
             } else {
                 val studyMaterial = section.studyMaterials.values.first()
                 when {
-                    studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL -> startActivity(Intent(applicationContext, AddStudyMaterialActivity::class.java))
-                    studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK -> startActivity(Intent(applicationContext, AddQuestionBankActivity::class.java))
+                    studyMaterial.type == STUDY_MATERIAL_TYPE_STUDY_MATERIAL -> {
+                        Intent(this, AddStudyMaterialActivity::class.java).apply {
+                            putExtra(QUIZ_ID, 1L)
+                            putExtra(SECTION_ID, section.id)
+                            putExtra(COURSE_ID, courseId)
+                            putExtra(QUESTION_BANK_NAME, section.name)
+                            startActivity(this)
+                        }
+                    }
+                    studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK -> {
+                        Intent(this, AddQuestionBankActivity::class.java).apply {
+                            putExtra(QUIZ_ID, 1L)
+                            putExtra(SECTION_ID, section.id)
+                            putExtra(COURSE_ID, courseId)
+                            putExtra(QUESTION_BANK_NAME, section.name)
+                            startActivity(this)
+                        }
+                    }
                     studyMaterial.type == STUDY_MATERIAL_TYPE_VIDEO -> {
                         Intent(this, EditQuizActivity::class.java).apply {
                             putExtra(QUIZ_ID, 1L)

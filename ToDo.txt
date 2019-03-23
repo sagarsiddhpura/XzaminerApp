@@ -1,11 +1,11 @@
 Issues:
-secure db rules in firebase console
 populate course path when import QB/SM option is done from edit section screen
-have image edit text to input raw value
 add auth check in all admin activities
+have ordering by drag and drop
 refresh managecourse activity on resume
+secure db rules in firebase console
+have image edit text to input raw value
 show user name instead of app name in drawer
-sections are not sorted according to order in manage course
 
 Next release
 order field in all entities

@@ -34,6 +34,7 @@ class AddStudyMaterialActivity : SimpleActivity() {
     var selectedPath = ""
     var courseId = ""
     var sectionId = ""
+    var sectionIdLong = -1L
     var monetization = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +59,19 @@ class AddStudyMaterialActivity : SimpleActivity() {
             category_value.text = "Flash Cards"
             courseId = "101"
             sectionId = "1014"
+        } else {
+            intent.apply {
+                sectionIdLong = getLongExtra(SECTION_ID, -1)
+                var name = getStringExtra(QUESTION_BANK_NAME)
+                if(name != null && sectionIdLong != (-1).toLong()) {
+                    dataSource.getSectionPathById(sectionIdLong) {
+                        if(it != null) {
+                            selectedPath = "$it/studyMaterials"
+                            category_value.text = name
+                        }
+                    }
+                }
+            }
         }
 
         val options = arrayOf("None", "Trial", "Monetized")

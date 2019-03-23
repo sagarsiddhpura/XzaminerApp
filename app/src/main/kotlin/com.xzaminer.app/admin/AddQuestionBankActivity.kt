@@ -35,6 +35,7 @@ class AddQuestionBankActivity : SimpleActivity() {
     var courseId = ""
     var sectionId = ""
     var monetization = ""
+    var sectionIdLong = -1L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,19 +50,27 @@ class AddQuestionBankActivity : SimpleActivity() {
         questionBank.type = STUDY_MATERIAL_TYPE_QUESTION_BANK
         purchase_id.text = PURCHASE_SECTION_STUDY_MATERIAL + questionBank.id
 
-//        intent.apply {
-//            courseId = getStringExtra(COURSE_ID)
-//            sectionId = getStringExtra(SECTION_ID)
-//            selectedPath = getStringExtra(SECTION_PATH)
-//        }
-
         if(BuildConfig.DEBUG) {
             name_value.setText("QB")
             selectedPath = "/1/courses/101/sections/1015/studyMaterials"
             category_value.text = "Question Banks"
             courseId = "101"
             sectionId = "1015"
+        } else {
+            intent.apply {
+                sectionIdLong = getLongExtra(SECTION_ID, -1)
+                val name = getStringExtra(QUESTION_BANK_NAME)
+                if(name != null && sectionIdLong != (-1).toLong()) {
+                    dataSource.getSectionPathById(sectionIdLong) {
+                        if(it != null) {
+                            selectedPath = "$it/studyMaterials"
+                            category_value.text = name
+                        }
+                    }
+                }
+            }
         }
+
         val options = arrayOf("None", "Trial", "Monetized")
         monetization_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
 

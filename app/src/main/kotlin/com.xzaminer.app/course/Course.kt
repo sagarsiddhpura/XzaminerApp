@@ -26,7 +26,7 @@ data class Course (
     }
 
     fun fetchSection(sectionId: Long): CourseSection? {
-        return sections.values.find { it -> it.id == sectionId }
+        return sections.values.find { it.id == sectionId }
     }
 
     fun fetchVisiblePurchases(): List<Purchase> {
@@ -55,6 +55,8 @@ data class Course (
     }
 
     fun fetchAllSections(): ArrayList<CourseSection> {
-        return ArrayList(sections.values)
+        val arrayList = ArrayList(sections.values)
+        if(!arrayList.isEmpty()) {arrayList.sortWith (compareBy { it.order })}
+        return arrayList
     }
 }
