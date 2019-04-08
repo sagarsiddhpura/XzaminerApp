@@ -126,7 +126,8 @@
                 android:layout_height="48dp"
                 android:scaleType="centerCrop"
                 android:layout_marginRight="8dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -145,7 +146,7 @@
 
                 <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/app_version"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@android:color/white"

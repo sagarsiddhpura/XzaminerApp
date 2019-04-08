@@ -199,4 +199,17 @@ class ManageCourseActivity : SimpleActivity() {
             startActivity(this)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        dataSource.getCourseById(courseId) { course ->
+            if(course != null) {
+                loadCourse(course)
+            } else {
+                toast("Error opening course.")
+                finish()
+                return@getCourseById
+            }
+        }
+    }
 }

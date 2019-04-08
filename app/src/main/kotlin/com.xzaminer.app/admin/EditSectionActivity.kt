@@ -252,7 +252,7 @@ class EditSectionActivity : SimpleActivity() {
             return
         }
 
-        ConfirmDialog(this, "Are you sure you want to update the Course?") {
+        ConfirmDialog(this, "Are you sure you want to update the Section?") {
             section.name = edit_name.text.toString()
             section.desc = edit_desc.text.toString()
 

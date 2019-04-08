@@ -23,6 +23,7 @@ import com.xzaminer.app.extensions.loadIconImageView
 import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.ConfirmDialog
 import com.xzaminer.app.utils.COURSE_ID
+import com.xzaminer.app.utils.IS_NEW_QUIZ
 import com.xzaminer.app.utils.PURCHASE_TYPE_IAP
 import kotlinx.android.synthetic.main.activity_edit_course.*
 import java.io.File
@@ -32,15 +33,16 @@ class EditCourseActivity : SimpleActivity() {
     private var courseId: Long? = null
     var monetization = ""
     private lateinit var course: Course
+    private var isNew: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_course)
-        supportActionBar?.title = "Edit Course"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         intent.apply {
             courseId = getLongExtra(COURSE_ID, -1)
+            isNew = getBooleanExtra(IS_NEW_QUIZ, false)
             if(courseId == (-1).toLong()) {
                 toast("Error editing this course.")
                 finish()
@@ -48,14 +50,21 @@ class EditCourseActivity : SimpleActivity() {
             }
         }
 
-        dataSource.getCourseById(courseId) { loadedCourse ->
-            if(loadedCourse != null) {
-                course = loadedCourse
-                loadCourse(loadedCourse)
-            } else {
-                toast("Error opening course.")
-                finish()
-                return@getCourseById
+        if(isNew) {
+            supportActionBar?.title = "Add Course"
+            course = Course(System.nanoTime())
+            loadCourse(course)
+        } else {
+            supportActionBar?.title = "Edit Course"
+            dataSource.getCourseById(courseId) { loadedCourse ->
+                if(loadedCourse != null) {
+                    course = loadedCourse
+                    loadCourse(loadedCourse)
+                } else {
+                    toast("Error opening course.")
+                    finish()
+                    return@getCourseById
+                }
             }
         }
 
@@ -213,7 +222,11 @@ class EditCourseActivity : SimpleActivity() {
                 visibility_spinner.selectedItemPosition == 1 -> course.isVisible = false
             }
 
-            dataSource.updateCourseProperties(course)
+            if(isNew) {
+                dataSource.addCourse(course)
+            } else {
+                dataSource.updateCourseProperties(course)
+            }
             ConfirmationDialog(this, "Course has been updated successfully", R.string.yes, R.string.ok, 0) { }
         }
     }

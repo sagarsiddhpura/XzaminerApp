@@ -8,17 +8,20 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.isGone
+import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.category.Category
-import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.extensions.getCategoriesFromDb
 import com.xzaminer.app.studymaterial.ConfirmDialog
-import com.xzaminer.app.utils.*
+import com.xzaminer.app.utils.CAT_ID
+import com.xzaminer.app.utils.COURSE_ID
+import com.xzaminer.app.utils.IS_NEW_QUIZ
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -199,6 +202,10 @@ class ManageCategoriesActivity : SimpleActivity() {
     }
 
     private fun addCourse() {
-        toast("This functionality is being implemented....")
+        Intent(this, EditCourseActivity::class.java).apply {
+            putExtra(COURSE_ID, 1L)
+            putExtra(IS_NEW_QUIZ, true)
+            startActivity(this)
+        }
     }
 }

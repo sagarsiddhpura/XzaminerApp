@@ -29,10 +29,7 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.*
-import com.xzaminer.app.admin.AddQuestionBankActivity
-import com.xzaminer.app.admin.AddStudyMaterialActivity
-import com.xzaminer.app.admin.ManageCategoriesActivity
-import com.xzaminer.app.admin.ManageUsersActivity
+import com.xzaminer.app.admin.*
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.extensions.*
@@ -109,9 +106,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                startActivity(this)
 //            }
 
-            Intent(this, AddQuestionBankActivity::class.java).apply {
-                startActivity(this)
-            }
+//            Intent(this, AddQuestionBankActivity::class.java).apply {
+//                startActivity(this)
+//            }
+
 //            Intent(this, AddStudyMaterialActivity::class.java).apply {
 //                startActivity(this)
 //            }
@@ -172,12 +170,12 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-//                Intent(this, EditQuizQuestionsActivity::class.java).apply {
-//                    putExtra(COURSE_ID, 101L)
-//                    putExtra(SECTION_ID, 1012L)
-//                    putExtra(QUIZ_ID, 101200L)
-//                    startActivity(this)
-//                }
+                Intent(this, EditQuizQuestionsActivity::class.java).apply {
+                    putExtra(COURSE_ID, 101L)
+                    putExtra(SECTION_ID, 1015L)
+                    putExtra(QUIZ_ID, 1553359166216L)
+                    startActivity(this)
+                }
 
 //                Intent(this, EditQuizActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)
@@ -417,7 +415,9 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                 view.material_drawer_account_header_background.setColorFilter(primaryColorAlpha) }
         }
 
-        view.app_version.text = "v${BuildConfig.VERSION_NAME}"
+        val user = config.getLoggedInUser() as User
+        view.app_version.text = user.email
+        view. app_title.text = user.name
         val defaultSelection = 1L
 
         val header = AccountHeaderBuilder()

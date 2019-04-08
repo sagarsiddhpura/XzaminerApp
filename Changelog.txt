@@ -227,3 +227,9 @@ sections are not sorted according to order in manage course
 automatically populate Section name and path when Add Question Bank / Add Study Material is selected from section
 re-write import qb parsing logic to accept file having trailing newlines and added lots of errors
 
+4.28
+Display name and email in drawer header
+refresh managecourse activity on resume
+Add course
+added remove all questions and import questions in manage questions screen
+remove check in editquizquestuinsactivity to close if there are no questions

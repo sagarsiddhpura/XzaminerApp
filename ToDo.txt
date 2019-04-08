@@ -1,11 +1,10 @@
 Issues:
-populate course path when import QB/SM option is done from edit section screen
-add auth check in all admin activities
 have ordering by drag and drop
-refresh managecourse activity on resume
+manage course images
+
+add auth check in all admin activities
 secure db rules in firebase console
 have image edit text to input raw value
-show user name instead of app name in drawer
 
 Next release
 order field in all entities

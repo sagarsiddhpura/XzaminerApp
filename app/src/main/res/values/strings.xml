@@ -26,4 +26,6 @@
     <string name="finish">Finish</string>
     <string name="add">Add</string>
     <string name="manage_users">Manage Users</string>
+    <string name="remove_all_questions">Remove All Questions</string>
+    <string name="import_questions">Import Questions</string>
 </resources>

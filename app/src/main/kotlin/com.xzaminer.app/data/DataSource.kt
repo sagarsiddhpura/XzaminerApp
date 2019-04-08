@@ -16,21 +16,20 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-
 private var db: FirebaseDatabase? = null
 private var storage: FirebaseStorage? = null
 
-//private var catsDbVersion = "VR1"
-//private var userDbVersion = "VR1"
-//private var purchaseLogDbVersion = "VR1"
+private var catsDbVersion = "VR1"
+private var userDbVersion = "VR1"
+private var purchaseLogDbVersion = "VR1"
 
 //private var catsDbVersion = "VT1"
 //private var userDbVersion = "VT1"
 //private var purchaseLogDbVersion = "VT1"
 
-private var catsDbVersion = "VD1"
-private var userDbVersion = "VD1"
-private var purchaseLogDbVersion = "VD1"
+//private var catsDbVersion = "VD1"
+//private var userDbVersion = "VD1"
+//private var purchaseLogDbVersion = "VD1"
 
 class DataSource {
 
@@ -386,6 +385,12 @@ class DataSource {
         val catsDatabase = getCatsDatabase()
         val dept = catsDatabase.child("cats")
         dept.child("/1/courses/"+courseId + "/sections/" + section.id).setValue(section)
+    }
+
+    fun addCourse(course: Course) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/" + course.id).setValue(course)
     }
 
     fun addStudyMaterial(courseId: Long?, sectionId: Long, studyMaterial: StudyMaterial) {
