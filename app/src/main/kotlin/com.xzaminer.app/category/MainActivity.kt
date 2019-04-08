@@ -22,10 +22,7 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.extensions.baseConfig
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.isGone
-import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.*
@@ -381,6 +378,8 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
             .withIcon(R.drawable.drw_manage_categories).withIconTintingEnabled(true)
         val manageUsers = PrimaryDrawerItem().withIdentifier(14).withName(R.string.manage_users)
             .withIcon(R.drawable.ic_manage_users).withIconTintingEnabled(true)
+        val privacyPolicy = PrimaryDrawerItem().withIdentifier(15).withName(R.string.privacy_policy)
+            .withIcon(R.drawable.ic_privacy_policy).withIconTintingEnabled(true)
 
         val idToMap = HashMap<Int, String>()
         idToMap.put(1, "Home")
@@ -397,6 +396,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         idToMap.put(12, "ImportStudyMaterial")
         idToMap.put(13, "ManageCategories")
         idToMap.put(14, "ManageUsers")
+        idToMap.put(15, "PrivacyPolicy")
 
         val customPrimaryColor = baseConfig.primaryColor
         val view = LayoutInflater.from(this).inflate(R.layout.drawer_header, null)
@@ -497,6 +497,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                             startActivity(Intent(applicationContext, ManageUsersActivity::class.java))
                             resetSelection()
                         }
+                        15L -> {
+                            launchViewIntent("https://xzaminer.github.io/xzaminer/")
+                            resetSelection()
+                        }
                     }
                     return false
                 }
@@ -511,14 +515,18 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
                 importQuestionBank,
                 importStudyMaterial,
                 manageCategories,
-                manageUsers
+                manageUsers,
+                DividerDrawerItem(),
+                privacyPolicy
             )
         } else {
             drawerBuilder.addDrawerItems(
                 home,
                 purchases,
                 settings,
-                logout
+                logout,
+                DividerDrawerItem(),
+                privacyPolicy
             )
         }
 
