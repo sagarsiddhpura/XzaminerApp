@@ -1,5 +1,6 @@
 package com.xzaminer.app.admin
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -93,6 +94,8 @@ class EditCourseActivity : SimpleActivity() {
         }
 
         edit_short_name_root.beVisible()
+        edit_content.beVisible()
+        edit_content.text = "Edit Slideshow Images"
         val options = arrayOf("None", "Monetized")
         monetization_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
 
@@ -150,6 +153,13 @@ class EditCourseActivity : SimpleActivity() {
         }
 
         order_value.setText(course.order.toString())
+
+        edit_content.setOnClickListener {
+            Intent(this, EditCourseImagesActivity::class.java).apply {
+                putExtra(COURSE_ID, course.id)
+                startActivity(this)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

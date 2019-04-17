@@ -144,6 +144,11 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
+                Intent(this, EditCourseImagesActivity::class.java).apply {
+                    putExtra(COURSE_ID, 101L)
+                    startActivity(this)
+                }
+
 //                Intent(this, ManageCategoriesActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)
 //                    startActivity(this)
@@ -162,17 +167,17 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 
 //                Intent(this, EditQuizActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)
-//                    putExtra(SECTION_ID, 1016L)
-//                    putExtra(QUIZ_ID, 101600L)
+//                    putExtra(SECTION_ID, 1012L)
+//                    putExtra(QUIZ_ID, 101200L)
 //                    startActivity(this)
 //                }
 
-                Intent(this, EditQuizQuestionsActivity::class.java).apply {
-                    putExtra(COURSE_ID, 101L)
-                    putExtra(SECTION_ID, 1015L)
-                    putExtra(QUIZ_ID, 1553359166216L)
-                    startActivity(this)
-                }
+//                Intent(this, EditQuizQuestionsActivity::class.java).apply {
+//                    putExtra(COURSE_ID, 101L)
+//                    putExtra(SECTION_ID, 1015L)
+//                    putExtra(QUIZ_ID, 1553359166216L)
+//                    startActivity(this)
+//                }
 
 //                Intent(this, EditQuizActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)
@@ -199,7 +204,7 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
             }
-//            debugDataSource.initMockDataRealtimeDatabase(dataSource)
+            debugDataSource.initMockDataRealtimeDatabase(dataSource)
 //            debugDataSource.copyQuestionBank(dataSource)
 //            debugDataSource.uploadImages(this, dataSource)
         }

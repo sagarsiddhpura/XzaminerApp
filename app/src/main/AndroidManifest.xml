@@ -34,6 +34,8 @@
         </activity>
         <activity android:name=".admin.AddQuestionBankActivity">
         </activity>
+        <activity android:name=".admin.EditCourseImagesActivity">
+        </activity>
         <activity android:name=".admin.AddStudyMaterialActivity">
         </activity>
         <activity android:name=".admin.ManageCategoriesActivity">

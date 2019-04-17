@@ -203,15 +203,26 @@ class EditQuizActivity : SimpleActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_manage, menu)
+        menu.apply {
+            findItem(R.id.manage_delete).isVisible = true
+        }
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.manage_finish -> validateAndSaveEntity()
+            R.id.manage_delete -> delete()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun delete() {
+        ConfirmationDialog(this, "Are you sure you want to delete this item?", R.string.no, R.string.yes, 0) {
+            dataSource.deleteStudyMaterial(courseId, sectionId, studyMaterial)
+            finish()
+        }
     }
 
     private fun validateAndSaveEntity() {

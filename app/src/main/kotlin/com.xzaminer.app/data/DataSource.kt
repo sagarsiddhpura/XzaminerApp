@@ -399,6 +399,12 @@ class DataSource {
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).setValue(studyMaterial)
     }
 
+    fun deleteStudyMaterial(courseId: Long?, sectionId: Long, studyMaterial: StudyMaterial) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).removeValue()
+    }
+
     fun getUsers(callback: (cats: ArrayList<User>) -> Unit) {
         val database = getUsersDatabase()
         val dept = database.child("users")
@@ -464,5 +470,11 @@ class DataSource {
             }
         }
         return null
+    }
+
+    fun updateCourseImages(course: Course) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+course.id).child("descImages").setValue(course.descImages)
     }
 }
