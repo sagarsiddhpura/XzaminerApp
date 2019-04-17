@@ -236,5 +236,7 @@ remove check in editquizquestuinsactivity to close if there are no questions
 Added privacy policy
 
 4.30
-Added delete for study material / qb / vd
+Added Delete QB/SM/Domain
 Added edit course images
+Import questions in SM activity
+BugFix: Section with no desc images crashed

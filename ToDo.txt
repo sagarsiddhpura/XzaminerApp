@@ -1,9 +1,6 @@
 Issues:
-Delete QB/SM/Domain
-manage course images
-Import questions in SM activity
 have ordering by drag and drop
-test category picker dialog
+Have add button in section when editing
 
 
 add auth check in all admin activities

@@ -85,10 +85,12 @@ class CourseActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
         course = loadedCourse
 
          if(loadedCourse.descImages.isEmpty()) {
-            desc_slider.beGone()
+             desc_slider.beGone()
+             Slider.init(PicassoImageLoadingService(this))
+             desc_slider.setAdapter(CourseDescriptionImageAdapter(loadedCourse.descImages))
         } else {
-            Slider.init(PicassoImageLoadingService(this))
-            desc_slider.setAdapter(CourseDescriptionImageAdapter(loadedCourse.descImages))
+             Slider.init(PicassoImageLoadingService(this))
+             desc_slider.setAdapter(CourseDescriptionImageAdapter(loadedCourse.descImages))
         }
 
         initPurchases()
