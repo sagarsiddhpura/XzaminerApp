@@ -21,6 +21,16 @@ class EditCourseImagesAdapter (
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), ItemTouchHelperAdapter {
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(entities, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(entities, i, i - 1)
+            }
+        }
+        notifyDataSetChanged()
         parentActivity?.onItemMove(fromPosition, toPosition)
         return true
     }
@@ -92,11 +102,15 @@ class EditCourseImagesAdapter (
                 parentActivity?.deleteEntity(image)
             }
 
-            manage_image.setOnTouchListener(object : View.OnTouchListener {
+            move_icon.setOnTouchListener(object : View.OnTouchListener {
                 override fun onTouch(v: View, event: MotionEvent): Boolean {
                     if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                         parentActivity?.onStartDrag(holder)
+//                        return true
                     }
+//                    if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP || MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_CANCEL) {
+//                        parentActivity?.onStopDrag()
+//                    }
                     return false
                 }
             })

@@ -1,12 +1,14 @@
 package com.xzaminer.app.admin
 
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
+import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
@@ -14,11 +16,14 @@ import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.studymaterial.ConfirmDialog
 import com.xzaminer.app.studymaterial.Question
+import com.xzaminer.app.studymaterial.QuestionOption
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.COURSE_ID
 import com.xzaminer.app.utils.QUIZ_ID
 import com.xzaminer.app.utils.SECTION_ID
 import kotlinx.android.synthetic.main.activity_quiz.*
+import java.io.BufferedReader
+import java.io.FileReader
 
 
 class EditStudyMaterialQuestionsActivity : SimpleActivity() {
@@ -82,12 +87,6 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
     private fun loadQuestionBank(loadedQuiz: StudyMaterial) {
         this.studyMaterial = loadedQuiz
         if (loadedQuiz != null) {
-            if (loadedQuiz.questions.size <= 0) {
-                toast("Error Opening Study Material. No Questions in this Study Material")
-                finish()
-                return
-            }
-
             supportActionBar?.title = loadedQuiz.name
             quizId = loadedQuiz.id
             setupAdapter(loadedQuiz.questions)
@@ -147,6 +146,8 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
         menuInflater.inflate(com.xzaminer.app.R.menu.menu_manage, menu)
         menu.apply {
             findItem(R.id.manage_add).isVisible = true
+            findItem(R.id.manage_remove_all).isVisible = true
+            findItem(R.id.manage_import_questions).isVisible = true
         }
         return true
     }
@@ -155,6 +156,8 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
         when (item.itemId) {
             R.id.manage_finish -> validateAndSaveEntity()
             R.id.manage_add -> addQuestion()
+            R.id.manage_remove_all -> removeAllQuestions()
+            R.id.manage_import_questions -> importQuestions()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -162,10 +165,60 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
 
     private fun addQuestion() {
         val highestId = studyMaterial.questions.maxBy { it.id }
-        val question = Question(highestId!!.id + 1, "")
+        var nextId = 1L
+        if(highestId != null) {
+            nextId = highestId.id.plus(1)
+        }
+        val question = Question(nextId, "")
         EditStudyMaterialQuestionDialog(this, question, courseId) {
             studyMaterial.questions.add(it)
             refreshQuestions(studyMaterial.questions)
         }
+    }
+
+    private fun importQuestions() {
+        FilePickerDialog(this, Environment.getExternalStorageDirectory().toString(), true, false, false) {
+            toast("Importing questions...")
+            parseQuestions(it)
+            refreshQuestions(studyMaterial.questions)
+        }
+    }
+
+    private fun removeAllQuestions() {
+        studyMaterial.questions.clear()
+        refreshQuestions(studyMaterial.questions)
+    }
+
+    private fun parseQuestions(path: String) {
+        var questions = arrayListOf<Question>()
+        var line: String?
+        val fileReader = BufferedReader(FileReader(path))
+
+        // Read the file line by line starting from the second line
+        line = fileReader.readLine()
+        var counterQues = 1L
+        while (line != null) {
+            val ques = Question()
+            var counter = 1L
+            ques.id = counterQues++
+
+            // first line is text
+            ques.text = line
+
+            line = fileReader.readLine()
+            while(line != null && line != "") {
+                ques.options.add(QuestionOption(counter++, line, ""))
+                line = fileReader.readLine()
+            }
+            questions.add(ques)
+
+            if(line == null) {
+                break
+            }
+            line = fileReader.readLine()
+        }
+
+        ConfirmationDialog(this, questions.size.toString() + " questions imported.", R.string.yes, R.string.ok, 0) { }
+        studyMaterial.questions.addAll(questions)
     }
 }

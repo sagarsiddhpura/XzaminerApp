@@ -67,8 +67,8 @@ class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
         monetization_label.beGone()
         monetization_spinner.beGone()
         edit_short_name_root.beGone()
-        edit_name.beGone()
-        edit_desc.beGone()
+        edit_name_root.beGone()
+        edit_desc_root.beGone()
         visibility_label.beGone()
         visibility_spinner.beGone()
         purchases_holder.beVisible()
@@ -154,6 +154,10 @@ class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
 
     fun onItemMove(fromPosition: Int, toPosition: Int) {
         Collections.swap(course.descImages, fromPosition, toPosition)
+        setupAdapter(course.descImages)
+    }
+
+    fun onStopDrag() {
         setupAdapter(course.descImages)
     }
 }

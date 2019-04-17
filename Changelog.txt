@@ -233,3 +233,8 @@ refresh managecourse activity on resume
 Add course
 added remove all questions and import questions in manage questions screen
 remove check in editquizquestuinsactivity to close if there are no questions
+Added privacy policy
+
+4.30
+Added delete for study material / qb / vd
+Added edit course images
