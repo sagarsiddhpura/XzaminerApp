@@ -1,6 +1,6 @@
 Issues:
 have ordering by drag and drop
-Have add button in section when editing
+Have add button in section as first button to quickly add QB/SM
 
 
 add auth check in all admin activities

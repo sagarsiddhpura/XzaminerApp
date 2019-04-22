@@ -86,19 +86,24 @@ class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
     private fun setupAdapter(images: ArrayList<String>) {
         val currAdapter = quizzes_grid.adapter
         if (currAdapter == null) {
-            EditCourseImagesAdapter(
+            RecyclerListAdapter(
                 this,
                 images.clone() as ArrayList<String>,
-                quizzes_grid
-            ) {
-            }.apply {
+                this
+            )
+//                EditCourseImagesAdapter(
+//                    this,
+//                    images.clone() as ArrayList<String>,
+//                    quizzes_grid
+//                ) { }
+            .apply {
                 quizzes_grid.adapter = this
                 val callback = SimpleItemTouchHelperCallback(this)
                 mItemTouchHelper = ItemTouchHelper(callback)
                 mItemTouchHelper!!.attachToRecyclerView(quizzes_grid)
             }
         } else {
-            (currAdapter as EditCourseImagesAdapter).updateEntities(images)
+            (currAdapter as RecyclerListAdapter).updateEntities(images)
         }
     }
 
@@ -154,7 +159,6 @@ class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
 
     fun onItemMove(fromPosition: Int, toPosition: Int) {
         Collections.swap(course.descImages, fromPosition, toPosition)
-        setupAdapter(course.descImages)
     }
 
     fun onStopDrag() {
