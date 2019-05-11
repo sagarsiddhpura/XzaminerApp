@@ -14,7 +14,7 @@ import java.util.*
  * Created by SIDD on 24-Sep-17.
  */
 data class User(
-    val name: String = "",
+    var name: String = "",
     val email: String = "",
     val password: String = "",
     var token: String = "",

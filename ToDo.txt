@@ -1,7 +1,10 @@
 Issues:
 have ordering by drag and drop
 Have add button in section as first button to quickly add QB/SM
-
+Name does not refresh on mainscreen if edited in editprofile
+edit phone no
+edit email
+have filetype check in all edit image
 
 add auth check in all admin activities
 secure db rules in firebase console
@@ -26,6 +29,12 @@ adb connect 192.168.0.102:5555
 Links
 https://github.com/anjlab/android-inapp-billing-v3
 https://github.com/tonyofrancis/Fetch
+
+Drag and drop RV
+https://github.com/iPaulPro/Android-ItemTouchHelper-Demo/blob/master/app/src/main/java/co/paulburke/android/itemtouchhelperdemo/RecyclerListAdapter.java
+https://medium.com/@ipaulpro/drag-and-swipe-with-recyclerview-6a6f0c422efd
+https://github.com/thesurix/gesture-recycler
+
 
 slider lib
 https://github.com/saeedsh92/Banner-Slider

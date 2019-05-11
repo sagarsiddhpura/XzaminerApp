@@ -12,6 +12,7 @@ import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.isImageFast
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.SimpleActivity
@@ -128,15 +129,20 @@ class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
         FilePickerDialog(this, Environment.getExternalStorageDirectory().toString(), true, false, false) {
             val imageFile = File(it)
             val file = Uri.fromFile(imageFile)
-            val name = courseId.toString() + "_desc_" + imageFile.name
-            val riversRef = dataSource.getStorage().getReference("courses/" + courseId + "/").child(name)
-            val uploadTask = riversRef.putFile(file)
-            toast("Uploading image...")
-            uploadTask.addOnFailureListener {
-                toast("Failed to add Image")
-            }.addOnSuccessListener {
-                course.descImages.add("courses/" + courseId + "/" + name)
-                setupAdapter(course.descImages)
+            if(!imageFile.isImageFast()) {
+                ConfirmationDialog(this, "Please select image with valid extension to continue (.jpg, .png, .bmp, .jpeg, .webp)",
+                    com.xzaminer.app.R.string.yes, com.xzaminer.app.R.string.ok, 0) { }
+            } else {
+                val name = courseId.toString() + "_desc_" + imageFile.name
+                val riversRef = dataSource.getStorage().getReference("courses/" + courseId + "/").child(name)
+                val uploadTask = riversRef.putFile(file)
+                toast("Uploading image...")
+                uploadTask.addOnFailureListener {
+                    toast("Failed to add Image")
+                }.addOnSuccessListener {
+                    course.descImages.add("courses/" + courseId + "/" + name)
+                    setupAdapter(course.descImages)
+                }
             }
         }
     }

@@ -57,6 +57,12 @@ class UserProfileActivity : SimpleActivity() {
                 startActivity(this)
             }
         }
+
+        edit_profile_root.setOnClickListener {
+            Intent(this, EditUserProfileActivity::class.java).apply {
+                startActivity(this)
+            }
+        }
     }
 
     override fun onResume() {

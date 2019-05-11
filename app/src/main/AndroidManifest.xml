@@ -75,6 +75,8 @@
         </activity>
         <activity android:name=".user.UserProfileActivity">
         </activity>
+        <activity android:name=".user.EditUserProfileActivity">
+        </activity>
         <activity android:name=".user.ListUnfinishedQuizzesActivity">
         </activity>
         <activity android:name=".user.ListFinishedQuizzesActivity">

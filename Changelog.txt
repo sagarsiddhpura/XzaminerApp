@@ -240,3 +240,8 @@ Added Delete QB/SM/Domain
 Added edit course images
 Import questions in SM activity
 BugFix: Section with no desc images crashed
+
+4.32
+Improvements in course image drag and drop
+Added Edit Profile screen
+Fix any file can be selected in course images
