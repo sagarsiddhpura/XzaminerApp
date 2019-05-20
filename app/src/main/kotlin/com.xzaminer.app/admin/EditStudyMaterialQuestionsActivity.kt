@@ -14,16 +14,14 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.studymaterial.ConfirmDialog
-import com.xzaminer.app.studymaterial.Question
-import com.xzaminer.app.studymaterial.QuestionOption
-import com.xzaminer.app.studymaterial.StudyMaterial
+import com.xzaminer.app.studymaterial.*
 import com.xzaminer.app.utils.COURSE_ID
 import com.xzaminer.app.utils.QUIZ_ID
 import com.xzaminer.app.utils.SECTION_ID
 import kotlinx.android.synthetic.main.activity_quiz.*
 import java.io.BufferedReader
-import java.io.FileReader
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 
 class EditStudyMaterialQuestionsActivity : SimpleActivity() {
@@ -148,6 +146,7 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
             findItem(R.id.manage_add).isVisible = true
             findItem(R.id.manage_remove_all).isVisible = true
             findItem(R.id.manage_import_questions).isVisible = true
+            findItem(R.id.manage_re_order).isVisible = true
         }
         return true
     }
@@ -158,6 +157,7 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
             R.id.manage_add -> addQuestion()
             R.id.manage_remove_all -> removeAllQuestions()
             R.id.manage_import_questions -> importQuestions()
+            R.id.manage_re_order -> reorderQuestions()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -192,7 +192,7 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
     private fun parseQuestions(path: String) {
         var questions = arrayListOf<Question>()
         var line: String?
-        val fileReader = BufferedReader(FileReader(path))
+        val fileReader = BufferedReader(InputStreamReader(FileInputStream(path), "Windows-1250"))
 
         // Read the file line by line starting from the second line
         line = fileReader.readLine()
@@ -220,5 +220,28 @@ class EditStudyMaterialQuestionsActivity : SimpleActivity() {
 
         ConfirmationDialog(this, questions.size.toString() + " questions imported.", R.string.yes, R.string.ok, 0) { }
         studyMaterial.questions.addAll(questions)
+    }
+
+    private fun reorderQuestions() {
+        val list = arrayListOf<String>()
+        studyMaterial.questions.forEach {
+            if(it.text != null) {
+                list.add(it.text!!)
+            }
+        }
+        SortEntitiesDialog(this, list) {
+            var questionsNew: ArrayList<Question> = arrayListOf()
+            it.forEachIndexed { index, entity ->
+                val updatedEntity = studyMaterial.questions?.find { it.text == entity }
+                if (updatedEntity != null) {
+                    questionsNew.add(updatedEntity)
+                }
+            }
+            studyMaterial.questions.clear()
+            studyMaterial.questions.addAll(questionsNew)
+            dataSource.updateQuizQuestions(courseId, sectionId, studyMaterial)
+            toast("Question re-ordering saved successfully")
+            refreshQuestions(studyMaterial.questions)
+        }
     }
 }

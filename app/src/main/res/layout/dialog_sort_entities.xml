@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/delete_remember_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/big_margin"
+        android:paddingRight="@dimen/big_margin"
+        android:paddingTop="@dimen/big_margin">
+
+    <com.simplemobiletools.commons.views.MyRecyclerView
+            android:id="@+id/sort_entities_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:layout_alignTop="@+id/purchases_label"
+            app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+            app:spanCount="@integer/category_columns_vertical_scroll"
+            android:padding="0dp"
+            android:layout_marginTop="0dp"/>
+
+</RelativeLayout>

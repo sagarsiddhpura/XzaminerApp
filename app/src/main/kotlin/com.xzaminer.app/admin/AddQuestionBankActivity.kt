@@ -26,7 +26,8 @@ import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_add_question_bank.*
 import java.io.File
-import java.io.FileReader
+import java.io.FileInputStream
+import java.io.InputStreamReader
 import java.util.*
 
 class AddQuestionBankActivity : SimpleActivity() {
@@ -132,10 +133,12 @@ class AddQuestionBankActivity : SimpleActivity() {
         val parser = CSVParserBuilder()
             .withSeparator(',')
             .build()
-        val reader = CSVReaderBuilder(FileReader(path))
+
+        val reader = CSVReaderBuilder(InputStreamReader(FileInputStream(path), "Windows-1250"))
             .withCSVParser(parser)
             .build()
-
+        // UTF-8 -> Questionmarks
+        // ISO-8859-1 -> boxes
 
         val iterator = CSVIterator(reader)
         tokens = iterator.next()

@@ -25,7 +25,8 @@ import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_add_question_bank.*
 import java.io.BufferedReader
 import java.io.File
-import java.io.FileReader
+import java.io.FileInputStream
+import java.io.InputStreamReader
 import java.util.*
 
 class AddStudyMaterialActivity : SimpleActivity() {
@@ -127,7 +128,7 @@ class AddStudyMaterialActivity : SimpleActivity() {
 
     private fun parseQuestions(path: String) {
         var line: String?
-        val fileReader = BufferedReader(FileReader(path))
+        val fileReader = BufferedReader(InputStreamReader(FileInputStream(path), "Windows-1250"))
 
         // Read the file line by line starting from the second line
         line = fileReader.readLine()

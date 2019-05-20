@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.toast
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
@@ -18,6 +19,7 @@ import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseSection
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.studymaterial.ConfirmDialog
+import com.xzaminer.app.studymaterial.SortEntitiesDialog
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_edit_course.*
 
@@ -85,6 +87,7 @@ class EditSectionActivity : SimpleActivity() {
                 }
             }
         }
+        edit_order.setColorFilter(getAdjustedPrimaryColor())
     }
 
     private fun loadSection(section: CourseSection) {
@@ -210,6 +213,35 @@ class EditSectionActivity : SimpleActivity() {
         }
 
         order_value.setText(section.order.toString())
+
+        edit_order.setOnClickListener {
+            dataSource.getCourseById(courseId) { course ->
+                if(course != null) {
+                    val entities = course!!.fetchAllSections()
+                    val list = arrayListOf<String>()
+                    entities.forEach {
+                        if(it.name != null) {
+                            list.add(it.name!!)
+                        }
+                    }
+                    SortEntitiesDialog(this, list) {
+                        it.forEachIndexed { index, entity ->
+                            val updatedEntity = entities?.find { it.name == entity }
+                            if (updatedEntity != null) {
+                                updatedEntity.order = index + 1
+                                dataSource.updateCourseSectionOrder(courseId, updatedEntity)
+                                if(updatedEntity.name == section.name) {
+                                    order_value.setText(updatedEntity.order.toString())
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    toast("Error loading sections.")
+                    return@getCourseById
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

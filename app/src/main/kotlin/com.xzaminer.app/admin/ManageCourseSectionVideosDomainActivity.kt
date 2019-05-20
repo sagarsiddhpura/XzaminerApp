@@ -16,6 +16,7 @@ import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.config
 import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.studymaterial.ConfirmDialog
+import com.xzaminer.app.studymaterial.SortEntitiesDialog
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.studymaterial.Video
 import com.xzaminer.app.user.User
@@ -122,6 +123,7 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
         menuInflater.inflate(R.menu.menu_manage, menu)
         menu.apply {
             findItem(R.id.manage_add).isVisible = true
+            findItem(R.id.manage_re_order).isVisible = true
         }
         return true
     }
@@ -130,6 +132,7 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
         when (item.itemId) {
             R.id.manage_add -> addVideo()
             R.id.manage_finish -> validateAndSaveEntity()
+            R.id.manage_re_order -> reorderEntities()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -180,5 +183,26 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
         loadDomain()
+    }
+
+    private fun reorderEntities() {
+        val list = arrayListOf<String>()
+        values.forEach {
+            if(it.name != null) {
+                list.add(it.name!!)
+            }
+        }
+        SortEntitiesDialog(this, list) {
+            it.forEachIndexed { index, entity ->
+                val updatedEntity = values?.find { it.name == entity }
+                if (updatedEntity != null) {
+                    updatedEntity.order = index + 1
+                }
+            }
+            values.sortWith(compareBy { it.order })
+            dataSource.updateVideoProperties(courseId, sectionId, studyMaterial!!)
+            toast("Videos re-ordering saved successfully")
+            (section_rv.adapter as ManageCourseSectionDomainVideosAdapter).updateVideos(values)
+        }
     }
 }

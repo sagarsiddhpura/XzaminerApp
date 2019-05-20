@@ -245,3 +245,6 @@ BugFix: Section with no desc images crashed
 Improvements in course image drag and drop
 Added Edit Profile screen
 Fix any file can be selected in course images
+
+4.34
+Added Reorder by drag and drop for Sections, Quizzes, Study Materials, Questions, video domains, videos

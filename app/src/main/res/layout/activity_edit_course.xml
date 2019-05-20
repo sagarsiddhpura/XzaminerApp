@@ -239,6 +239,14 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/edit_order"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_move_drag"
+                    android:padding="2dp"/>
+
         </android.support.v7.widget.LinearLayoutCompat>
 
         <com.simplemobiletools.commons.views.MyTextView

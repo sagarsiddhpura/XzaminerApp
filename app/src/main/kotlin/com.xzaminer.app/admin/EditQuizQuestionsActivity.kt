@@ -17,15 +17,13 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.R
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.extensions.dataSource
-import com.xzaminer.app.studymaterial.ConfirmDialog
-import com.xzaminer.app.studymaterial.Question
-import com.xzaminer.app.studymaterial.QuestionOption
-import com.xzaminer.app.studymaterial.StudyMaterial
+import com.xzaminer.app.studymaterial.*
 import com.xzaminer.app.utils.COURSE_ID
 import com.xzaminer.app.utils.QUIZ_ID
 import com.xzaminer.app.utils.SECTION_ID
 import kotlinx.android.synthetic.main.activity_quiz.*
-import java.io.FileReader
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 
 class EditQuizQuestionsActivity : SimpleActivity() {
@@ -135,6 +133,7 @@ class EditQuizQuestionsActivity : SimpleActivity() {
             findItem(R.id.manage_add).isVisible = true
             findItem(R.id.manage_remove_all).isVisible = true
             findItem(R.id.manage_import_questions).isVisible = true
+            findItem(R.id.manage_re_order).isVisible = true
         }
         return true
     }
@@ -145,6 +144,7 @@ class EditQuizQuestionsActivity : SimpleActivity() {
             R.id.manage_add -> addQuestion()
             R.id.manage_remove_all -> removeAllQuestions()
             R.id.manage_import_questions -> importQuestions()
+            R.id.manage_re_order -> reorderQuestions()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -215,7 +215,7 @@ class EditQuizQuestionsActivity : SimpleActivity() {
         val parser = CSVParserBuilder()
             .withSeparator(',')
             .build()
-        val reader = CSVReaderBuilder(FileReader(path))
+        val reader = CSVReaderBuilder(InputStreamReader(FileInputStream(path), "Windows-1250"))
             .withCSVParser(parser)
             .build()
 
@@ -378,5 +378,28 @@ class EditQuizQuestionsActivity : SimpleActivity() {
             }
         }
         return retVal
+    }
+
+    private fun reorderQuestions() {
+        val list = arrayListOf<String>()
+        studyMaterial.questions.forEach {
+            if(it.text != null) {
+                list.add(it.text!!)
+            }
+        }
+        SortEntitiesDialog(this, list) {
+            var questionsNew: ArrayList<Question> = arrayListOf()
+            it.forEachIndexed { index, entity ->
+                val updatedEntity = studyMaterial.questions?.find { it.text == entity }
+                if (updatedEntity != null) {
+                    questionsNew.add(updatedEntity)
+                }
+            }
+            studyMaterial.questions.clear()
+            studyMaterial.questions.addAll(questionsNew)
+            dataSource.updateQuizQuestions(courseId, sectionId, studyMaterial)
+            toast("Question re-ordering saved successfully")
+            refreshQuestions(studyMaterial.questions)
+        }
     }
 }

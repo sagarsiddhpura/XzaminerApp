@@ -29,4 +29,5 @@
     <string name="remove_all_questions">Remove All Questions</string>
     <string name="import_questions">Import Questions</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="reorder">Reorder</string>
 </resources>

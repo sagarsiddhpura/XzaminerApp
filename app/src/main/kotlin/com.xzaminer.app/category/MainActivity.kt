@@ -26,15 +26,11 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.*
-import com.xzaminer.app.admin.AddQuestionBankActivity
-import com.xzaminer.app.admin.AddStudyMaterialActivity
-import com.xzaminer.app.admin.ManageCategoriesActivity
-import com.xzaminer.app.admin.ManageUsersActivity
+import com.xzaminer.app.admin.*
 import com.xzaminer.app.billing.Purchase
 import com.xzaminer.app.course.CourseActivity
 import com.xzaminer.app.extensions.*
 import com.xzaminer.app.studymaterial.ConfirmDialog
-import com.xzaminer.app.user.EditUserProfileActivity
 import com.xzaminer.app.user.User
 import com.xzaminer.app.user.UserProfileActivity
 import com.xzaminer.app.utils.*
@@ -126,9 +122,9 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-                Intent(this, EditUserProfileActivity::class.java).apply {
-                    startActivity(this)
-                }
+//                Intent(this, EditUserProfileActivity::class.java).apply {
+//                    startActivity(this)
+//                }
 
 //                Intent(this, VideoActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)
@@ -164,10 +160,10 @@ class MainActivity : SimpleActivity(), BillingProcessor.IBillingHandler {
 //                    startActivity(this)
 //                }
 
-//                Intent(this, ManageCourseActivity::class.java).apply {
-//                    putExtra(COURSE_ID, 101L)
-//                    startActivity(this)
-//                }
+                Intent(this, ManageCourseActivity::class.java).apply {
+                    putExtra(COURSE_ID, 101L)
+                    startActivity(this)
+                }
 
 //                Intent(this, EditSectionActivity::class.java).apply {
 //                    putExtra(COURSE_ID, 101L)

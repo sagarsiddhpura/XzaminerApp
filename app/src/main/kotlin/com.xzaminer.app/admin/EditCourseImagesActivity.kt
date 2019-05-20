@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.beGone
@@ -18,6 +20,7 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.xzaminer.app.SimpleActivity
 import com.xzaminer.app.course.Course
 import com.xzaminer.app.extensions.dataSource
+import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.ConfirmDialog
 import com.xzaminer.app.utils.COURSE_ID
 import kotlinx.android.synthetic.main.activity_edit_course.*
@@ -25,7 +28,7 @@ import java.io.File
 import java.util.*
 
 
-class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
+class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener, ItemTouchHelperAdapter {
 
     private var courseId: Long? = null
     private lateinit var course: Course
@@ -87,7 +90,7 @@ class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
     private fun setupAdapter(images: ArrayList<String>) {
         val currAdapter = quizzes_grid.adapter
         if (currAdapter == null) {
-            RecyclerListAdapter(
+            EditCourseImageAdapter(
                 this,
                 images.clone() as ArrayList<String>,
                 this
@@ -104,7 +107,7 @@ class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
                 mItemTouchHelper!!.attachToRecyclerView(quizzes_grid)
             }
         } else {
-            (currAdapter as RecyclerListAdapter).updateEntities(images)
+            (currAdapter as EditCourseImageAdapter).updateEntities(images)
         }
     }
 
@@ -154,7 +157,7 @@ class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
         }
     }
 
-    fun deleteEntity(image: String) {
+    override fun deleteEntity(image: String) {
         course.descImages.remove(image)
         setupAdapter(course.descImages)
     }
@@ -163,11 +166,25 @@ class EditCourseImagesActivity : SimpleActivity(), OnStartDragListener {
         mItemTouchHelper!!.startDrag(viewHolder)
     }
 
-    fun onItemMove(fromPosition: Int, toPosition: Int) {
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         Collections.swap(course.descImages, fromPosition, toPosition)
+        return true
     }
 
     fun onStopDrag() {
         setupAdapter(course.descImages)
+    }
+
+    override fun onItemDismiss(position: Int) {}
+
+    override fun loadImageImageView(
+        url: String,
+        imageView: ImageView,
+        cropThumbnails: Boolean,
+        textView: TextView?,
+        hasRoundEdges: Boolean,
+        im_placeholder_video: Int
+    ) {
+        parent.loadImageImageView(url, imageView, cropThumbnails,  textView, hasRoundEdges, im_placeholder_video)
     }
 }

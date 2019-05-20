@@ -22,6 +22,7 @@ import com.xzaminer.app.extensions.dataSource
 import com.xzaminer.app.extensions.loadIconImageView
 import com.xzaminer.app.extensions.loadImageImageView
 import com.xzaminer.app.studymaterial.ConfirmDialog
+import com.xzaminer.app.studymaterial.SortEntitiesDialog
 import com.xzaminer.app.studymaterial.StudyMaterial
 import com.xzaminer.app.utils.*
 import kotlinx.android.synthetic.main.activity_edit_course.*
@@ -127,6 +128,7 @@ class EditQuizActivity : SimpleActivity() {
 
         edit_edit_image.setColorFilter(getAdjustedPrimaryColor())
         edit_delete_image.setColorFilter(getAdjustedPrimaryColor())
+        edit_order.setColorFilter(getAdjustedPrimaryColor())
     }
 
     private fun loadQuestionBank(studyMaterial_: StudyMaterial) {
@@ -199,6 +201,40 @@ class EditQuizActivity : SimpleActivity() {
         }
 
         order_value.setText(studyMaterial.order.toString())
+
+        edit_order.setOnClickListener {
+            dataSource.getCourseById(courseId) { course ->
+                if(course != null) {
+                    val section = course.fetchSection(sectionId)
+                    if(section != null) {
+                        val values = ArrayList(section.studyMaterials.values)
+                        values.sortWith(compareBy { it.order })
+
+                        val list = arrayListOf<String>()
+                        values.forEach {
+                            if(it.name != null) {
+                                list.add(it.name!!)
+                            }
+                        }
+                        SortEntitiesDialog(this, list) {
+                            it.forEachIndexed { index, entity ->
+                                val updatedEntity = values?.find { it.name == entity }
+                                updatedEntity?.order = index + 1
+                                if (updatedEntity != null) {
+                                    dataSource.updateQuizOrder(courseId, sectionId, updatedEntity)
+                                }
+                            }
+                        }
+                    } else {
+                        toast("Error loading section.")
+                        return@getCourseById
+                    }
+                } else {
+                    toast("Error loading section.")
+                    return@getCourseById
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

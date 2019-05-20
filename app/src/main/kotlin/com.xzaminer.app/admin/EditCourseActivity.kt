@@ -116,6 +116,7 @@ class EditCourseActivity : SimpleActivity() {
 
         edit_edit_image.setColorFilter(getAdjustedPrimaryColor())
         edit_delete_image.setColorFilter(getAdjustedPrimaryColor())
+        edit_order.beGone()
     }
 
     private fun loadCourse(course: Course) {

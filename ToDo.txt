@@ -5,7 +5,10 @@ Name does not refresh on mainscreen if edited in editprofile
 edit phone no
 edit email
 have filetype check in all edit image
+include database backup/restore in help manual
+refresh order textfield on order dialog
 
+add sort button on edit course activity
 add auth check in all admin activities
 secure db rules in firebase console
 have image edit text to input raw value

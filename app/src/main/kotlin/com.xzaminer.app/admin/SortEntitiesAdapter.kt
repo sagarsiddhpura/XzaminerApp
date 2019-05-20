@@ -8,31 +8,26 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.xzaminer.app.R
-import com.xzaminer.app.extensions.loadImageImageView
 import java.util.*
 
-class RecyclerListAdapter(eciActivity: EditCourseImagesActivity, var entities: ArrayList<String>, private val mDragStartListener: OnStartDragListener) :
-    RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder>(), ItemTouchHelperAdapter {
+class SortEntitiesAdapter(eciActivity: ItemTouchHelperAdapter, var entities: ArrayList<String>, private val mDragStartListener: OnStartDragListener) :
+    RecyclerView.Adapter<SortEntitiesAdapter.ItemViewHolder>(), ItemTouchHelperAdapter {
 
-    private var parentActivity: EditCourseImagesActivity = eciActivity
+    private var parentActivity: ItemTouchHelperAdapter = eciActivity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.course_image_grid, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_sort_entities, parent, false)
         return ItemViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.handleView.setColorFilter(holder.handleView.resources.getColor(com.xzaminer.app.R.color.md_blue_800_dark))
-        holder.deleteView.setColorFilter(holder.handleView.resources.getColor(com.xzaminer.app.R.color.md_blue_800_dark))
-        parentActivity.loadImageImageView(entities[position], holder.imageView, false, null, false, com.xzaminer.app.R.drawable.im_placeholder_video)
-
-        holder.deleteView.setOnClickListener {
-            parentActivity?.deleteEntity(entities[position])
-        }
+        holder.name.text = entities[position]
 
         // Start a drag whenever the handle view it touched
-        holder.handleView.setOnTouchListener { v, event ->
+        holder.handleView.setOnTouchListener { _, event ->
             if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                 mDragStartListener.onStartDrag(holder)
             }
@@ -67,9 +62,8 @@ class RecyclerListAdapter(eciActivity: EditCourseImagesActivity, var entities: A
      */
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder {
 
-        val imageView: ImageView = itemView.findViewById<View>(R.id.manage_image) as ImageView
         val handleView: ImageView = itemView.findViewById<View>(R.id.move_icon) as ImageView
-        val deleteView: ImageView = itemView.findViewById<View>(R.id.manage_delete) as ImageView
+        val name: TextView = itemView.findViewById<View>(R.id.sort_name) as TextView
 
         override fun onItemSelected() {
             itemView.setBackgroundColor(Color.LTGRAY)
@@ -79,13 +73,17 @@ class RecyclerListAdapter(eciActivity: EditCourseImagesActivity, var entities: A
             itemView.setBackgroundColor(Color.WHITE)
         }
     }
+
+    override fun loadImageImageView(
+        url: String,
+        imageView: ImageView,
+        cropThumbnails: Boolean,
+        textView: TextView?,
+
+        hasRoundEdges: Boolean,
+        im_placeholder_video: Int
+    ) {}
+
+    override fun deleteEntity(entity: String) {}
 }
 
-//Data2added.zip
-//        Dawa2added.zew
-//        Dawa2added.zew
-//        gmDawa
-//        gmDawa2added.zew
-//        gDaw a2ad ded. zewm
-//        gDawa2.zewm
-//        gDawa2.ultm

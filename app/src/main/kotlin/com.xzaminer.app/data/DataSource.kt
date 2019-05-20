@@ -19,17 +19,17 @@ import kotlin.collections.ArrayList
 private var db: FirebaseDatabase? = null
 private var storage: FirebaseStorage? = null
 
-private var catsDbVersion = "VR1"
-private var userDbVersion = "VR1"
-private var purchaseLogDbVersion = "VR1"
+//private var catsDbVersion = "VR1"
+//private var userDbVersion = "VR1"
+//private var purchaseLogDbVersion = "VR1"
 
 //private var catsDbVersion = "VT1"
 //private var userDbVersion = "VT1"
 //private var purchaseLogDbVersion = "VT1"
 
-//private var catsDbVersion = "VD1"
-//private var userDbVersion = "VD1"
-//private var purchaseLogDbVersion = "VD1"
+private var catsDbVersion = "VD1"
+private var userDbVersion = "VD1"
+private var purchaseLogDbVersion = "VD1"
 
 class DataSource {
 
@@ -331,6 +331,12 @@ class DataSource {
         dept.child("/1/courses/"+course.id).child("visible").setValue(course.isVisible)
     }
 
+    fun updateCourseOrder(course: Course) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+course.id).child("order").setValue(course.order)
+    }
+
     fun deleteCourse(course: Category) {
         val catsDatabase = getCatsDatabase()
         val dept = catsDatabase.child("cats")
@@ -358,6 +364,12 @@ class DataSource {
         dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("visible").setValue(section.isVisible)
     }
 
+    fun updateCourseSectionOrder(courseId: Long?, section: CourseSection) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+courseId + "/sections/" + section.id).child("order").setValue(section.order)
+    }
+
     fun updateQuizProperties(courseId: Long?, sectionId: Long, studyMaterial: StudyMaterial) {
         val catsDatabase = getCatsDatabase()
         val dept = catsDatabase.child("cats")
@@ -367,6 +379,12 @@ class DataSource {
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("purchaseInfo").setValue(studyMaterial.purchaseInfo)
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("order").setValue(studyMaterial.order)
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("visible").setValue(studyMaterial.isVisible)
+    }
+
+    fun updateQuizOrder(courseId: Long?, sectionId: Long, studyMaterial: StudyMaterial) {
+        val catsDatabase = getCatsDatabase()
+        val dept = catsDatabase.child("cats")
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("order").setValue(studyMaterial.order)
     }
 
     fun updateQuizQuestions(courseId: Long, sectionId: Long, studyMaterial: StudyMaterial) {

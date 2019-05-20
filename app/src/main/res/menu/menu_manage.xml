@@ -30,4 +30,10 @@
         android:title="@string/delete"
         android:visible="false"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/manage_re-order"
+        android:icon="@drawable/ic_move_drag"
+        android:title="@string/reorder"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
 </menu>
