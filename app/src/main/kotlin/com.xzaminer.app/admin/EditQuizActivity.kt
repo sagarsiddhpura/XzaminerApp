@@ -192,8 +192,22 @@ class EditQuizActivity : SimpleActivity() {
         }
 
         val options = arrayOf("Yes", "No")
-        visibility_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
+        if(studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
+            randomize_ques_spinner.beVisible()
+            randomize_ques_label.beVisible()
+            randomize_ques_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
+            if(studyMaterial.randomizeQuestions) {
+                randomize_ques_spinner.setSelection(0)
+            } else {
+                randomize_ques_spinner.setSelection(1)
+            }
 
+            edit_short_name_root.beVisible()
+            edit_short_name_root.hint = "No Of Questions in Quiz (-1/Blank for All)"
+            edit_short_name.setText(studyMaterial.noQuestionsInQuiz.toString())
+        }
+
+        visibility_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
         if(studyMaterial.isVisible) {
             visibility_spinner.setSelection(0)
         } else {
@@ -286,6 +300,20 @@ class EditQuizActivity : SimpleActivity() {
             ConfirmationDialog(this, "Please fill correct numeric value for Order", R.string.yes, R.string.ok, 0) { }
             return
         }
+        if(studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK && edit_short_name.text.toString() != "") {
+            try {
+                Integer.parseInt(edit_short_name.text.toString())
+            } catch (e: Exception) {
+                ConfirmationDialog(
+                    this,
+                    "Please fill correct numeric value for No of Questions in Quiz",
+                    R.string.yes,
+                    R.string.ok,
+                    0
+                ) { }
+                return
+            }
+        }
 
         ConfirmDialog(this, "Are you sure you want to update the Entity?") {
             studyMaterial.name = edit_name.text.toString()
@@ -322,6 +350,18 @@ class EditQuizActivity : SimpleActivity() {
             when {
                 visibility_spinner.selectedItemPosition == 0 -> studyMaterial.isVisible = true
                 visibility_spinner.selectedItemPosition == 1 -> studyMaterial.isVisible = false
+            }
+
+            if(studyMaterial.type == STUDY_MATERIAL_TYPE_QUESTION_BANK) {
+                when {
+                    randomize_ques_spinner.selectedItemPosition == 0 -> studyMaterial.randomizeQuestions = true
+                    randomize_ques_spinner.selectedItemPosition == 1 -> studyMaterial.randomizeQuestions = false
+                }
+                try {
+                    studyMaterial.noQuestionsInQuiz = Integer.parseInt(edit_short_name.text.toString())
+                } catch (e : Exception) {
+                    studyMaterial.noQuestionsInQuiz = -1
+                }
             }
 
             if(isNew) {

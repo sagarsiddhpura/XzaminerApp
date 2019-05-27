@@ -248,3 +248,8 @@ Fix any file can be selected in course images
 
 4.34
 Added Reorder by drag and drop for Sections, Quizzes, Study Materials, Questions, video domains, videos
+Updated file encoding to Windows
+
+4.36
+Updated title to Manage Videos
+added randomize list and noQuestionsInQuiz functionality

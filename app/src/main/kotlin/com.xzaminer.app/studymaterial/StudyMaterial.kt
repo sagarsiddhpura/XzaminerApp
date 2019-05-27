@@ -16,7 +16,9 @@ data class StudyMaterial (
     var status: String = "",
     var type: String = STUDY_MATERIAL_TYPE_STUDY_MATERIAL,
     var order: Int = 0,
-    var isVisible: Boolean = true
+    var isVisible: Boolean = true,
+    var randomizeQuestions: Boolean = false,
+    var noQuestionsInQuiz: Int = -1
     ) {
     fun fetchIapPurchase(): Purchase? {
         purchaseInfo.forEach {
@@ -122,6 +124,12 @@ data class StudyMaterial (
     fun startQuiz() {
         status = QB_STATUS_IN_PROGRESS
         properties[QB_STARTED_ON] = arrayListOf(getNowDateTime())
+        if(noQuestionsInQuiz > 0 && noQuestionsInQuiz < questions.size) {
+            questions = ArrayList(questions.subList(0, noQuestionsInQuiz))
+        }
+        if(randomizeQuestions) {
+            questions.shuffle()
+        }
     }
 
     fun updateCompleted() {

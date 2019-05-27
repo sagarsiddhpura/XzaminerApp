@@ -339,14 +339,14 @@ class EditQuizQuestionsActivity : SimpleActivity() {
             questions.add(ques)
 
             if(!iterator.hasNext()) {
-                ConfirmationDialog(this, questions.size.toString() + " questions imported.") { }
+                ConfirmationDialog(this, questions.size.toString() + " questions imported.", 0, R.string.ok, 0) { }
                 studyMaterial.questions.addAll(questions)
                 return
             }
             tokens = iterator.next()
             lineCounter++
             if(!iterator.hasNext()) {
-                ConfirmationDialog(this, questions.size.toString() + " questions imported.") { }
+                ConfirmationDialog(this, questions.size.toString() + " questions imported.", 0, R.string.ok, 0) { }
                 studyMaterial.questions.addAll(questions)
                 return
             }
@@ -357,13 +357,13 @@ class EditQuizQuestionsActivity : SimpleActivity() {
                 lineCounter++
             }
             if(!iterator.hasNext()) {
-                ConfirmationDialog(this, questions.size.toString() + " questions imported.") { }
+                ConfirmationDialog(this, questions.size.toString() + " questions imported.", 0, R.string.ok, 0) { }
                 studyMaterial.questions.addAll(questions)
                 return
             }
         }
 
-        ConfirmationDialog(this, questions.size.toString() + " questions imported.") { }
+        ConfirmationDialog(this, questions.size.toString() + " questions imported.", 0, R.string.ok, 0) { }
         studyMaterial.questions.addAll(questions)
     }
 

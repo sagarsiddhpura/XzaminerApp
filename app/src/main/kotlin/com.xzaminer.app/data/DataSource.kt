@@ -379,6 +379,8 @@ class DataSource {
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("purchaseInfo").setValue(studyMaterial.purchaseInfo)
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("order").setValue(studyMaterial.order)
         dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("visible").setValue(studyMaterial.isVisible)
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("randomizeQuestions").setValue(studyMaterial.randomizeQuestions)
+        dept.child("/1/courses/"+courseId + "/sections/" + sectionId + "/studyMaterials/" + studyMaterial.id).child("noQuestionsInQuiz").setValue(studyMaterial.noQuestionsInQuiz)
     }
 
     fun updateQuizOrder(courseId: Long?, sectionId: Long, studyMaterial: StudyMaterial) {

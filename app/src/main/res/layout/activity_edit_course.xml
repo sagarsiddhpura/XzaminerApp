@@ -213,12 +213,40 @@
                 >
         </Spinner>
 
+        <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/randomize_ques_label"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="2dp"
+                android:text="Randomize Questions:"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textColor="@color/text_black"
+                app:layout_constraintTop_toBottomOf="@+id/visibility_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="2dp"/>
+
+        <Spinner
+                android:id="@+id/randomize_ques_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/visibility_label"
+                app:layout_constraintStart_toEndOf="@+id/randomize_ques_label"
+                >
+        </Spinner>
+
         <android.support.v7.widget.LinearLayoutCompat
                 android:id="@+id/order_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/visibility_label"
+                app:layout_constraintTop_toBottomOf="@+id/randomize_ques_label"
                 app:layout_constraintStart_toStartOf="parent"
                 android:padding="8dp"
                 android:weightSum="1">

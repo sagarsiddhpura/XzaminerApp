@@ -45,7 +45,7 @@ class ManageCourseSectionVideosDomainActivity : SimpleActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar?.setNavigationOnClickListener { onBackPressed() }
-        supportActionBar?.title = "Edit Video Domain"
+        supportActionBar?.title = "Manage Videos"
 
         intent.apply {
             courseId = getLongExtra(COURSE_ID, -1)
