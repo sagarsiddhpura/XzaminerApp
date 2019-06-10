@@ -1,5 +1,5 @@
 Issues:
-have ordering by drag and drop
+Have total questions displayed on top of no questions textbox
 Have add button in section as first button to quickly add QB/SM
 Name does not refresh on mainscreen if edited in editprofile
 edit phone no

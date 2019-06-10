@@ -203,7 +203,7 @@ class EditQuizActivity : SimpleActivity() {
             }
 
             edit_short_name_root.beVisible()
-            edit_short_name_root.hint = "No Of Questions in Quiz (-1/Blank for All)"
+            edit_short_name_root.hint = "No of Questions in Quiz (-1/Blank for All)"
             edit_short_name.setText(studyMaterial.noQuestionsInQuiz.toString())
         }
 
